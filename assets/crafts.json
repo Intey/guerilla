@@ -1,0 +1,15 @@
+{
+  "trap": {
+    "sticks": 10,
+    "rope": 3,
+    "mud": 1
+  },
+  "rope": {
+    "leafs": 15
+  },
+  "campfire": {
+    "logs": 1,
+    "sticks": 4    
+  }
+}
+

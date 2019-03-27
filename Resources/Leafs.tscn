@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Resources/Resource.tscn" type="PackedScene" id=1]
+
+[node name="Leafs" index="0" instance=ExtResource( 1 )]
+type = "Leafs"
+count = 25
+
+[node name="ColorRect" parent="." index="1"]
+color = Color( 0.12549, 0.564706, 0, 1 )
+
