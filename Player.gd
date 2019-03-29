@@ -1,17 +1,19 @@
 extends Node2D
 
-export (PackedScene) var Campfire
 export var speed = 200
 export var collection_speed = 1
 
-var CraftHUD = preload('res://CraftHUD.tscn')
+#var CraftHUD = preload('res://CraftHUD.tscn')
+var CraftStation = preload('res://CraftStation.gd')
 var showedHUD = null
 
 var crafts = preload('res://crafts.gd')
 
 var inventory = {}
-var craftHud = null
+#var craftHud = null
 var collectable_area = null
+
+signal inventory_update(inventory)
 
 func _ready():
     pass
@@ -39,14 +41,6 @@ func move(delta):
     self.position += velocity * delta
 
 func actions(delta):
-    if Input.is_action_just_released('create_campfire'):
-        craftHud = CraftHUD.instance()
-        craftHud.init(inventory, crafts.get_crafts())
-        get_parent().add_child(craftHud)
-        craftHud.connect('craft', self, 'on_craft')
-    if Input.is_action_just_pressed('ui_cancel') and craftHud != null:
-        craftHud.free()
-        
     # collecting
     if Input.is_action_just_pressed('ui_accept') and collectable_area:
         print_debug("start collecting ", collectable_area.type)
@@ -64,7 +58,7 @@ func _on_CollectTimer_timeout():
         else:
             inventory[res_type] = collected
         print_debug('collected ', collected, ' ', res_type, ". now player has ", inventory)
-
+        emit_signal('inventory_update', self.inventory)
 
 func enter_collectable_area(area):
     print_debug('enter ', area)
@@ -76,7 +70,7 @@ func exit_collectable_area(area):
     collectable_area = null
     $CollectTimer.stop()
         
-        
+
 func build(name):
     var reciepes = crafts.get_crafts()
     var reciepe = reciepes.get(name)
@@ -85,13 +79,10 @@ func build(name):
         return
     # check reciepe buildable
     print_debug("craft reciepe ", reciepe)
-    for res_name in reciepe.ingridients:
-        var count = reciepe.ingridients[res_name]
-        if inventory.get(res_name, 0) < count:
-            print_debug('not enought ', res_name, ' for build ' , name)
-            return
-    for res_name in reciepe.ingridients:
-        var count = reciepe.ingridients[res_name]
-        inventory[res_name] -= count
-        if inventory[res_name] == 0:
-            inventory.erase(res_name)
+    if CraftStation.can_build(reciepe, self.inventory):
+        for res_name in reciepe.ingridients:
+            var count = reciepe.ingridients[res_name]
+            self.inventory[res_name] -= count
+            if self.inventory[res_name] == 0:
+                self.inventory.erase(res_name)
+        emit_signal('inventory_update', self.inventory)

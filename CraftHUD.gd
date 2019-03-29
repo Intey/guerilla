@@ -1,38 +1,38 @@
 extends Panel
 
 var ReciepeItem = preload('res://ReciepeItem.tscn')
+var CraftStation = preload('res://CraftStation.gd')
 
 signal craft(reciepe_name)
-"""
-init(inventory, reciepes)
-
-"""
 
 var selected_reciepe: ReciepeItem = null
-var inventory = []
 var reciepes = []
-
-func can_build(reciepe, inventory):
-    for res_name in reciepe.ingridients:
-        var count = reciepe.ingridients[res_name]
-        if inventory.get(res_name, 0) < count:
-            return false
-    return true
 
 func init(inventory, reciepes):
     self.reciepes = reciepes
-    self.inventory = inventory
-    for item_name in self.inventory:
-        _add_ingridient(item_name, self.inventory[item_name])
-
+    self.render_ingridients(inventory)
     for reciepe_name in self.reciepes:
         var reciepeItem = ReciepeItem.instance()
         reciepeItem.set_item_name(reciepe_name)
-        var buildable = can_build(self.reciepes[reciepe_name], self.inventory)
+        var buildable = CraftStation.can_build(self.reciepes[reciepe_name], inventory)
         reciepeItem.set_disabled(not buildable)
         $Reciepes.add_child(reciepeItem)
         reciepeItem.connect('selected', self, '_on_reciepe_selected')        
         
+func update_state(new_inventory):
+    $ItemList.clear()
+    $Counts.clear()
+    render_ingridients(new_inventory)
+    
+    for ch in $Reciepes.get_children():
+        var buildable = CraftStation.can_build(self.reciepes[ch.get_item_name()], new_inventory)
+        ch.set_disabled(not buildable)
+    
+func render_ingridients(inventory):     
+    if not inventory.empty():
+        for item_name in inventory:
+            _add_ingridient(item_name, inventory[item_name])  
+            
 func _add_ingridient(name, count):
     $ItemList.add_item(name)
     $Counts.add_item(String(count))
@@ -43,6 +43,6 @@ func _on_reciepe_selected(reciepe: ReciepeItem):
     selected_reciepe = reciepe
     reciepe.set_selected(true)
 
-func on_craft_button_pressed():
+func _on_craft_button_pressed():
     if selected_reciepe:
         emit_signal('craft', selected_reciepe.get_item_name())

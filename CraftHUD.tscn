@@ -6,6 +6,9 @@
 margin_right = 400.0
 margin_bottom = 240.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CraftButton" type="Button" parent="."]
 anchor_left = 1.0
@@ -21,11 +24,13 @@ text = "Craft"
 [node name="ItemList" type="ItemList" parent="."]
 margin_right = 112.0
 margin_bottom = 240.0
+mouse_filter = 2
 
 [node name="Counts" type="ItemList" parent="."]
 margin_left = 112.0
 margin_right = 144.0
 margin_bottom = 240.0
+mouse_filter = 2
 
 [node name="Reciepes" type="GridContainer" parent="."]
 margin_left = 160.0
@@ -34,4 +39,4 @@ margin_right = 384.0
 margin_bottom = 160.0
 columns = 6
 
-[connection signal="pressed" from="CraftButton" to="." method="on_craft_button_pressed"]
+[connection signal="pressed" from="CraftButton" to="." method="_on_craft_button_pressed"]

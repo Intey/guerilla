@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://Campfire.tscn" type="PackedScene" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 31.1473
@@ -12,12 +11,11 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-Campfire = ExtResource( 2 )
 speed = 300
 collection_speed = 3
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 collision_mask = 2
@@ -26,5 +24,6 @@ collision_mask = 2
 shape = SubResource( 1 )
 
 [node name="CollectTimer" type="Timer" parent="."]
+wait_time = 0.3
 
 [connection signal="timeout" from="CollectTimer" to="." method="_on_CollectTimer_timeout"]
