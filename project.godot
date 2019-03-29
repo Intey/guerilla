@@ -10,12 +10,12 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "HBoxContainer",
-"class": "Item",
+"class": "ReciepeItem",
 "language": "GDScript",
-"path": "res://Item.gd"
+"path": "res://ReciepeItem.gd"
 } ]
 _global_script_class_icons={
-"Item": ""
+"ReciepeItem": ""
 }
 
 [application]

@@ -1,25 +1,7 @@
 extends Node
 static func get_crafts():
-    return {
-        'trap': {
-            'resources': {
-                'sticks': 10,
-                'rope': 3,
-                'mud': 1
-            },
-            'type': 'building'
-        },
-        'rope': {
-            'resources': {    
-                'leafs': 15,
-            },
-            'type': 'item'
-        },
-        'campfire': {
-            'resources': {    
-                'logs': 1,
-                'sticks': 4    
-            },
-            'type': 'building'
-        }
-    }
+    var file = File.new()
+    file.open('res://assets/crafts.json', file.READ)
+    var reciepes = JSON.parse(file.get_as_text()).result
+    file.close()
+    return reciepes

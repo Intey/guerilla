@@ -2,8 +2,8 @@
 
 [ext_resource path="res://Resources/Resource.tscn" type="PackedScene" id=1]
 
-[node name="Logs" index="0" instance=ExtResource( 1 )]
-type = "Logs"
+[node name="Logs" instance=ExtResource( 1 )]
+type = "logs"
 count = 2
 
 [node name="ColorRect" parent="." index="1"]
