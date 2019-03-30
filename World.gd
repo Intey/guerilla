@@ -14,7 +14,7 @@ func _process(delta):
         craftHud.show()
     if Input.is_action_just_pressed('ui_cancel'): # and craftHud != null:
         craftHud.hide()
-        $Player.
+        $Player.hide_build_mode()
     
 func create_building(reciepe, position):
     var scene_path = reciepe.scene

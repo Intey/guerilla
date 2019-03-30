@@ -95,6 +95,7 @@ func craft(name):
             build_plan = {'node': plan_node, 'reciepe': reciepe}
             plan_node.set_area(self, $BuildArea/Shape.shape.radius)
             get_parent().add_child(plan_node)
+            $BuildArea.visible = true
         
 
 func add_to_inventory(name, count):
@@ -121,7 +122,12 @@ func build_structure():
     var position = build_plan['node'].position
     emit_signal('build', reciepe, position)
     if not CraftStation.can_build(reciepe, self.inventory):
+        self.hide_build_mode()
+
+
+func hide_build_mode():
+    if build_plan:
         build_plan['node'].queue_free()
         build_plan = null
+    $BuildArea.visible = false
 
-    
