@@ -1,7 +1,8 @@
 {
   "trap": {
-    "icon": "",
+    "icon": "res://assets/icons/trap.png",
     "scene": "",
+    "type": 1,
     "ingridients": {
       "sticks": 10,
       "rope": 3,
@@ -9,15 +10,17 @@
     }
   },
   "rope": {
-    "icon": "",
+    "icon": "res://assets/icons/rope.png",
     "scene": "",
+    "type": 1,
     "ingridients": {
       "leafs": 15
     }
   },
   "campfire": {
-    "icon": "",
+    "icon": "res://assets/icons/campfire.png",
     "scene": "",
+    "type": 0,
     "ingridients": {
       "logs": 1,
       "sticks": 4    

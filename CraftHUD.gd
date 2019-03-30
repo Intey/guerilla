@@ -14,14 +14,17 @@ func init(inventory, reciepes):
     for reciepe_name in self.reciepes:
         var reciepeItem = ReciepeItem.instance()
         reciepeItem.set_item_name(reciepe_name)
+        var rec_icon = load(self.reciepes[reciepe_name].icon)
+        if rec_icon:
+            reciepeItem.set_item_img(rec_icon)
         var buildable = CraftStation.can_build(self.reciepes[reciepe_name], inventory)
         reciepeItem.set_disabled(not buildable)
         $Reciepes.add_child(reciepeItem)
         reciepeItem.connect('selected', self, '_on_reciepe_selected')        
         
 func update_state(new_inventory):
-    $ItemList.clear()
-    $Counts.clear()
+    $Items/ItemList.clear()
+    $Items/Counts.clear()
     render_ingridients(new_inventory)
     
     for ch in $Reciepes.get_children():
@@ -34,8 +37,8 @@ func render_ingridients(inventory):
             _add_ingridient(item_name, inventory[item_name])  
             
 func _add_ingridient(name, count):
-    $ItemList.add_item(name)
-    $Counts.add_item(String(count))
+    $Items/ItemList.add_item(name)
+    $Items/Counts.add_item(String(count))
     
 func _on_reciepe_selected(reciepe: ReciepeItem):
     if selected_reciepe:

@@ -33,11 +33,12 @@ position = Vector2( 66.128, 60.636 )
 position = Vector2( 430.873, 80.636 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="CraftHUD" parent="HUD" instance=ExtResource( 7 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_top = -240.0
-margin_right = 368.0
+margin_top = -144.0
+margin_right = 384.0
 margin_bottom = 0.0
 

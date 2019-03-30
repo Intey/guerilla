@@ -85,4 +85,7 @@ func build(name):
             self.inventory[res_name] -= count
             if self.inventory[res_name] == 0:
                 self.inventory.erase(res_name)
+            if self.inventory.get(reciepe) == null:
+                self.inventory[reciepe] = 0
+            self.inventory[reciepe] += 1
         emit_signal('inventory_update', self.inventory)

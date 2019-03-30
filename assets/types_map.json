@@ -1,0 +1,10 @@
+[
+    {
+        "name": "building",
+        "handy": false
+    },
+    {
+        "name": "item",
+        "handy": true
+    }
+]
