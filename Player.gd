@@ -5,7 +5,6 @@ export var collection_speed = 1
 
 #var CraftHUD = preload('res://CraftHUD.tscn')
 var CraftStation = preload('res://CraftStation.gd')
-var showedHUD = null
 
 var crafts = preload('res://crafts.gd')
 
@@ -85,7 +84,7 @@ func build(name):
             self.inventory[res_name] -= count
             if self.inventory[res_name] == 0:
                 self.inventory.erase(res_name)
-            if self.inventory.get(reciepe) == null:
-                self.inventory[reciepe] = 0
-            self.inventory[reciepe] += 1
+            if self.inventory.get(name) == null:
+                self.inventory[name] = 0
+            self.inventory[name] += 1
         emit_signal('inventory_update', self.inventory)
