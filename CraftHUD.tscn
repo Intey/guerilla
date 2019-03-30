@@ -16,6 +16,7 @@ margin_left = -64.0
 margin_top = -48.0
 margin_right = -16.0
 margin_bottom = -16.0
+focus_mode = 0
 text = "Craft"
 
 [node name="Items" type="HBoxContainer" parent="."]
@@ -25,6 +26,7 @@ margin_right = 128.0
 [node name="ItemList" type="ItemList" parent="Items"]
 margin_right = 93.0
 margin_bottom = 240.0
+focus_mode = 0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
@@ -33,6 +35,7 @@ size_flags_stretch_ratio = 3.0
 margin_left = 97.0
 margin_right = 128.0
 margin_bottom = 240.0
+focus_mode = 0
 mouse_filter = 2
 size_flags_horizontal = 3
 
@@ -44,4 +47,4 @@ margin_bottom = 160.0
 mouse_filter = 0
 columns = 6
 
-[connection signal="pressed" from="CraftButton" to="." method="_on_craft_button_pressed"]
+[connection signal="pressed" from="CraftButton" to="." method="_on_craft_pressed"]

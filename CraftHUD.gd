@@ -8,6 +8,7 @@ signal craft(reciepe_name)
 var selected_reciepe: ReciepeItem = null
 var reciepes = []
 
+
 func init(inventory, reciepes):
     self.reciepes = reciepes
     self.render_ingridients(inventory)
@@ -22,6 +23,7 @@ func init(inventory, reciepes):
         $Reciepes.add_child(reciepeItem)
         reciepeItem.connect('selected', self, '_on_reciepe_selected')        
         
+        
 func update_state(new_inventory):
     $Items/ItemList.clear()
     $Items/Counts.clear()
@@ -31,14 +33,17 @@ func update_state(new_inventory):
         var buildable = CraftStation.can_build(self.reciepes[ch.get_item_name()], new_inventory)
         ch.set_disabled(not buildable)
     
+    
 func render_ingridients(inventory):     
     if not inventory.empty():
         for item_name in inventory:
             _add_ingridient(item_name, inventory[item_name])  
             
+            
 func _add_ingridient(name, count):
     $Items/ItemList.add_item(name)
     $Items/Counts.add_item(String(count))
+    
     
 func _on_reciepe_selected(reciepe: ReciepeItem):
     if selected_reciepe:
@@ -46,6 +51,7 @@ func _on_reciepe_selected(reciepe: ReciepeItem):
     selected_reciepe = reciepe
     reciepe.set_selected(true)
 
-func _on_craft_button_pressed():
+
+func _on_craft_pressed():
     if selected_reciepe:
         emit_signal('craft', selected_reciepe.get_item_name())
