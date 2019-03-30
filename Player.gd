@@ -51,7 +51,8 @@ func actions(delta):
     if Input.is_action_just_released('ui_accept'):
         $CollectTimer.stop()
     if Input.is_action_just_pressed('ui_select') and build_plan != null:
-        build_structure()
+        if not build_plan['node'].collided:
+            build_structure()
         
 
 func _on_CollectTimer_timeout():
@@ -95,6 +96,8 @@ func craft(name):
             build_plan = {'node': plan_node, 'reciepe': reciepe}
             plan_node.set_area(self, $BuildArea/Shape.shape.radius)
             get_parent().add_child(plan_node)
+            # нам нужно показывать|скрывать дочерние спрайты. 
+            # hide/show - не работает
             $BuildArea.visible = true
         
 
@@ -129,5 +132,8 @@ func hide_build_mode():
     if build_plan:
         build_plan['node'].queue_free()
         build_plan = null
+    # нам нужно показывать|скрывать дочерние спрайты. 
+    # hide/show - не работает
     $BuildArea.visible = false
+
 

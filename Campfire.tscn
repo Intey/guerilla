@@ -53,6 +53,7 @@ randomness = 0.25
 process_material = SubResource( 3 )
 
 [node name="CraftArea" type="Area2D" parent="."]
+collision_layer = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CraftArea"]
 shape = SubResource( 4 )
