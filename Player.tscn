@@ -1,16 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/craft_area.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 31.1473
 
+[sub_resource type="CircleShape2D" id=2]
+radius = 100.0
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 speed = 300
 collection_speed = 3
 
@@ -25,5 +26,16 @@ shape = SubResource( 1 )
 
 [node name="CollectTimer" type="Timer" parent="."]
 wait_time = 0.3
+
+[node name="BuildArea" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="BuildArea"]
+show_behind_parent = true
+shape = SubResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="BuildArea"]
+position = Vector2( -3.8147e-006, -7.62939e-006 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
 
 [connection signal="timeout" from="CollectTimer" to="." method="_on_CollectTimer_timeout"]

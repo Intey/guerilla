@@ -52,6 +52,8 @@ explosiveness = 0.19
 randomness = 0.25
 process_material = SubResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CraftArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CraftArea"]
 shape = SubResource( 4 )
 

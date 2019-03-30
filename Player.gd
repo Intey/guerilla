@@ -3,22 +3,25 @@ extends Node2D
 export var speed = 200
 export var collection_speed = 1
 
-#var CraftHUD = preload('res://CraftHUD.tscn')
 var CraftStation = preload('res://CraftStation.gd')
-
+var BuildPlan = preload('res://BuildPlan.tscn')
 var crafts = preload('res://crafts.gd')
 
-var inventory = {}
+signal inventory_update(inventory)
+signal build(reciepe, position)
+
+var inventory = {
+    'sticks': 10,
+    'logs': 3,
+   }
 #var craftHud = null
 var collectable_area = null
+var build_plan = null
 
-signal inventory_update(inventory)
 
 func _ready():
     pass
     
-func on_craft(reciepe_name):
-    build(reciepe_name)
 
 func _process(delta):
     move(delta)
@@ -39,14 +42,17 @@ func move(delta):
         velocity = velocity.normalized() * speed
     self.position += velocity * delta
 
+
 func actions(delta):
     # collecting
     if Input.is_action_just_pressed('ui_accept') and collectable_area:
         print_debug("start collecting ", collectable_area.type)
         $CollectTimer.start()
-    if Input.is_action_just_released('ui_select'):
+    if Input.is_action_just_released('ui_accept'):
         $CollectTimer.stop()
-
+    if Input.is_action_just_pressed('ui_select') and build_plan != null:
+        build_structure()
+        
 
 func _on_CollectTimer_timeout():
     if Input.is_action_pressed('ui_accept') and collectable_area:
@@ -59,6 +65,7 @@ func _on_CollectTimer_timeout():
         print_debug('collected ', collected, ' ', res_type, ". now player has ", inventory)
         emit_signal('inventory_update', self.inventory)
 
+
 func enter_collectable_area(area):
     print_debug('enter ', area)
     collectable_area = area
@@ -70,7 +77,7 @@ func exit_collectable_area(area):
     $CollectTimer.stop()
         
 
-func build(name):
+func craft(name):
     var reciepes = crafts.get_crafts()
     var reciepe = reciepes.get(name)
     if reciepe == null:
@@ -79,12 +86,42 @@ func build(name):
     # check reciepe buildable
     print_debug("craft reciepe ", reciepe)
     if CraftStation.can_build(reciepe, self.inventory):
-        for res_name in reciepe.ingridients:
-            var count = reciepe.ingridients[res_name]
-            self.inventory[res_name] -= count
-            if self.inventory[res_name] == 0:
-                self.inventory.erase(res_name)
-            if self.inventory.get(name) == null:
-                self.inventory[name] = 0
-            self.inventory[name] += 1
-        emit_signal('inventory_update', self.inventory)
+        if reciepe.type == crafts.Types.ITEM:
+            subtract_from_inventory(reciepe)
+            add_to_inventory(name, reciepe.count)
+            
+        elif reciepe.type == crafts.Types.BUILDING:
+            var plan_node = BuildPlan.instance()
+            build_plan = {'node': plan_node, 'reciepe': reciepe}
+            plan_node.set_area(self, $BuildArea/Shape.shape.radius)
+            get_parent().add_child(plan_node)
+        
+
+func add_to_inventory(name, count):
+    if self.inventory.get(name) == null:
+        self.inventory[name] = 0
+    self.inventory[name] += count
+    emit_signal('inventory_update', self.inventory)
+
+
+func subtract_from_inventory(reciepe):
+    for res_name in reciepe.ingridients:
+        var count = reciepe.ingridients[res_name]
+        self.inventory[res_name] -= count
+        if self.inventory[res_name] == 0:
+            self.inventory.erase(res_name)
+    emit_signal('inventory_update', self.inventory)
+    
+    
+func build_structure():
+    if build_plan == null:
+        return
+    var reciepe = build_plan['reciepe']
+    subtract_from_inventory(reciepe)
+    var position = build_plan['node'].position
+    emit_signal('build', reciepe, position)
+    if not CraftStation.can_build(reciepe, self.inventory):
+        build_plan['node'].queue_free()
+        build_plan = null
+
+    

@@ -7,7 +7,8 @@
       "sticks": 10,
       "rope": 3,
       "mud": 1
-    }
+    },
+    "count": 1
   },
   "rope": {
     "icon": "res://assets/icons/rope.png",
@@ -15,16 +16,18 @@
     "type": 1,
     "ingridients": {
       "leafs": 15
-    }
+    },
+    "count": 2
   },
   "campfire": {
     "icon": "res://assets/icons/campfire.png",
-    "scene": "",
+    "scene": "res://Campfire.tscn",
     "type": 0,
     "ingridients": {
       "logs": 1,
       "sticks": 4    
-    }
+    },
+    "count": 1
   }
 }
 

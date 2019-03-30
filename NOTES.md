@@ -9,6 +9,10 @@
 - [x] crafting: recipes
 - [x] crafting: resources
 - [x] crafting: storing items
+- [ ] crafting: place buiding
+- [ ] craft-time: craft timer
+- [ ] craft-time: reset craft on move
+- [ ] craft-time: craft time progress bar
 - [ ] campfire: cooking
 - [ ] campfire: reduce cooling
 - [ ] animal spawning
