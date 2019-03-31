@@ -2,21 +2,32 @@
 
 - [x] gathering: get resource from place
 - [x] gathering: speed control
-- [ ] player chracters: health, stamina, hungry
+- [ ] biomes: cooling
+- [ ] game-time: day-night cycles
+- [ ] game-time: night cooling
+- [ ] player chracters: health, stamina, hungry, cooling
 - [ ] HUD: show health, stamina, hungry
 - [x] HUD: show resources
 - [x] crafting: action
 - [x] crafting: recipes
 - [x] crafting: resources
 - [x] crafting: storing items
-- [ ] crafting: place buiding
+- [x] crafting: place buiding
 - [ ] craft-time: craft timer
 - [ ] craft-time: reset craft on move
 - [ ] craft-time: craft time progress bar
-- [ ] campfire: cooking
 - [ ] campfire: reduce cooling
-- [ ] animal spawning
+- [ ] animal: spawning
+- [ ] animal: roaming
 - [ ] campfire: animal fear
+- [ ] fight: player melee attack
+- [ ] fight: animal melee attack
+- [ ] fight: player range attack
+- [ ] world: static items, rocks
+- [ ] animal: roaming with collisions
+- [ ] animal: detection range
+- [ ] animal: player pursuit, pursuit range
+- [ ] campfire: cooking
 
 # Thinks
 
