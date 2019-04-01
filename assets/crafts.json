@@ -28,6 +28,16 @@
       "sticks": 4    
     },
     "count": 1
+  },
+  "food": {
+    "icon": "",
+    "scene": "",
+    "type": 1,
+    "ingridients" : {
+      "meat": 1, 
+      "sticks": 3
+    },
+    "place": "campfire"
   }
 }
 

@@ -1,6 +1,5 @@
 extends Node2D
 
-export var speed = 200
 export var collection_speed = 1
 
 var CraftStation = preload('res://CraftStation.gd')
@@ -19,28 +18,8 @@ var collectable_area = null
 var build_plan = null
 
 
-func _ready():
-    pass
-    
-
 func _process(delta):
-    move(delta)
     actions(delta)
-
-
-func move(delta):    
-    var velocity = Vector2()  # The player's movement vector.
-    if Input.is_action_pressed("ui_right"):
-        velocity.x += 1
-    if Input.is_action_pressed("ui_left"):
-        velocity.x -= 1
-    if Input.is_action_pressed("ui_down"):
-        velocity.y += 1
-    if Input.is_action_pressed("ui_up"):
-        velocity.y -= 1
-    if velocity.length() > 0:
-        velocity = velocity.normalized() * speed
-    self.position += velocity * delta
 
 
 func actions(delta):
