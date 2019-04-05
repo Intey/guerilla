@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+}, {
 "base": "HBoxContainer",
 "class": "ReciepeItem",
 "language": "GDScript",
 "path": "res://ReciepeItem.gd"
 } ]
 _global_script_class_icons={
+"Player": "",
 "ReciepeItem": ""
 }
 
@@ -73,7 +79,9 @@ create_campfire={
 
 [layer_names]
 
-2d_physics/layer_2="resources"
+2d_physics/layer_1="Dinamic"
+2d_physics/layer_2="StaticInteractive"
+2d_physics/layer_3="Environment"
 
 [rendering]
 

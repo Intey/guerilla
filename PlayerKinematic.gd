@@ -20,5 +20,5 @@ func get_input() -> Vector2:
 func _physics_process(delta):
     var velocity = get_input()
     var collision = move_and_collide(velocity * delta)
-    if collision:
-        print_debug('collide ', collision)
+    #if collision:
+        #print_debug('collide ', collision)

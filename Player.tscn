@@ -1,47 +1,49 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://KinematicBody2D.gd" type="Script" id=2]
+[ext_resource path="res://PlayerKinematic.gd" type="Script" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://assets/craft_area.png" type="Texture" id=4]
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 100.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 31.1473
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="CircleShape2D" id=2]
+radius = 100.0
+
+[node name="Player" type="Node2D"]
 script = ExtResource( 1 )
 collection_speed = 3
 
 [node name="CollectTimer" type="Timer" parent="."]
 wait_time = 0.3
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="PlayerBody" type="KinematicBody2D" parent="."]
 collision_mask = 3
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="KinematicBody2D"]
+[node name="Sprite" type="Sprite" parent="PlayerBody"]
 texture = ExtResource( 3 )
 
-[node name="BuildArea" type="Area2D" parent="KinematicBody2D"]
-editor/display_folded = true
+[node name="Shape" type="CollisionShape2D" parent="PlayerBody"]
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
+current = true
+
+[node name="BuildArea" type="Area2D" parent="."]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Shape" type="CollisionShape2D" parent="KinematicBody2D/BuildArea"]
+[node name="Shape" type="CollisionShape2D" parent="BuildArea"]
 show_behind_parent = true
 shape = SubResource( 2 )
 
-[node name="BuildSprite" type="Sprite" parent="KinematicBody2D/BuildArea"]
+[node name="BuildSprite" type="Sprite" parent="BuildArea"]
 modulate = Color( 0, 1, 0.929412, 0.333333 )
 position = Vector2( 1.14441e-005, -7.62939e-006 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
-shape = SubResource( 1 )
 
 [connection signal="timeout" from="CollectTimer" to="." method="_on_CollectTimer_timeout"]

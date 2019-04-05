@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name Player
 export var collection_speed = 1
 
 var CraftStation = preload('res://CraftStation.gd')
