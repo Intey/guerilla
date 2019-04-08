@@ -30,5 +30,6 @@ color = Color( 0.0313726, 0.498039, 0.498039, 1 )
 [node name="Circle" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 2 )
 
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_DetectionArea_area_entered"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]

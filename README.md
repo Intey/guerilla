@@ -58,3 +58,18 @@
 отступление. На решение влияет количество патронов оставшихся у игрока,
 местность и дистанция до игрока, а так же характеристики (смелость, скорость и
 т.п.) бота.
+
+### Utility based system
+
+#### Bear
+
+```
+distrance to victum = dtv
+health points (%) = hpp
+campfire distance = cd
+
+PURSUIT = dtv * 0.8 + cd * 0.6 + hpp * 0.9
+FLEEING = hpp * 0.3 + cd * 0.8 + dtv * 0.4
+ROAMING = hpp * 0.8 + cd * 0.9 + dtv * 0.6 
+SEARCH_FOOD = hpp * 0.7 + cd * 0.8 + dtv * 0.6 
+```

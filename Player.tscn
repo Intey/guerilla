@@ -1,35 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
-[ext_resource path="res://PlayerKinematic.gd" type="Script" id=2]
+[ext_resource path="res://assets/craft_area.png" type="Texture" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://assets/craft_area.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 31.1473
-
-[sub_resource type="CircleShape2D" id=2]
 radius = 100.0
 
-[node name="Player" type="Node2D"]
+[sub_resource type="CircleShape2D" id=2]
+radius = 31.1473
+
+[node name="Player" type="KinematicBody2D"]
+collision_mask = 3
 script = ExtResource( 1 )
-collection_speed = 3
 
 [node name="CollectTimer" type="Timer" parent="."]
 wait_time = 0.3
-
-[node name="PlayerBody" type="KinematicBody2D" parent="."]
-collision_mask = 3
-script = ExtResource( 2 )
-
-[node name="Sprite" type="Sprite" parent="PlayerBody"]
-texture = ExtResource( 3 )
-
-[node name="Shape" type="CollisionShape2D" parent="PlayerBody"]
-shape = SubResource( 1 )
-
-[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
-current = true
 
 [node name="BuildArea" type="Area2D" parent="."]
 __meta__ = {
@@ -38,12 +24,20 @@ __meta__ = {
 
 [node name="Shape" type="CollisionShape2D" parent="BuildArea"]
 show_behind_parent = true
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="BuildSprite" type="Sprite" parent="BuildArea"]
 modulate = Color( 0, 1, 0.929412, 0.333333 )
 position = Vector2( 1.14441e-005, -7.62939e-006 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 4 )
+texture = ExtResource( 2 )
 
-[connection signal="timeout" from="CollectTimer" to="." method="_on_CollectTimer_timeout"]
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+

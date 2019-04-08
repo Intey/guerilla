@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Campfire.gd" type="Script" id=1]
 
@@ -30,6 +30,12 @@ color_ramp = SubResource( 2 )
 [sub_resource type="CircleShape2D" id=4]
 radius = 40.0
 
+[sub_resource type="CircleShape2D" id=5]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 45.0
+
 [node name="Campfire" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -55,6 +61,16 @@ process_material = SubResource( 3 )
 [node name="CraftArea" type="Area2D" parent="."]
 collision_layer = 1024
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CraftArea"]
+[node name="Shape" type="CollisionShape2D" parent="CraftArea"]
 shape = SubResource( 4 )
+
+[node name="AnimalFearArea" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="AnimalFearArea"]
+shape = SubResource( 5 )
+
+[node name="HeatArea" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="HeatArea"]
+shape = SubResource( 6 )
 
