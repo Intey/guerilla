@@ -1,47 +1,52 @@
 extends KinematicBody2D
-
+class_name Animal
 export var speed: float = 100.0
-
-enum { ROAMING, PURSUIT, FLEEING }
-var state: int = ROAMING
-var target = null
-var last_farest_direction: Vector2
-var velocity: Vector2
-var nearest_campfire = null
-
-class RoamingModel:
-    var color = Color(0, 1, 1)
-    func action(delta):
-        var farest_direction = find_farest_visible_direction()
-        if not last_farest_direction:
-            last_farest_direction = farest_direction
-        # Если новая позиция примерно в нашей области зрения - идем к ней
-        # чтобы не ходить вперед-назад
-        var angle = farest_direction.dot(last_farest_direction)
-        if angle > 0:
-            last_farest_direction = farest_direction
-        # remember path or came_from point, or last point. 
-        # move until not find other farest_direction in other direction
-        velocity = last_farest_direction * speed
-        move(delta, velocity)
-        
-class PursuitModel:
-    var color = Color(1, 0, 0)
-    func action(delta):
-        pursuit(delta)
-        
-class FleeingModel:
-    var color = Color(0, 0, .5)
-    func action(delta):
-        velocity = (-nearest_campfire.position).normalized() * speed
-        move(delta, velocity)
-    
-var models = {
-    ROAMING: RoamingModel(),
-    PURSUIT: PursuitModel(),
-    FLEEING: FleeingModel(),
+# state for select
+enum { 
+    ROAMING, 
+    PURSUIT, 
+    FLEEING,
+    WAIT, 
+    PREVIOUS 
 }
 
+var velocity: Vector2
+
+# BlackBoard. Used for collect knowledges with events, that came from detection area, collision shape, etc.
+var BB := Dictionary()
+    
+var colors = {
+    ROAMING: Color(0, 1, 0),
+    PURSUIT: Color(1, 0, 0),
+    FLEEING: Color(0, 0, 1),
+    WAIT: Color(0.5, 0.5, 0.5),
+}
+
+var current_state = null
+var states_stack = []
+onready var states_map = {
+    ROAMING: $SM/Roaming.init(self),
+    PURSUIT: $SM/Pursuiting.init(self),
+    FLEEING: $SM/Fleeing.init(self),
+    WAIT: $SM/Wait.init(self),
+}
+# Transitions
+# event | source | target
+# enter fear area | 
+
+func _ready():
+    states_stack.push_front(ROAMING)
+    current_state = states_stack[0]
+    _change_state(ROAMING)
+    
+func _change_state(state):
+    if state == PREVIOUS:
+        states_stack.pop_front()
+    elif state != PREVIOUS:
+        states_stack.push_front(state)
+        
+    current_state = states_stack[0]
+    
 
 func move(delta, velocity):
     var collision = move_and_collide(velocity * delta)
@@ -49,57 +54,38 @@ func move(delta, velocity):
     #    print_debug('collide ', collision)
     #print_debug("go to ", last_farest_direction)
 
-
+#TODO: deligates to current state
 func _draw():
-    $ColorRect.color = models[state].color
+    $ColorRect.color = colors.get(current_state, Color(1, 1, 1))
     draw_line(Vector2(), velocity * 20, Color(0,1,0))
-    if target != null:
+    if BB.get('player'):
+        var target = BB['player']
         var pos = target.position - position
         draw_line(Vector2(), pos, Color(1,0,0))
      
 func _physics_process(delta):
-    update()
-    models[state].action(delta)
+    update() # for redrawing
+    var new_state = states_map[current_state].update(delta)
+    if new_state:
+        _change_state(new_state)
     
-func find_farest_visible_direction():
-    # var space_rid = get_world_2d().space
-    # var space_state = Physics2DServer.space_get_direct_state(space_rid)
-    var space_state = get_world_2d().direct_space_state
-    var excepts = [self]
-    var max_direction = Vector2(cos(0), sin(0))
-    var max_distance = 0
-    
-    for angle in range(0, 360, 5):
-        #print_debug('cast ray to angle ', angle)
-        var cast_to = Vector2(cos(angle), sin(angle))
-        var result = space_state.intersect_ray(global_position, cast_to, excepts)
-        if result:
-            var distance = abs((result.position - global_position).length())
-            if distance > max_distance:
-                #print_debug('find max distance ', distance, ' ', result.position, ' collide ray ', result.collider.name)
-                max_direction = result.position
-                max_distance = distance
-    return max_direction.normalized()
-
-    
-func pursuit(delta):
-    #print_debug('persuit ', target.position)
-    var pos = target.position - position
-    velocity = pos.normalized() * speed
-    move(delta, velocity)    
-        
 func _on_DetectionArea_body_entered(body):
-    if body.name == 'Player' and state != FLEEING:
-        target = body
-        state = PURSUIT
-    
+    if body.name == 'Player':
+       BB['player'] = body
    
 func _on_DetectionArea_body_exited(body):
-    target = null
-    state = ROAMING
+    if body.name == 'Player':
+        BB.erase('player')
 
 
 func _on_DetectionArea_area_entered(area):
     if area.name == "AnimalFearArea":
-        state = FLEEING
-        nearest_campfire = area.get_parent()
+        BB['fear_point'] = area.get_parent()
+
+
+func _on_DetectionArea_area_exited(area):
+    if area.name == "AnimalFearArea":
+        BB.erase('fear_point')
+        
+func too_close(fp):
+    return (fp.position - position).length() < (fp.fear_radius - 10)
