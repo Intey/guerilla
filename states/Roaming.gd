@@ -1,16 +1,25 @@
-extends 'res://state.gd'
+extends 'res://states/state.gd'
 
 var last_farest_direction: Vector2
 
 func update(delta):
     .update(delta)
     var host = self.host
-    if host.BB.get('player'):
+    var fp = host.BB.get('fear_point')
+    var target = host.BB.get('player')
+    if fp and host.too_close(fp):
+        throttle_print("STOP ROAM. FLEE")    
+        return host.FLEEING
+    if target_near_fear_area(target, fp):
+        return host.WAIT
+    if target:
         return host.PURSUIT
+        
     roaming(delta)
     
 func roaming(delta):
     var host = self.host
+    
     # var host = get_parent().get_parent()
     var farest_direction = find_farest_visible_direction()
     if not last_farest_direction:
@@ -23,10 +32,12 @@ func roaming(delta):
     # remember path or came_from point, or last point. 
     # move until not find other farest_direction in other direction
     host.velocity = last_farest_direction * host.speed
+    throttle_print(["ROAM: ", host.velocity])
     host.move(delta, host.velocity)
     
 func find_farest_visible_direction():
     var host = self.host
+    var fp = host.BB.get('fear_point')
     # var space_rid = get_world_2d().space
     # var space_state = Physics2DServer.space_get_direct_state(space_rid)
     var space_state = host.get_world_2d().direct_space_state

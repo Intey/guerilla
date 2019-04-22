@@ -1,16 +1,19 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://AnimalKinematic.gd" type="Script" id=1]
-[ext_resource path="res://Roaming.gd" type="Script" id=2]
-[ext_resource path="res://Pursuiting.gd" type="Script" id=3]
-[ext_resource path="res://Fleeing.gd" type="Script" id=4]
-[ext_resource path="res://Wait.gd" type="Script" id=5]
+[ext_resource path="res://states/Roaming.gd" type="Script" id=2]
+[ext_resource path="res://states/Pursuiting.gd" type="Script" id=3]
+[ext_resource path="res://states/Fleeing.gd" type="Script" id=4]
+[ext_resource path="res://states/Wait.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 190.003
+radius = 140.0
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 349.0
 
 [node name="Animal" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -48,7 +51,13 @@ script = ExtResource( 4 )
 [node name="Wait" type="Node" parent="SM"]
 script = ExtResource( 5 )
 
+[node name="PursuitArea" type="Area2D" parent="."]
+
+[node name="PursuitCircle" type="CollisionShape2D" parent="PursuitArea"]
+shape = SubResource( 3 )
+
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_DetectionArea_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_DetectionArea_area_exited"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]
+[connection signal="body_exited" from="PursuitArea" to="." method="_on_PursuitArea_body_exited"]

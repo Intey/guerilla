@@ -3,7 +3,7 @@ class_name Animal
 export var speed: float = 100.0
 # state for select
 enum { 
-    ROAMING, 
+    ROAMING = 1, 
     PURSUIT, 
     FLEEING,
     WAIT, 
@@ -44,7 +44,6 @@ func _change_state(state):
         states_stack.pop_front()
     elif state != PREVIOUS:
         states_stack.push_front(state)
-        
     current_state = states_stack[0]
     
 
@@ -74,18 +73,22 @@ func _on_DetectionArea_body_entered(body):
        BB['player'] = body
    
 func _on_DetectionArea_body_exited(body):
-    if body.name == 'Player':
-        BB.erase('player')
-
+    pass
 
 func _on_DetectionArea_area_entered(area):
     if area.name == "AnimalFearArea":
         BB['fear_point'] = area.get_parent()
+            
 
 
 func _on_DetectionArea_area_exited(area):
     if area.name == "AnimalFearArea":
-        BB.erase('fear_point')
+        pass
         
 func too_close(fp):
-    return (fp.position - position).length() < (fp.fear_radius - 10)
+    return (fp.position - position).length() < (fp.fear_radius)
+
+
+func _on_PursuitArea_body_exited(body):
+    if body.name == 'Player':
+        BB.erase('player')

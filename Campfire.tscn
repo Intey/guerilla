@@ -28,13 +28,13 @@ angle_random = 1.0
 color_ramp = SubResource( 2 )
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 40.0
-
-[sub_resource type="CircleShape2D" id=5]
 radius = 60.0
 
 [sub_resource type="CircleShape2D" id=6]
-radius = 45.0
+radius = 160.0
+
+[sub_resource type="CircleShape2D" id=7]
+radius = 60.0
 
 [node name="Campfire" type="Node2D"]
 script = ExtResource( 1 )
@@ -67,10 +67,10 @@ shape = SubResource( 4 )
 [node name="AnimalFearArea" type="Area2D" parent="."]
 
 [node name="Shape" type="CollisionShape2D" parent="AnimalFearArea"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="HeatArea" type="Area2D" parent="."]
 
 [node name="Shape" type="CollisionShape2D" parent="HeatArea"]
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 

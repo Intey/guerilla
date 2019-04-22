@@ -1,20 +1,18 @@
-extends 'res://state.gd'
+extends 'res://states/state.gd'
 
 func update(delta):
     .update(delta)
     var host = self.host
     var target = host.BB.get('player')
     var fp = host.BB.get('fear_point')
-    if fp:
-        if target and (target.position - host.position).length() < (fp.position - host.position).length():
-            if (host.position - fp.position).dot(target.position) < 0:
-                return
-            else:
-                return host.WAIT
-        else:
-            return host.FLEEING
+    if fp and host.too_close(fp):
+        if target_near_fear_area(target, fp):
+            return host.WAIT
+        throttle_print("STOP PURSUIT. FLEE")
+        return host.FLEEING
+    
     if not target:
-        return host.PREVIOUS
+        return host.ROAMING
     
     pursuit(delta, target)
     
