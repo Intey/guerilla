@@ -14,6 +14,7 @@ var crafts = preload('res://crafts.gd')
 
 signal inventory_update(inventory)
 signal build(reciepe, position)
+signal shoot(ammo)
 
 var inventory = {
     'sticks': 10,
@@ -25,6 +26,7 @@ var build_plan = null
 
 func _ready():
     Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+    $Ammo.init(20, 20)
 
 func _process(delta):
     update()
@@ -150,12 +152,18 @@ func _physics_process(delta):
         #print_debug('collide ', collision)
         
 func fire(delta):
+    if $Ammo.empty():
+        return 
     var mpos = get_local_mouse_position()
     # start view
     var bullet = BULLET.instance()
     bullet.global_position = global_position
     bullet.velocity = mpos.normalized()
     get_parent().add_child(bullet)
+    
+    #ammo reduce
+    $Ammo.shoot()
+    emit_signal("shoot", $Ammo.value)
     # logic
     var space_state = get_world_2d().direct_space_state
     var excepts = [self]

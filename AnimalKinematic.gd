@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Animal
 export var speed: float = 100.0
+
+var health: Health = Health.new()
 # state for select
 enum { 
     ROAMING = 1, 
@@ -10,7 +12,6 @@ enum {
     PREVIOUS 
 }
 
-var health = 100 setget set_health
 var velocity: Vector2
 
 # BlackBoard. Used for collect knowledges with events, that came from detection area, collision shape, etc.
@@ -93,10 +94,8 @@ func _on_PursuitArea_body_exited(body):
     if body.name == 'Player':
         BB.erase('player')
         
-func set_health(value):
-    health = value
-    if health == 0:
-        queue_free()
 
 func hit():
-    self.health -= 20
+    self.health.hit(20)
+    if not self.health.alive:
+        queue_free()

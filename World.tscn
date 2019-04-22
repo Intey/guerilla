@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
@@ -7,8 +7,9 @@
 [ext_resource path="res://Resources/Leafs.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Resources/Sticks.tscn" type="PackedScene" id=6]
 [ext_resource path="res://CraftHUD.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Tree.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Animal.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Ammo.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Tree.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Animal.tscn" type="PackedScene" id=10]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -40,9 +41,11 @@ anchor_bottom = 1.0
 margin_top = -240.0
 margin_bottom = 0.0
 
-[node name="Tree" parent="." instance=ExtResource( 8 )]
+[node name="Ammo" parent="HUD" instance=ExtResource( 8 )]
+
+[node name="Tree" parent="." instance=ExtResource( 9 )]
 position = Vector2( 709.195, 90.8885 )
 
-[node name="Animal" parent="." instance=ExtResource( 9 )]
+[node name="Animal" parent="." instance=ExtResource( 10 )]
 position = Vector2( 304, 272 )
 

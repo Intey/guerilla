@@ -18,15 +18,15 @@
 - [ ] game-time: night cooling
 - [ ] campfire: reduce cooling
 - [ ] animal: spawning
-- [ ] animal: roaming
-- [ ] campfire: animal fear
+- [x] animal: roaming
+- [x] campfire: animal fear
 - [ ] fight: player melee attack
 - [ ] fight: animal melee attack
-- [ ] fight: player range attack
+- [x] fight: player range attack
 - [ ] world: static items, rocks
 - [ ] animal: roaming with collisions
-- [ ] animal: detection range
-- [ ] animal: player pursuit, pursuit range
+- [x] animal: detection range
+- [x] animal: player pursuit, pursuit range
 - [ ] campfire: cooking
 
 # Thinks
