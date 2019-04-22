@@ -151,9 +151,18 @@ func _physics_process(delta):
         
 func fire(delta):
     var mpos = get_local_mouse_position()
+    # start view
     var bullet = BULLET.instance()
     bullet.global_position = global_position
     bullet.velocity = mpos.normalized()
     get_parent().add_child(bullet)
-    
-    
+    # logic
+    var space_state = get_world_2d().direct_space_state
+    var excepts = [self]
+    var cast_to = get_global_mouse_position()
+    var result = space_state.intersect_ray(global_position, cast_to, excepts)
+    if result:
+        bullet.path_end = result.position
+        if result.collider.has_method('hit'):
+            result.collider.hit()
+            

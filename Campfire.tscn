@@ -30,10 +30,10 @@ color_ramp = SubResource( 2 )
 [sub_resource type="CircleShape2D" id=4]
 radius = 60.0
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=5]
 radius = 160.0
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=6]
 radius = 60.0
 
 [node name="Campfire" type="Node2D"]
@@ -59,18 +59,21 @@ randomness = 0.25
 process_material = SubResource( 3 )
 
 [node name="CraftArea" type="Area2D" parent="."]
-collision_layer = 1024
+collision_layer = 4
 
 [node name="Shape" type="CollisionShape2D" parent="CraftArea"]
 shape = SubResource( 4 )
 
 [node name="AnimalFearArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="Shape" type="CollisionShape2D" parent="AnimalFearArea"]
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 
 [node name="HeatArea" type="Area2D" parent="."]
+collision_layer = 4
 
 [node name="Shape" type="CollisionShape2D" parent="HeatArea"]
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 

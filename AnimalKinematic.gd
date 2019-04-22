@@ -10,6 +10,7 @@ enum {
     PREVIOUS 
 }
 
+var health = 100 setget set_health
 var velocity: Vector2
 
 # BlackBoard. Used for collect knowledges with events, that came from detection area, collision shape, etc.
@@ -91,3 +92,11 @@ func too_close(fp):
 func _on_PursuitArea_body_exited(body):
     if body.name == 'Player':
         BB.erase('player')
+        
+func set_health(value):
+    health = value
+    if health == 0:
+        queue_free()
+
+func hit():
+    self.health -= 20

@@ -85,9 +85,11 @@ create_campfire={
 
 [layer_names]
 
-2d_physics/layer_1="Dinamic"
-2d_physics/layer_2="StaticInteractive"
-2d_physics/layer_3="Environment"
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Dimanics"
+2d_physics/layer_3="Buildings"
+2d_physics/layer_4="Environment Statics"
+2d_physics/layer_5="Templates"
 
 [rendering]
 
