@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Player
 
+const BULLET = preload('res://Bullet.tscn')
+
 export var speed = 250
 export var collection_speed = 1
 
@@ -21,10 +23,16 @@ var inventory = {
 var collectable_area = null
 var build_plan = null
 
+func _ready():
+    Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _process(delta):
+    update()
     actions(delta)
-
+    
+func _draw():
+    var mpos = get_local_mouse_position()
+    draw_circle(mpos, 3, Color(1, 0, 0))
 
 func actions(delta):
     # collecting
@@ -33,9 +41,12 @@ func actions(delta):
         $CollectTimer.start()
     if Input.is_action_just_released('ui_accept'):
         $CollectTimer.stop()
-    if Input.is_action_just_pressed('ui_select') and build_plan != null:
-        if not build_plan['node'].collided:
-            build_structure()
+    if Input.is_action_just_pressed('ui_select'):
+        if build_plan:
+            if not build_plan['node'].collided:
+                build_structure()
+        else:
+            fire(delta)
         
 
 func _on_CollectTimer_timeout():
@@ -137,3 +148,12 @@ func _physics_process(delta):
     var collision = move_and_collide(velocity * delta)
     #if collision:
         #print_debug('collide ', collision)
+        
+func fire(delta):
+    var mpos = get_local_mouse_position()
+    var bullet = BULLET.instance()
+    bullet.global_position = global_position
+    bullet.velocity = mpos.normalized()
+    get_parent().add_child(bullet)
+    
+    

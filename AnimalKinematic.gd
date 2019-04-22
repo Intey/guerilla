@@ -42,7 +42,7 @@ func _ready():
 func _change_state(state):
     if state == PREVIOUS:
         states_stack.pop_front()
-    elif state != PREVIOUS:
+    else:
         states_stack.push_front(state)
     current_state = states_stack[0]
     
@@ -79,7 +79,6 @@ func _on_DetectionArea_area_entered(area):
     if area.name == "AnimalFearArea":
         BB['fear_point'] = area.get_parent()
             
-
 
 func _on_DetectionArea_area_exited(area):
     if area.name == "AnimalFearArea":

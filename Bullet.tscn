@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/bullet.png" type="Texture" id=1]
+[ext_resource path="res://Bullet.gd" type="Script" id=2]
+
+[node name="Bullet" type="Sprite"]
+z_index = 1
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+SPEED = 3000.0
+
+[node name="LifeTime" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
