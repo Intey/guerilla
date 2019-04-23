@@ -3,12 +3,12 @@ export var type = 'Unknown'
 export var count = 0    
 
 func _on_Resource_body_entered(body):
-    if body.get_parent() is Player:
-        body.get_parent().enter_collectable_area(self)
+    if body is Player:
+        body.enter_collectable_area(self)
 
 func _on_Resource_body_exited(body):
-    if body.get_parent() is Player:
-        body.get_parent().exit_collectable_area(self)
+    if body is Player:
+        body.exit_collectable_area(self)
 
 # extract resource and delete node, if resources done
 func pop(cnt):

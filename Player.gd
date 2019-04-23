@@ -41,10 +41,10 @@ func _draw():
 
 func actions(delta):
     # collecting
-    if Input.is_action_just_pressed('ui_accept') and collectable_area:
+    if Input.is_action_just_pressed('ui_interact') and collectable_area:
         print_debug("start collecting ", collectable_area.type)
         $CollectTimer.start()
-    if Input.is_action_just_released('ui_accept'):
+    if Input.is_action_just_released('ui_interact'):
         $CollectTimer.stop()
     if Input.is_action_just_pressed('ui_select'):
         if build_plan:
@@ -55,7 +55,8 @@ func actions(delta):
         
 
 func _on_CollectTimer_timeout():
-    if Input.is_action_pressed('ui_accept') and collectable_area:
+    print_debug("collect timeout")
+    if Input.is_action_pressed('ui_interact') and collectable_area:
         var collected = collectable_area.pop(collection_speed)
         var res_type = collectable_area.type
         if res_type in inventory:
