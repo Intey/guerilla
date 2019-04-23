@@ -1,11 +1,11 @@
 extends Node2D
 
 onready var craftHud = $HUD/CraftHUD
-onready var ammoHud = $HUD/Ammo/ProgressBar
+onready var ammoHud = $HUD/Ammo
 
 func _ready():
     connect_craft()
-    connect_ammo()
+    connect_clip()
     
 func connect_craft():
     $Player.connect('inventory_update', craftHud, "update_state")
@@ -13,14 +13,15 @@ func connect_craft():
     craftHud.init($Player.inventory, $Player.crafts.get_crafts())
     $Player.connect('build', self, 'create_building')
 
-func connect_ammo():
-    var mv = $Player/Ammo.max_value
-    var v = $Player/Ammo.value
-    ammoHud.max_value = mv
-    ammoHud.value = v
+func connect_clip():
+    var mv = $Player/WeaponClip.max_value
+    var v = $Player/WeaponClip.value
+    ammoHud.upload(v, mv)
+    $Player/WeaponClip.connect("clip_uploaded", ammoHud, "upload")
+    $Player/WeaponClip.connect("clip_value_change", ammoHud, "set_value")    
+    $Player/WeaponClip.connect("clip_reload_done", ammoHud, "reload_done")
+    $Player/WeaponClip.connect("clip_reload_start", ammoHud, "start_reload")
     
-    $Player.connect("shoot", ammoHud, "set_value")
-
     
 func _process(delta):
     if Input.is_action_just_released('create_campfire'):
