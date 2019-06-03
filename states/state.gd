@@ -9,14 +9,11 @@ func init(host):
     return self
     
 func update(delta):
-    debug_print_timeout += delta
     assert inited and "State " + str(self) + " should be initialized with 'init'"
+    debug_print_timeout += delta
     
 
 func throttle_print(args):
     if debug_print_timeout > 1:
         debug_print_timeout = 0
         print_debug(args)
-        
-func target_near_fear_area(target, fp):
-    return target and fp and (target.position - fp.position).length() < fp.fear_radius

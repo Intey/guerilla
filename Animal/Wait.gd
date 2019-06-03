@@ -1,4 +1,4 @@
-extends "res://states/state.gd"
+extends 'res://Animal/BaseState.gd'
 
 func update(delta):
     .update(delta)
@@ -8,7 +8,7 @@ func update(delta):
     var fp = BB.get('fear_point')
     if fp:
         if target and not host.too_close(fp):
-            var player_near_fear = (fp.position - target.position).length() < fp.fear_radius
+            var player_near_fear = target_near_fear_area(target, fp)
             if player_near_fear:
                 return
             if (fp.position - host.position).dot(target.position - host.position) < 0:

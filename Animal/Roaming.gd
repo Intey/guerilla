@@ -1,4 +1,4 @@
-extends 'res://states/state.gd'
+extends 'res://Animal/BaseState.gd'
 
 var last_farest_direction: Vector2
 

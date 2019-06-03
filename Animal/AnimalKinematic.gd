@@ -47,9 +47,11 @@ func _change_state(state):
     else:
         states_stack.push_front(state)
     current_state = states_stack[0]
-    
-
+     
 func move(delta, velocity):
+    """
+    Interface for state. All logic is in state.
+    """
     var collision = move_and_collide(velocity * delta)
     #if collision:
     #    print_debug('collide ', collision)

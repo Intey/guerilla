@@ -1,4 +1,4 @@
-extends 'res://states/state.gd'
+extends 'res://Animal/BaseState.gd'
 
 func update(delta):
     .update(delta)

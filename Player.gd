@@ -6,8 +6,6 @@ const BULLET = preload('res://Bullet.tscn')
 export var speed = 250
 export var collection_speed = 1
 
-var use_slide = true
-
 var CraftStation = preload('res://CraftStation.gd')
 var BuildPlan = preload('res://BuildPlan.tscn')
 var crafts = preload('res://crafts.gd')
@@ -16,6 +14,7 @@ signal inventory_update(inventory)
 signal build(reciepe, position)
 
 var health := Health.new()
+
 
 onready var weapon_clip := $WeaponClip
 
