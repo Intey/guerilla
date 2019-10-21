@@ -1,8 +1,13 @@
 extends KinematicBody2D
 class_name Animal
 export var speed: float = 100.0
+var unit : Unit
 
-var health: Health = Health.new()
+
+func on_dead():
+    queue_free()
+    
+
 # state for select
 enum { 
     ROAMING = 1, 
@@ -35,11 +40,11 @@ onready var states_map = {
 # Transitions
 # event | source | target
 # enter fear area | 
-
 func _ready():
     states_stack.push_front(ROAMING)
     current_state = states_stack[0]
     _change_state(ROAMING)
+    self.unit = Unit.new(funcref(self, "on_dead"))
     
 func _change_state(state):
     if state == PREVIOUS:
@@ -96,8 +101,5 @@ func _on_PursuitArea_body_exited(body):
     if body.name == 'Player':
         BB.erase('player')
         
-
-func hit():
-    self.health.hit(20)
-    if not self.health.alive:
-        queue_free()
+func hit(dmg: int):
+    self.unit.take_damage(dmg)

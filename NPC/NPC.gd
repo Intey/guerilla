@@ -5,6 +5,9 @@ export var speed: float
 
 # FIXME: not react on change from GUI. Making copy on state.init(self)?
 export var shoot_range: int = 250 
+export var accuracy := 0.2
+
+var unit: Unit
 
 # State machinary
 enum {
@@ -49,6 +52,7 @@ func _change_state(state):
 func _ready():
     $DetectionArea/Area.shape.radius = detection_radius
     _change_state(ROAMING) # init state
+    self.unit = Unit.new(funcref(self, "queue_free"))
     $RangeWeapon.init(self)
     
     
@@ -82,11 +86,14 @@ func _on_DetectionArea_body_exited(body):
         
 func fire(delta):
     var player: Node2D = BB.get('player')
-    var target = accuracy_fix(player.global_position)
+    var target = accuracy_fix(player.global_position, self.accuracy)
     $RangeWeapon.fire(delta, target)
     
-func accuracy_fix(vector: Vector2) -> Vector2:
-    vector.x += rand_range(-0.2, 0.2)
-    vector.y += rand_range(-0.2, 0.2)
-    return vector.normalized()
+func accuracy_fix(vector: Vector2, accuracy: float = 1.0) -> Vector2:
+    accuracy = 1.0 - accuracy
+    vector.x += rand_range(-accuracy, accuracy)
+    vector.y += rand_range(-accuracy, accuracy)
+    return vector
     
+func hit(dmg: int = 20):
+    self.unit.take_damage(dmg)

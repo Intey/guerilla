@@ -50,4 +50,4 @@ func fire(delta, target: Vector2):
     if result:
         bullet.path_end = result.position
         if result.collider.has_method('hit'):
-            result.collider.hit()
+            result.collider.hit(20)

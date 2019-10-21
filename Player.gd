@@ -6,6 +6,7 @@ const BULLET = preload('res://Bullet.tscn')
 export var speed = 250
 export var collection_speed = 1
 
+export var shoot_range := 20
 var CraftStation = preload('res://CraftStation.gd')
 var BuildPlan = preload('res://BuildPlan.tscn')
 var crafts = preload('res://crafts.gd')
@@ -13,7 +14,7 @@ var crafts = preload('res://crafts.gd')
 signal inventory_update(inventory)
 signal build(reciepe, position)
 
-var health := Health.new()
+var unit
 
 
 onready var weapon_clip := $WeaponClip
@@ -27,16 +28,18 @@ var collectable_area = null
 var build_plan = null
 
 func _ready():
-    Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+    # TODO: Hide mouse when aiming, and enable on gui opened
+    # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+    unit = Unit.new(funcref(self, "queue_free"))
     weapon_clip.upload(10)
 
 func _process(delta):
     update()
     actions(delta)
     
-func _draw():
-    var mpos = get_local_mouse_position()
-    draw_circle(mpos, 3, Color(1, 0, 0))
+#func _draw():
+#    var mpos = get_local_mouse_position()
+#    draw_circle(mpos, 3, Color(1, 0, 0))
 
 func actions(delta):
     # collecting
@@ -125,6 +128,7 @@ func build_structure():
     emit_signal('build', reciepe, position)
     if not CraftStation.can_build(reciepe, self.inventory):
         self.hide_build_mode()
+    # TODO: add to camp
 
 
 func hide_build_mode():
@@ -169,10 +173,13 @@ func fire(delta):
     # logic
     var space_state = get_world_2d().direct_space_state
     var excepts = [self]
-    var cast_to = get_global_mouse_position()
+    var cast_to = get_global_mouse_position() * shoot_range
     var result = space_state.intersect_ray(global_position, cast_to, excepts)
+    # TODO: fix bullet fly range if no intersection
+    
     if result:
         bullet.path_end = result.position
+        # TODO: intersect with trees
         if result.collider.has_method('hit'):
-            result.collider.hit()
+            result.collider.hit(20)
             

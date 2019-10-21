@@ -25,8 +25,6 @@
 - [x] AI(animal): detection range
 - [x] AI(animal): player pursuit, pursuit range
 
-- [ ] AI(human): camp manager or todolist
-- [ ] AI(human): get task from todolist and process
 - [ ] AI(human): different IQ
 - [x] AI(human): detection range
 - [x] AI(human): player pursuit, pursuit range
@@ -44,4 +42,8 @@
 - [x] building: place buiding
 - [x] campfire: animal fear
 - [ ] campfire: cooking
-- [ ] camp: as place
+
+- [ ] camp: campfire is camp
+- [ ] camp: distance to add to camp
+- [ ] AI(human): camp manager or todolist
+- [ ] AI(human): get task from todolist and process
