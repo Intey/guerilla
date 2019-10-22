@@ -78,3 +78,5 @@ collision_layer = 4
 [node name="Shape" type="CollisionShape2D" parent="HeatArea"]
 shape = SubResource( 6 )
 
+[connection signal="body_entered" from="CraftArea" to="." method="_on_CraftArea_body_entered"]
+[connection signal="body_exited" from="CraftArea" to="." method="_on_CraftArea_body_exited"]

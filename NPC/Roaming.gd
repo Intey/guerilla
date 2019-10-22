@@ -1,4 +1,5 @@
 extends "res://states/state.gd"
+var utils = preload("res://Utility/utils.gd").new()
 
 export var redirect_timeout := 1.0
 var covered_map = null
@@ -24,5 +25,5 @@ func update(delta):
     if last_time_direction >= redirect_timeout:
         last_time_direction = 0
     var rand_dir = select_new_direction()
-    throttle_print(["RANDOM ROAM to: ", rand_dir])
+    utils.throttle_print(delta, ["RANDOM ROAM to: ", rand_dir])
     host.move(delta, rand_dir)

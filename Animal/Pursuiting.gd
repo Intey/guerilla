@@ -1,4 +1,5 @@
 extends 'res://Animal/BaseState.gd'
+var utils = preload("res://Utility/utils.gd")
 
 func update(delta):
     .update(delta)
@@ -8,7 +9,7 @@ func update(delta):
     if fp and host.too_close(fp):
         if target_near_fear_area(target, fp):
             return host.WAIT
-        throttle_print("STOP PURSUIT. FLEE")
+        utils.throttle_print(delta, "STOP PURSUIT. FLEE")
         return host.FLEEING
     
     if not target:

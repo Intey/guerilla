@@ -13,3 +13,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #    pass
+
+
+func _on_CraftArea_body_entered(body):
+    body.Blackboard.set('campfire')
+
+
+func _on_CraftArea_body_exited(body):
+    body.Blackboard.unset('campfire')

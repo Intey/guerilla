@@ -1,4 +1,5 @@
 extends 'res://Animal/BaseState.gd'
+var utils = preload("res://Utility/utils.gd")
 
 func update(delta):
     .update(delta)
@@ -7,7 +8,7 @@ func update(delta):
     var target = host.BB.get('player')
     # if nothing to fear - get back to previous state
     if not host.too_close(fp):
-        throttle_print("STOP FLEE. ROAM")
+        utils.throttle_print(delta, "STOP FLEE. ROAM")
         return host.ROAMING
     flee(delta, fp)
         

@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+var BB = preload("res://Utility/Blackboard.gd").new()
+
+
 export var detection_radius: int
 export var speed: float
 
@@ -18,8 +21,6 @@ enum {
     PREVIOUS
     }
 
-# BlackBoard    
-var BB = {}
 
 # Debug colors for state visibility
 var colors = {
@@ -31,21 +32,16 @@ var colors = {
 
 
 # ============ State machinary
-var current_state = null
-var states_stack = []
 onready var states_map = {
     ROAMING: $SM/Roaming.init(self),
     PURSUIT: $SM/Pursuiting.init(self),
     ATTACK: $SM/Attack.init(self),
 }
 
+onready var statemachine = preload("res://states/machinary.gd").new(states_map)
 
 func _change_state(state):
-    if state == PREVIOUS:
-        states_stack.pop_front()
-    else:
-        states_stack.push_front(state)
-    current_state = states_stack[0]
+    statemachine.change_state(state)
 # ============ END State machinary    
     
     
@@ -66,18 +62,18 @@ func move(delta, direction: Vector2):
      
 func _physics_process(delta):
     update() # for redrawing
-    var new_state = states_map[current_state].update(delta)
+    var new_state = statemachine.update(delta)
     if new_state:
         _change_state(new_state)
     
     
 func _draw():
-    $ColorRect.color = colors.get(current_state, Color(1, 1, 1))
+    $ColorRect.color = colors.get(statemachine.current_state, Color(1, 1, 1))
 
 
 func _on_DetectionArea_body_entered(body):
     if body.name == 'Player':
-        BB['player'] = body
+        BB.write('player', body)
 
 
 func _on_DetectionArea_body_exited(body):

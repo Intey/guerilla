@@ -10,6 +10,7 @@ export var shoot_range := 20
 var CraftStation = preload('res://CraftStation.gd')
 var BuildPlan = preload('res://BuildPlan.tscn')
 var crafts = preload('res://crafts.gd')
+var Blackboard = preload("res://Utility/Blackboard.gd").new()
 
 signal inventory_update(inventory)
 signal build(reciepe, position)
@@ -49,7 +50,7 @@ func actions(delta):
     if Input.is_action_just_released('ui_interact'):
         $CollectTimer.stop()
     if Input.is_action_just_pressed('ui_select'):
-        if build_plan:
+        if Blackboard.get('crafting') and build_plan:
             if not build_plan['node'].collided:
                 build_structure()
         else:

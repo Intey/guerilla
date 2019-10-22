@@ -24,10 +24,12 @@ func connect_clip():
     
     
 func _process(delta):
-    if Input.is_action_just_released('create_campfire'):
+    if Input.is_action_just_released('open_craft'):
+        $Player.Blackboard.check('crafting')
         craftHud.update_state($Player.inventory)  
         craftHud.show()
     if Input.is_action_just_pressed('ui_cancel'): # and craftHud != null:
+        $Player.Blackboard.erase('crafting')
         craftHud.hide()
         $Player.hide_build_mode()
     

@@ -1,4 +1,5 @@
 extends 'res://Animal/BaseState.gd'
+var utils = preload("res://Utility/utils.gd")
 
 func update(delta):
     .update(delta)
@@ -12,10 +13,10 @@ func update(delta):
             if player_near_fear:
                 return
             if (fp.position - host.position).dot(target.position - host.position) < 0:
-                throttle_print("PURSUIT")
+                utils.throttle_print(delta, "PURSUIT")
                 return host.PURSUIT
         else:
-            throttle_print("FLEEING")
+            utils.throttle_print(delta, "FLEEING")
             return host.FLEEING
     else:
         return host.PREVIOUS

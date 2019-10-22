@@ -1,5 +1,5 @@
 extends 'res://Animal/BaseState.gd'
-
+var utils = preload("res://Utility/utils.gd").new()
 var last_farest_direction: Vector2
 
 func update(delta):
@@ -8,7 +8,7 @@ func update(delta):
     var fp = host.BB.get('fear_point')
     var target = host.BB.get('player')
     if fp and host.too_close(fp):
-        throttle_print("STOP ROAM. FLEE")    
+        utils.throttle_print("STOP ROAM. FLEE")    
         return host.FLEEING
     if target_near_fear_area(target, fp):
         return host.WAIT
@@ -32,7 +32,7 @@ func roaming(delta):
     # remember path or came_from point, or last point. 
     # move until not find other farest_direction in other direction
     host.velocity = last_farest_direction * host.speed
-    throttle_print(["ROAM: ", host.velocity])
+    utils.throttle_print(delta, ["ROAM: ", host.velocity])
     host.move(delta, host.velocity)
     
 func find_farest_visible_direction():
