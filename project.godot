@@ -33,19 +33,25 @@ _global_script_classes=[ {
 "class": "Value",
 "language": "GDScript",
 "path": "res://Value/Value.gd"
+}, {
+"base": "Node",
+"class": "utils",
+"language": "GDScript",
+"path": "res://Utility/utils.gd"
 } ]
 _global_script_class_icons={
 "Animal": "",
 "Player": "",
 "ReciepeItem": "",
 "Unit": "",
-"Value": ""
+"Value": "",
+"utils": ""
 }
 
 [application]
 
 config/name="Guerilla"
-run/main_scene="res://World.tscn"
+run/main_scene="res://UIScreens/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]

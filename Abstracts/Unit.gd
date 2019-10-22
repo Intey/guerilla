@@ -6,7 +6,9 @@ var alive := true
 var on_dead: FuncRef
 
 
-func _init(on_dead_ref: FuncRef):
+func _init(health, on_dead_ref: FuncRef):
+    self.health.max_value = health
+    self.health.set_value(health)
     self.on_dead = on_dead_ref
 
 

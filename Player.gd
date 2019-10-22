@@ -15,7 +15,7 @@ var Blackboard = preload("res://Utility/Blackboard.gd").new()
 signal inventory_update(inventory)
 signal build(reciepe, position)
 
-var unit
+var unit: Unit
 
 
 onready var weapon_clip := $WeaponClip
@@ -31,7 +31,7 @@ var build_plan = null
 func _ready():
     # TODO: Hide mouse when aiming, and enable on gui opened
     # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-    unit = Unit.new(funcref(self, "queue_free"))
+    unit = Unit.new(1000, funcref(self, "queue_free"))
     weapon_clip.upload(10)
 
 func _process(delta):
@@ -50,8 +50,9 @@ func actions(delta):
     if Input.is_action_just_released('ui_interact'):
         $CollectTimer.stop()
     if Input.is_action_just_pressed('ui_select'):
-        if Blackboard.get('crafting') and build_plan:
-            if not build_plan['node'].collided:
+        print("is crafting", Blackboard.get('crafting'))
+        if Blackboard.get('crafting'):
+            if build_plan and not build_plan['node'].collided:
                 build_structure()
         else:
             fire(delta)
@@ -184,3 +185,8 @@ func fire(delta):
         if result.collider.has_method('hit'):
             result.collider.hit(20)
             
+func hit(dmg):
+    self.unit.take_damage(dmg)
+    if not self.unit.alive:
+        get_tree().change_scene("res://UIScreens/MainMenu.tscn")
+        

@@ -44,7 +44,7 @@ func _ready():
     states_stack.push_front(ROAMING)
     current_state = states_stack[0]
     _change_state(ROAMING)
-    self.unit = Unit.new(funcref(self, "on_dead"))
+    self.unit = Unit.new(100, funcref(self, "on_dead"))
     
 func _change_state(state):
     if state == PREVIOUS:

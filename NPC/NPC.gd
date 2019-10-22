@@ -5,7 +5,7 @@ var BB = preload("res://Utility/Blackboard.gd").new()
 
 export var detection_radius: int
 export var speed: float
-
+export var damage := 10
 # FIXME: not react on change from GUI. Making copy on state.init(self)?
 export var shoot_range: int = 250 
 export var accuracy := 0.2
@@ -48,7 +48,7 @@ func _change_state(state):
 func _ready():
     $DetectionArea/Area.shape.radius = detection_radius
     _change_state(ROAMING) # init state
-    self.unit = Unit.new(funcref(self, "queue_free"))
+    self.unit = Unit.new(100, funcref(self, "queue_free"))
     $RangeWeapon.init(self)
     
     
@@ -84,6 +84,8 @@ func fire(delta):
     var player: Node2D = BB.get('player')
     var target = accuracy_fix(player.global_position, self.accuracy)
     $RangeWeapon.fire(delta, target)
+    player.hit(self.damage)
+    
     
 func accuracy_fix(vector: Vector2, accuracy: float = 1.0) -> Vector2:
     accuracy = 1.0 - accuracy

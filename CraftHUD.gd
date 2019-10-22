@@ -46,6 +46,7 @@ func _add_ingridient(name, count):
     
     
 func _on_reciepe_selected(reciepe: ReciepeItem):
+    print_debug("select recipe:", reciepe)
     if selected_reciepe:
         selected_reciepe.set_selected(false)
     selected_reciepe = reciepe
