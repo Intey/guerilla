@@ -16,8 +16,8 @@ func _ready():
 
 
 func _on_CraftArea_body_entered(body):
-    body.Blackboard.set('campfire')
+    body.Blackboard.check('campfire')
 
 
 func _on_CraftArea_body_exited(body):
-    body.Blackboard.unset('campfire')
+    body.Blackboard.erase('campfire')

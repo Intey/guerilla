@@ -1,5 +1,6 @@
 extends KinematicBody2D
 class_name Player
+var settings_filepath = "res://settings.json"
 
 const BULLET = preload('res://Bullet.tscn')
 
@@ -28,9 +29,20 @@ var inventory = {
 var collectable_area = null
 var build_plan = null
 
+var godmode = false
+
 func _ready():
+    var settings_file = File.new()
+    settings_file.open(settings_filepath, File.READ)
+    var line = settings_file.get_line()
+    var settings = parse_json(line)
+    godmode = settings.get('godmode', false)
+    
     # TODO: Hide mouse when aiming, and enable on gui opened
     # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+    
+    
+    
     unit = Unit.new(1000, funcref(self, "queue_free"))
     weapon_clip.upload(10)
 
@@ -186,6 +198,8 @@ func fire(delta):
             result.collider.hit(20)
             
 func hit(dmg):
+    if godmode:
+        return 
     self.unit.take_damage(dmg)
     if not self.unit.alive:
         get_tree().change_scene("res://UIScreens/MainMenu.tscn")
