@@ -1,0 +1,20 @@
+{
+  "sleepbag": {
+    "area_radius": 20,
+    "actions": {
+      "sleep": true
+    }
+  },
+  "campfire": {
+    "area_radius": 20,
+    "actions": {
+      "craft": [
+        "food"
+      ]
+    },
+    "effects": [
+      "warm": 10
+    ]
+  }
+
+}
