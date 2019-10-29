@@ -8,7 +8,7 @@ export var speed = 250
 export var collection_speed = 1
 
 export var shoot_range := 20
-var CraftStation = preload('res://CraftStation.gd')
+var CS = preload('res://CraftStation.gd')
 var BuildPlan = preload('res://BuildPlan.tscn')
 var crafts = preload('res://crafts.gd')
 var Blackboard = preload("res://Utility/Blackboard.gd").new()
@@ -24,14 +24,16 @@ onready var weapon_clip := $WeaponClip
 var inventory = {
     'sticks': 10,
     'logs': 3,
+    'meat': 6
    }
 #var craftHud = null
 var collectable_area = null
 var build_plan = null
-
+var CraftStation = null
 var godmode = false
 
 func _ready():
+    self.CraftStation = CS.new(self)
     var settings_file = File.new()
     settings_file.open(settings_filepath, File.READ)
     var line = settings_file.get_line()
@@ -40,9 +42,7 @@ func _ready():
     
     # TODO: Hide mouse when aiming, and enable on gui opened
     # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-    
-    
-    
+
     unit = Unit.new(1000, funcref(self, "queue_free"))
     weapon_clip.upload(10)
 
@@ -62,7 +62,7 @@ func actions(delta):
     if Input.is_action_just_released('ui_interact'):
         $CollectTimer.stop()
     if Input.is_action_just_pressed('ui_select'):
-        print("is crafting", Blackboard.get('crafting'))
+        print("is crafting: ", Blackboard.get('crafting'))
         if Blackboard.get('crafting'):
             if build_plan and not build_plan['node'].collided:
                 build_structure()
@@ -93,8 +93,15 @@ func exit_collectable_area(area):
     collectable_area = null
     $CollectTimer.stop()
         
+func enter_campfire_zone():
+    self.Blackboard.check('campfire')
+
+func exit_campfire_zone():
+    self.Blackboard.erase('campfire')
+    
 
 func craft(name):
+    # CraftStation.craft(name)
     var reciepes = crafts.get_crafts()
     var reciepe = reciepes.get(name)
     if reciepe == null:
@@ -102,7 +109,7 @@ func craft(name):
         return
     # check reciepe buildable
     print_debug("craft reciepe ", reciepe)
-    if CraftStation.can_build(reciepe, self.inventory):
+    if self.CraftStation.can_build(reciepe):
         if reciepe.type == crafts.Types.ITEM:
             subtract_from_inventory(reciepe)
             add_to_inventory(name, reciepe.count)
@@ -140,7 +147,7 @@ func build_structure():
     subtract_from_inventory(reciepe)
     var position = build_plan['node'].position
     emit_signal('build', reciepe, position)
-    if not CraftStation.can_build(reciepe, self.inventory):
+    if not self.CraftStation.can_build(reciepe):
         self.hide_build_mode()
     # TODO: add to camp
 

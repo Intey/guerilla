@@ -16,8 +16,10 @@ func _ready():
 
 
 func _on_CraftArea_body_entered(body):
-    body.Blackboard.check('campfire')
+    if body is Player:
+        body.enter_campfire_zone()
 
 
 func _on_CraftArea_body_exited(body):
-    body.Blackboard.erase('campfire')
+    if body is Player:
+        body.exit_campfire_zone()

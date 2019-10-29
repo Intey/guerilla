@@ -8,10 +8,12 @@ func _ready():
     connect_clip()
     
 func connect_craft():
-    $Player.connect('inventory_update', craftHud, "update_state")
+    craftHud.init($Player)
+    $Player.connect('inventory_update', craftHud, "update_reciepes_view")
     craftHud.connect('craft', $Player, 'craft')
-    craftHud.init($Player.inventory, $Player.crafts.get_crafts())
     $Player.connect('build', self, 'create_building')
+    
+
 
 func connect_clip():
     var mv = $Player/WeaponClip.max_value
@@ -26,7 +28,7 @@ func connect_clip():
 func _process(delta):
     if Input.is_action_just_released('open_craft'):
         $Player.Blackboard.check('crafting')
-        craftHud.update_state($Player.inventory)  
+        craftHud.update_reciepes_view()  
         craftHud.show()
     if Input.is_action_just_pressed('ui_cancel'): # and craftHud != null:
         $Player.Blackboard.erase('crafting')

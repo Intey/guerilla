@@ -1,6 +1,16 @@
-static func can_build(reciepe, inventory):
+
+var player
+
+func _init(player):
+    self.player = player
+
+func can_build(reciepe):
+    var required_place = reciepe.get('place')
+    if required_place and player.Blackboard != null and player.Blackboard.get(required_place) == null:
+        return false
+        
     for res_name in reciepe.ingridients:
         var count = reciepe.ingridients[res_name]
-        if inventory.get(res_name, 0) < count:
+        if player.inventory.get(res_name, 0) < count:
             return false
     return true

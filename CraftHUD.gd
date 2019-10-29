@@ -1,36 +1,44 @@
 extends Panel
 
 var ReciepeItem = preload('res://ReciepeItem.tscn')
-var CraftStation = preload('res://CraftStation.gd')
+var crafts = preload('res://crafts.gd')
 
 signal craft(reciepe_name)
 
 var selected_reciepe: ReciepeItem = null
 var reciepes = []
+var player: Player
 
+func init(player: Player):
+    self.player = player
+    self.reciepes = crafts.get_crafts()
+    self.render_ingridients(self.player.inventory)        
+    self.init_reciepes()
 
-func init(inventory, reciepes):
-    self.reciepes = reciepes
-    self.render_ingridients(inventory)
+func init_reciepes():
     for reciepe_name in self.reciepes:
         var reciepeItem = ReciepeItem.instance()
         reciepeItem.set_item_name(reciepe_name)
         var rec_icon = load(self.reciepes[reciepe_name].icon)
         if rec_icon:
             reciepeItem.set_item_img(rec_icon)
-        var buildable = CraftStation.can_build(self.reciepes[reciepe_name], inventory)
+        var buildable = self.player.CraftStation.can_build(self.reciepes[reciepe_name])
         reciepeItem.set_disabled(not buildable)
         $Reciepes.add_child(reciepeItem)
-        reciepeItem.connect('selected', self, '_on_reciepe_selected')        
+        reciepeItem.connect('selected', self, '_on_reciepe_selected')
         
+func _process(delta):
+    self.reciepes = crafts.get_crafts()
+    self.update_reciepes_view()
         
-func update_state(new_inventory):
+# slot for signals: updates reciepes, ingridients
+func update_reciepes_view():
     $Items/ItemList.clear()
     $Items/Counts.clear()
-    render_ingridients(new_inventory)
+    render_ingridients(self.player.inventory)
     
     for ch in $Reciepes.get_children():
-        var buildable = CraftStation.can_build(self.reciepes[ch.get_item_name()], new_inventory)
+        var buildable = self.player.CraftStation.can_build(self.reciepes[ch.get_item_name()])
         ch.set_disabled(not buildable)
     
     
