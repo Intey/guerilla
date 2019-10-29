@@ -24,7 +24,8 @@ onready var weapon_clip := $WeaponClip
 var inventory = {
     'sticks': 10,
     'logs': 3,
-    'meat': 6
+    'meat': 6,
+    "leafs": 20,
    }
 #var craftHud = null
 var collectable_area = null
@@ -98,7 +99,12 @@ func enter_campfire_zone():
 
 func exit_campfire_zone():
     self.Blackboard.erase('campfire')
-    
+
+func set_sleep_zone(in_zone=true):
+    if in_zone:
+        self.Blackboard.check("sleep")    
+    else:
+        self.Blackboard.erase("sleep")
 
 func craft(name):
     # CraftStation.craft(name)

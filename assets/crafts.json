@@ -37,7 +37,19 @@
       "meat": 1, 
       "sticks": 3
     },
+    "count": 1,
     "place": "campfire"
+  },
+  "sleepbag": {
+    "icon": "",
+    "scene": "res://Buildings/SleepBag.tscn",
+    "type": 0,
+    "ingridients" : {
+      "leafs": 20, 
+      "sticks": 8
+    },
+    "count": 1
   }
+
 }
 
