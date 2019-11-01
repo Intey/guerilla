@@ -31,6 +31,8 @@ func get_one():
     return false
 
 func reload():
+    if not $ReloadTimer.is_stopped():
+        return
     $ReloadTimer.stop()
     $ReloadTimer.start()
     emit_signal("clip_reload_start")
