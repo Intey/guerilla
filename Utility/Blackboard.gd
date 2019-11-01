@@ -1,17 +1,21 @@
 extends Node
+signal change_value(key, value)
 
 var _blackboard = {}
 func write(key, value):
-    _blackboard[key] = value
+    if _blackboard.get(key) != value:
+        _blackboard[key] = value
+        emit_signal("change_value", key, value)
     
 func check(key):
-    _blackboard[key] = true
+    write(key, true)
     
 func toggle(key):
-    _blackboard[key] = not _blackboard[key]
+    write(key, _blackboard.get('key', false))
     
 func erase(key):
     _blackboard.erase(key)
+    emit_signal("change_value", key, null)
     
 func get(key):
     return _blackboard.get(key)

@@ -2,7 +2,7 @@
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Resources/Logs.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Resources/Leafs.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Resources/Sticks.tscn" type="PackedScene" id=6]

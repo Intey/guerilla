@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Buildings/SleepBag.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Sticks.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+debug = true
+
+[node name="SleepBag" parent="." instance=ExtResource( 2 )]
+position = Vector2( 80, 32 )
+
+[node name="Sticks" parent="." instance=ExtResource( 3 )]
+position = Vector2( -128, 32 )
+

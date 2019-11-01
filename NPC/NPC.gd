@@ -14,12 +14,12 @@ var unit: Unit
 
 # State machinary
 enum {
-    ROAMING = 1,
+    PREVIOUS = Machinary.PREVIOUS_STATE,
+    ROAMING,
     PURSUIT,
     ATTACK,
     FLEEING,
-    PREVIOUS
-    }
+}
 
 
 # Debug colors for state visibility
@@ -33,21 +33,19 @@ var colors = {
 
 # ============ State machinary
 onready var states_map = {
-    ROAMING: $SM/Roaming.init(self),
-    PURSUIT: $SM/Pursuiting.init(self),
-    ATTACK: $SM/Attack.init(self),
+    ROAMING: $Machinary/Roaming.init(self),
+    PURSUIT: $Machinary/Pursuiting.init(self),
+    ATTACK: $Machinary/Attack.init(self),
 }
 
-onready var statemachine = preload("res://states/machinary.gd").new(states_map)
-
 func _change_state(state):
-    statemachine.change_state(state)
+    $Machinary.change_state(state)
 # ============ END State machinary    
     
     
 func _ready():
+    $Machinary.init(states_map, ROAMING)
     $DetectionArea/Area.shape.radius = detection_radius
-    _change_state(ROAMING) # init state
     self.unit = Unit.new(100, funcref(self, "queue_free"))
     $RangeWeapon.init(self)
     
@@ -58,17 +56,14 @@ func move(delta, direction: Vector2):
     Interface for state. All logic is in state.
     """
     var collision = move_and_collide(direction.normalized() * speed * delta)
-
+    
      
 func _physics_process(delta):
     update() # for redrawing
-    var new_state = statemachine.update(delta)
-    if new_state:
-        _change_state(new_state)
     
     
 func _draw():
-    $ColorRect.color = colors.get(statemachine.current_state, Color(1, 1, 1))
+    $ColorRect.color = colors.get($Machinary.current_state, Color(1, 1, 1))
 
 
 func _on_DetectionArea_body_entered(body):

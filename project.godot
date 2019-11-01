@@ -14,10 +14,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Animal/AnimalKinematic.gd"
 }, {
+"base": "Node",
+"class": "Machinary",
+"language": "GDScript",
+"path": "res://states/Machinary.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Player.gd"
+"path": "res://Player/Player.gd"
 }, {
 "base": "HBoxContainer",
 "class": "ReciepeItem",
@@ -41,6 +46,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Animal": "",
+"Machinary": "",
 "Player": "",
 "ReciepeItem": "",
 "Unit": "",
@@ -56,7 +62,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-utils="res://Utility/utils.gd"
+utils="*res://Utility/utils.gd"
 
 [display]
 

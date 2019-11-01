@@ -6,8 +6,11 @@ const BULLET = preload('res://Bullet.tscn')
 
 export var speed = 250
 export var collection_speed = 1
-
+export var max_sleep_time := 10.0
+export var sleep_time := 10.0
 export var shoot_range := 20
+export var debug = false
+
 var CS = preload('res://CraftStation.gd')
 var BuildPlan = preload('res://BuildPlan.tscn')
 var crafts = preload('res://crafts.gd')
@@ -17,9 +20,29 @@ signal inventory_update(inventory)
 signal build(reciepe, position)
 
 var unit: Unit
-
-
 onready var weapon_clip := $WeaponClip
+
+# State machinary
+enum {
+    PREVIOUS = Machinary.PREVIOUS_STATE,
+    IDLE,
+    SLEEP,
+    COLLECTING,
+}
+# Debug colors for state visibility
+var colors = {
+    IDLE: Color(0, 0, 0, 0),
+    SLEEP: Color(0, 0, 1, 0.4),
+    COLLECTING: Color(0, 0, 0, 0),
+}
+onready var states_map = {
+    IDLE: $Machinary/Idle.init(self),
+    SLEEP: $Machinary/Sleep.init(self),
+    COLLECTING: $Machinary/Collecting.init(self),
+}
+
+# ============ State machinary
+
 
 var inventory = {
     'sticks': 10,
@@ -34,6 +57,7 @@ var CraftStation = null
 var godmode = false
 
 func _ready():
+    $Machinary.init(states_map, IDLE)
     self.CraftStation = CS.new(self)
     var settings_file = File.new()
     settings_file.open(settings_filepath, File.READ)
@@ -48,40 +72,24 @@ func _ready():
     weapon_clip.upload(10)
 
 func _process(delta):
-    update()
-    actions(delta)
+    self.update()
+
+func _draw():
+    var color = colors.get($Machinary.current_state, Color(1, 1, 1))
+    $Sprite/ColorRect.color = color
     
 #func _draw():
 #    var mpos = get_local_mouse_position()
 #    draw_circle(mpos, 3, Color(1, 0, 0))
 
-func actions(delta):
-    # collecting
-    if Input.is_action_just_pressed('ui_interact') and collectable_area:
-        print_debug("start collecting ", collectable_area.type)
-        $CollectTimer.start()
-    if Input.is_action_just_released('ui_interact'):
-        $CollectTimer.stop()
-    if Input.is_action_just_pressed('ui_select'):
-        print("is crafting: ", Blackboard.get('crafting'))
-        if Blackboard.get('crafting'):
-            if build_plan and not build_plan['node'].collided:
-                build_structure()
-        else:
-            fire(delta)
-        
-
-func _on_CollectTimer_timeout():
-    print_debug("collect timeout")
-    if Input.is_action_pressed('ui_interact') and collectable_area:
-        var collected = collectable_area.pop(collection_speed)
-        var res_type = collectable_area.type
-        if res_type in inventory:
-            inventory[res_type] += collected
-        else:
-            inventory[res_type] = collected
-        print_debug('collected ', collected, ' ', res_type, ". now player has ", inventory)
-        emit_signal('inventory_update', self.inventory)
+func collect_item(res_type):
+    var collected = collectable_area.pop(collection_speed)
+    if res_type in inventory:
+        inventory[res_type] += collected
+    else:
+        inventory[res_type] = collected
+    print_debug('collected ', collected, ' ', res_type, ". now player has ", inventory)
+    emit_signal('inventory_update', self.inventory)
 
 
 func enter_collectable_area(area):
@@ -92,7 +100,6 @@ func enter_collectable_area(area):
 func exit_collectable_area(area):
     print_debug('exit ', area)
     collectable_area = null
-    $CollectTimer.stop()
         
 func enter_campfire_zone():
     self.Blackboard.check('campfire')
@@ -165,23 +172,6 @@ func hide_build_mode():
     # нам нужно показывать|скрывать дочерние спрайты. 
     # hide/show - не работает
     $BuildArea.visible = false
-
-func get_input() -> Vector2:
-    var velocity = Vector2()
-    if Input.is_action_pressed('ui_right'):
-        velocity.x += 1
-    if Input.is_action_pressed('ui_left'):
-        velocity.x -= 1
-    if Input.is_action_pressed('ui_down'):
-        velocity.y += 1
-    if Input.is_action_pressed('ui_up'):
-        velocity.y -= 1
-    velocity = velocity.normalized() * speed
-    return velocity
-    
-func _physics_process(delta):
-    var velocity = get_input()
-    var collision = move_and_collide(velocity * delta)
     #if collision:
         #print_debug('collide ', collision)
         
@@ -217,3 +207,8 @@ func hit(dmg):
     if not self.unit.alive:
         get_tree().change_scene("res://UIScreens/MainMenu.tscn")
         
+func start_collect():
+    $CollectTimer.start()
+    
+func stop_collect():
+    $CollectTimer.stop()

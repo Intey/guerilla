@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://NPC/NPC.gd" type="Script" id=1]
-[ext_resource path="res://NPC/Roaming.gd" type="Script" id=2]
-[ext_resource path="res://NPC/Pursuiting.gd" type="Script" id=3]
-[ext_resource path="res://NPC/Fleeing.gd" type="Script" id=4]
-[ext_resource path="res://NPC/Attack.gd" type="Script" id=5]
-[ext_resource path="res://Weapons/RangeWeapon.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Weapons/RangeWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://states/Machinary.tscn" type="PackedScene" id=3]
+[ext_resource path="res://NPC/Roaming.gd" type="Script" id=4]
+[ext_resource path="res://NPC/Pursuiting.gd" type="Script" id=5]
+[ext_resource path="res://NPC/Fleeing.gd" type="Script" id=6]
+[ext_resource path="res://NPC/Attack.gd" type="Script" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 22.7069
@@ -35,21 +36,6 @@ color = Color( 0.772549, 0, 0, 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="SM" type="Node" parent="."]
-
-[node name="Roaming" type="Node" parent="SM"]
-script = ExtResource( 2 )
-redirect_timeout = 3.0
-
-[node name="Pursuiting" type="Node" parent="SM"]
-script = ExtResource( 3 )
-
-[node name="Fleeing" type="Node" parent="SM"]
-script = ExtResource( 4 )
-
-[node name="Attack" type="Node" parent="SM"]
-script = ExtResource( 5 )
-
 [node name="DetectionArea" type="Area2D" parent="."]
 
 [node name="Area" type="CollisionShape2D" parent="DetectionArea"]
@@ -60,7 +46,22 @@ shape = SubResource( 2 )
 [node name="Shape" type="CollisionShape2D" parent="ShootDistance"]
 shape = SubResource( 3 )
 
-[node name="RangeWeapon" parent="." instance=ExtResource( 6 )]
+[node name="RangeWeapon" parent="." instance=ExtResource( 2 )]
+
+[node name="Machinary" parent="." instance=ExtResource( 3 )]
+
+[node name="Roaming" type="Node" parent="Machinary"]
+script = ExtResource( 4 )
+redirect_timeout = 3.0
+
+[node name="Pursuiting" type="Node" parent="Machinary"]
+script = ExtResource( 5 )
+
+[node name="Fleeing" type="Node" parent="Machinary"]
+script = ExtResource( 6 )
+
+[node name="Attack" type="Node" parent="Machinary"]
+script = ExtResource( 7 )
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]

@@ -10,11 +10,11 @@ func on_dead():
 
 # state for select
 enum { 
-    ROAMING = 1, 
+    PREVIOUS = Machinary.PREVIOUS_STATE,
+    ROAMING, 
     PURSUIT, 
     FLEEING,
     WAIT, 
-    PREVIOUS 
 }
 
 var velocity: Vector2
@@ -37,6 +37,7 @@ onready var states_map = {
     FLEEING: $SM/Fleeing.init(self),
     WAIT: $SM/Wait.init(self),
 }
+
 # Transitions
 # event | source | target
 # enter fear area | 
