@@ -29,8 +29,7 @@ var colors = {
     WAIT: Color(0.5, 0.5, 0.5),
 }
 
-var current_state = null
-var states_stack = []
+var GT = null
 onready var states_map = {
     ROAMING: $SM/Roaming.init(self),
     PURSUIT: $SM/Pursuiting.init(self),
@@ -44,13 +43,16 @@ onready var states_map = {
 func _ready():
     $SM.init(states_map, ROAMING)
     self.unit = Unit.new(100, funcref(self, "on_dead"))
+    self.GT = get_node('/root/GT')
+    if self.GT == null:
+        self.GT = load('res://World/GlobalTime.tscn').instance()
      
 func move(delta, velocity):
     """
     Interface for state. All logic is in state.
     """
     # 
-    move_and_slide(velocity)
+    move_and_slide(velocity * self.GT.timespeed)
     #if collision:
     #    print_debug('collide ', collision)
     #print_debug("go to ", last_farest_direction)
