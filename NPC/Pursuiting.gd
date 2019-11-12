@@ -1,7 +1,5 @@
 extends "res://states/state.gd"
-
-func update(delta):
-    .update(delta)
+func update_impl(delta):
     var host: Node2D = self.host
     var player = host.BB.get('player')
     if not player:

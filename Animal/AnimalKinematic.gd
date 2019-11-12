@@ -42,23 +42,14 @@ onready var states_map = {
 # event | source | target
 # enter fear area | 
 func _ready():
-    states_stack.push_front(ROAMING)
-    current_state = states_stack[0]
-    _change_state(ROAMING)
+    $SM.init(states_map, ROAMING)
     self.unit = Unit.new(100, funcref(self, "on_dead"))
-    
-func _change_state(state):
-    if state == PREVIOUS:
-        states_stack.pop_front()
-    else:
-        states_stack.push_front(state)
-    current_state = states_stack[0]
      
 func move(delta, velocity):
     """
     Interface for state. All logic is in state.
     """
-    var collision = move_and_collide(velocity * delta)
+    move_and_slide(velocity * delta)
     #if collision:
     #    print_debug('collide ', collision)
     #print_debug("go to ", last_farest_direction)
@@ -71,13 +62,10 @@ func _draw():
         var target = BB['player']
         var pos = target.position - position
         draw_line(Vector2(), pos, Color(1,0,0))
-     
+ 
 func _physics_process(delta):
     update() # for redrawing
-    var new_state = states_map[current_state].update(delta)
-    if new_state:
-        _change_state(new_state)
-    
+
 func _on_DetectionArea_body_entered(body):
     if body.name == 'Player':
        BB['player'] = body

@@ -3,8 +3,8 @@ extends "res://states/state.gd"
 export var collecting_timeout = 1.0
 var __collect_time = 0.0
 
-func update(delta):
-    .update(delta)
+func update_impl(delta):
+   
     if not Input.is_action_pressed('ui_interact'):
         return self.host.PREVIOUS
                 

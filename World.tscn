@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://Tree.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Animal/Animal.tscn" type="PackedScene" id=10]
 [ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=11]
+[ext_resource path="res://World/GlobalTime.tscn" type="PackedScene" id=12]
+[ext_resource path="res://World/Events/EventSheduler.tscn" type="PackedScene" id=13]
+[ext_resource path="res://World/Events/GameEvent.tscn" type="PackedScene" id=14]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -54,8 +57,33 @@ margin_bottom = 0.0
 position = Vector2( 709.195, 90.8885 )
 
 [node name="Animal" parent="." instance=ExtResource( 10 )]
-position = Vector2( 304, 272 )
+position = Vector2( 160, 112 )
 
 [node name="NPC" parent="." instance=ExtResource( 11 )]
 position = Vector2( 288, 8 )
+
+[node name="GlobalTime" parent="." instance=ExtResource( 12 )]
+time = 225.975
+
+[node name="EventSheduler" parent="." instance=ExtResource( 13 )]
+
+[node name="GameEvent" parent="EventSheduler" instance=ExtResource( 14 )]
+
+[node name="Animal7" parent="." instance=ExtResource( 10 )]
+position = Vector2( 93, 141.84 )
+
+[node name="Animal6" parent="." instance=ExtResource( 10 )]
+position = Vector2( 192, 60.636 )
+
+[node name="Animal5" parent="." instance=ExtResource( 10 )]
+position = Vector2( -192, -32 )
+
+[node name="Animal4" parent="." instance=ExtResource( 10 )]
+position = Vector2( -32, 144 )
+
+[node name="Animal3" parent="." instance=ExtResource( 10 )]
+position = Vector2( -96, 64 )
+
+[node name="Animal2" parent="." instance=ExtResource( 10 )]
+position = Vector2( -208, -176 )
 

@@ -1,8 +1,8 @@
 extends 'res://Animal/BaseState.gd'
 var utils = preload("res://Utility/utils.gd")
 
-func update(delta):
-    .update(delta)
+func update_impl(delta):
+    
     var host = self.host
     var BB = host.BB
     var target = BB.get('player')

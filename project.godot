@@ -15,6 +15,16 @@ _global_script_classes=[ {
 "path": "res://Animal/AnimalKinematic.gd"
 }, {
 "base": "Node",
+"class": "GameEvent",
+"language": "GDScript",
+"path": "res://World/Events/GameEvent.gd"
+}, {
+"base": "Node",
+"class": "GlobalTime",
+"language": "GDScript",
+"path": "res://World/GlobalTime.gd"
+}, {
+"base": "Node",
 "class": "Machinary",
 "language": "GDScript",
 "path": "res://states/Machinary.gd"
@@ -46,6 +56,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Animal": "",
+"GameEvent": "",
+"GlobalTime": "",
 "Machinary": "",
 "Player": "",
 "ReciepeItem": "",
@@ -63,6 +75,7 @@ config/icon="res://icon.png"
 [autoload]
 
 utils="*res://Utility/utils.gd"
+GT="*res://World/GlobalTime.tscn"
 
 [display]
 
@@ -121,6 +134,11 @@ open_craft={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":67,"unicode":0,"echo":false,"script":null)
  ]
 }
+ui_timelapse={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [layer_names]
 
@@ -132,4 +150,8 @@ open_craft={
 
 [rendering]
 
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=1
+quality/2d/use_pixel_snap=true
+quality/subsurface_scattering/quality=2
 environment/default_environment="res://default_env.tres"

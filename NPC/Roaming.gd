@@ -15,8 +15,7 @@ func select_new_direction():
     return target_point
         
 
-func update(delta):
-    .update(delta)
+func update_impl(delta):
     host = self.host
     var player = host.BB.get('player')
     if player:

@@ -1,8 +1,8 @@
 extends 'res://Animal/BaseState.gd'
 var utils = preload("res://Utility/utils.gd")
 
-func update(delta):
-    .update(delta)
+func update_impl(delta):
+    
     var host = self.host
     var target = host.BB.get('player')
     var fp = host.BB.get('fear_point')
@@ -14,8 +14,12 @@ func update(delta):
     
     if not target:
         return host.ROAMING
+
+func physics_process_impl(delta):
+    var target = host.BB.get('player')
+    if target:
+        self.pursuit(delta, target)
     
-    pursuit(delta, target)
     
 func pursuit(delta, target):
     var host = self.host

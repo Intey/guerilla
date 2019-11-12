@@ -1,9 +1,7 @@
 extends "res://states/state.gd"
-func update(delta):
-    .update(delta)
-    var velocity = get_input()
-    var collision = self.host.move_and_collide(velocity * delta)
-    
+
+func update_impl(delta):
+      
     # collecting
     if Input.is_action_just_pressed('ui_interact'):
         print_debug("interacting...")
@@ -31,4 +29,8 @@ func get_input() -> Vector2:
         velocity.y -= 1
     velocity = velocity.normalized() * self.host.speed
     return velocity
+    
+func physics_process_impl(delta):
+     var velocity = get_input()
+     var collision = self.host.move_and_collide(velocity * delta)
     

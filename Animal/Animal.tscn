@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Animal/AnimalKinematic.gd" type="Script" id=1]
-[ext_resource path="res://Animal/Roaming.gd" type="Script" id=2]
-[ext_resource path="res://Animal/Pursuiting.gd" type="Script" id=3]
-[ext_resource path="res://Animal/Fleeing.gd" type="Script" id=4]
-[ext_resource path="res://Animal/Wait.gd" type="Script" id=5]
+[ext_resource path="res://states/Machinary.gd" type="Script" id=2]
+[ext_resource path="res://Animal/Roaming.gd" type="Script" id=3]
+[ext_resource path="res://Animal/Pursuiting.gd" type="Script" id=4]
+[ext_resource path="res://Animal/Fleeing.gd" type="Script" id=5]
+[ext_resource path="res://Animal/Wait.gd" type="Script" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -42,18 +43,19 @@ collision_mask = 15
 shape = SubResource( 2 )
 
 [node name="SM" type="Node" parent="."]
-
-[node name="Roaming" type="Node" parent="SM"]
 script = ExtResource( 2 )
 
-[node name="Pursuiting" type="Node" parent="SM"]
+[node name="Roaming" type="Node" parent="SM"]
 script = ExtResource( 3 )
 
-[node name="Fleeing" type="Node" parent="SM"]
+[node name="Pursuiting" type="Node" parent="SM"]
 script = ExtResource( 4 )
 
-[node name="Wait" type="Node" parent="SM"]
+[node name="Fleeing" type="Node" parent="SM"]
 script = ExtResource( 5 )
+
+[node name="Wait" type="Node" parent="SM"]
+script = ExtResource( 6 )
 
 [node name="PursuitArea" type="Area2D" parent="."]
 

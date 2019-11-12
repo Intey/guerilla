@@ -19,8 +19,6 @@ func init(states: Dictionary, initial_state):
     assert initial_state != null
     __states_stack.push_back(initial_state)
         
-
-
 func change_state(state):
     var from_state = __get_current_state()
     if state == null: # state not changes
@@ -39,9 +37,10 @@ func _process(delta):
     #if debug and new_state != null:
         #print_debug("state ", state.name, " updates to state ", new_state)
     change_state(new_state)
-
+    
 func _physics_process(delta):
-    pass
+    var state = states_map[__get_current_state()]
+    state.update_physics(delta)
     
 func __get_current_state():
     return __states_stack[0]
