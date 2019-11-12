@@ -3,13 +3,12 @@ var utils = preload("res://Utility/utils.gd").new()
 var last_farest_direction: Vector2
 
 func update_impl(delta):
-    
     var host = self.host
     var fp = host.BB.get('fear_point')
     var target = host.BB.get('player')
     if fp and host.too_close(fp):
         utils.throttle_print("STOP ROAM. FLEE")    
-        return host.FLEEING
+        return host.FLEEING    
     if target_near_fear_area(target, fp):
         return host.WAIT
     if target:

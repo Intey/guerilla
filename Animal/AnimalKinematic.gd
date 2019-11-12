@@ -49,14 +49,15 @@ func move(delta, velocity):
     """
     Interface for state. All logic is in state.
     """
-    move_and_slide(velocity * delta)
+    # 
+    move_and_slide(velocity)
     #if collision:
     #    print_debug('collide ', collision)
     #print_debug("go to ", last_farest_direction)
 
 #TODO: deligates to current state
 func _draw():
-    $ColorRect.color = colors.get(current_state, Color(1, 1, 1))
+    $ColorRect.color = colors.get($SM.current_state, Color(1, 1, 1))
     draw_line(Vector2(), velocity * 20, Color(0,1,0))
     if BB.get('player'):
         var target = BB['player']

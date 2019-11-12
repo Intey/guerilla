@@ -11,6 +11,8 @@ func init(host):
     
 func _ready():
     self.GT = get_node('/root/World/GlobalTime')
+    if self.GT == null:
+        self.GT = load('res://World/GlobalTime.tscn').instance()
     
 func update(delta):
     assert inited and "State " + str(self) + " should be initialized with 'init'"

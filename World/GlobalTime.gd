@@ -29,11 +29,10 @@ export var timespeed := 1.0
 var last_second = 0
 
 func _process(delta):
+    # TODO: use player timelaps stamina
     if Input.is_action_just_pressed("ui_timelapse"):
-        #Engine.time_scale(0.2)
         timespeed = 0.4
     if Input.is_action_just_released("ui_timelapse"):
-        #Engine.time_scale(1)
         timespeed = 1.0
         
     var scaled_delta = delta * timespeed
