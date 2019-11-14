@@ -3,6 +3,7 @@ class_name Machinary
 
 export var debug = false
 
+#warning-ignore:unused_class_variable
 var current_state setget , __get_current_state
 
 var __states_stack := []
@@ -28,7 +29,8 @@ func change_state(state):
     else:
         __states_stack.push_front(state)
     if from_state != __get_current_state():
-        print_debug("change state from ", from_state, " to ", __get_current_state())
+        pass
+        #print_debug("change state from ", from_state, " to ", __get_current_state())
     
     
 func _process(delta):

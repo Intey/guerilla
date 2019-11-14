@@ -28,9 +28,7 @@ func update_physics(delta):
     
 func update_impl(delta):
     print_debug("Not implemented state method 'update_impl' ", self.host.name, ".", self.name)
-    #get_tree().quit()
     
 func physics_process_impl(delta):
     print_debug("Not implemented state method 'update_impl' ", self.host.name, ".", self.name)
-    #get_tree().quit()
     
