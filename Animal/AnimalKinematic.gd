@@ -94,4 +94,6 @@ func _on_PursuitArea_body_exited(body):
         BB.erase('player')
         
 func hit(dmg: int):
+    print_debug("animal hitted")
+    $AnimationPlayer.play("hit")
     self.unit.take_damage(dmg)
