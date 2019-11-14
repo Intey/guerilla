@@ -20,7 +20,6 @@ signal inventory_update(inventory)
 signal build(reciepe, position)
 
 var unit: Unit
-onready var weapon_clip := $WeaponClip
 
 # State machinary
 enum {
@@ -69,8 +68,8 @@ func _ready():
     # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
     unit = Unit.new(1000, funcref(self, "queue_free"))
-    weapon_clip.upload(10)
-
+    $RangeWeapon.init(self)
+    
 func _process(delta):
     self.update()
     $AnimationPlayer.play("idle")    
@@ -177,30 +176,9 @@ func hide_build_mode():
         #print_debug('collide ', collision)
         
 func fire(delta):
-    if not weapon_clip.get_one():
-        weapon_clip.reload()
-        return
+    var mpos = get_local_mouse_position() * shoot_range
+    $RangeWeapon.fire(delta, mpos)
     
-    # start view
-    var mpos = get_local_mouse_position()
-    var bullet = BULLET.instance()
-    bullet.global_position = global_position
-    bullet.velocity = mpos.normalized()
-    get_parent().add_child(bullet)
-    
-    # logic
-    var space_state = get_world_2d().direct_space_state
-    var excepts = [self]
-    var cast_to = get_global_mouse_position() * shoot_range
-    var result = space_state.intersect_ray(global_position, cast_to, excepts)
-    # TODO: fix bullet fly range if no intersection
-    
-    if result:
-        bullet.path_end = result.position
-        # TODO: intersect with trees
-        if result.collider.has_method('hit'):
-            result.collider.hit(20)
-            
 func hit(dmg):
     if godmode:
         return 

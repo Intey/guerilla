@@ -16,13 +16,14 @@ func connect_craft():
 
 
 func connect_clip():
-    var mv = $Player/WeaponClip.max_value
-    var v = $Player/WeaponClip.value
+    var clip = $Player/RangeWeapon/WeaponClip
+    var mv = clip.max_value
+    var v = clip.value
     ammoHud.upload(v, mv)
-    $Player/WeaponClip.connect("clip_uploaded", ammoHud, "upload")
-    $Player/WeaponClip.connect("clip_value_change", ammoHud, "set_value")    
-    $Player/WeaponClip.connect("clip_reload_done", ammoHud, "reload_done")
-    $Player/WeaponClip.connect("clip_reload_start", ammoHud, "start_reload")
+    clip.connect("clip_uploaded", ammoHud, "upload")
+    clip.connect("clip_value_change", ammoHud, "set_value")    
+    clip.connect("clip_reload_done", ammoHud, "reload_done")
+    clip.connect("clip_reload_start", ammoHud, "start_reload")
     
     
 func _process(delta):

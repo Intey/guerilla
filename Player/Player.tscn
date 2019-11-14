@@ -3,11 +3,11 @@
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/craft_area.png" type="Texture" id=2]
 [ext_resource path="res://assets/New.png" type="Texture" id=3]
-[ext_resource path="res://WeaponClip.tscn" type="PackedScene" id=4]
-[ext_resource path="res://states/Machinary.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Player/Idle.gd" type="Script" id=6]
-[ext_resource path="res://Player/Sleep.gd" type="Script" id=7]
-[ext_resource path="res://Player/Collecting.gd" type="Script" id=8]
+[ext_resource path="res://states/Machinary.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Player/Idle.gd" type="Script" id=5]
+[ext_resource path="res://Player/Sleep.gd" type="Script" id=6]
+[ext_resource path="res://Player/Collecting.gd" type="Script" id=7]
+[ext_resource path="res://Weapons/RangeWeapon.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 100.0
@@ -76,16 +76,19 @@ shape = SubResource( 3 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
-[node name="WeaponClip" parent="." instance=ExtResource( 4 )]
-
-[node name="Machinary" parent="." instance=ExtResource( 5 )]
+[node name="Machinary" parent="." instance=ExtResource( 4 )]
 
 [node name="Idle" type="Node" parent="Machinary"]
-script = ExtResource( 6 )
+script = ExtResource( 5 )
 
 [node name="Sleep" type="Node" parent="Machinary"]
-script = ExtResource( 7 )
+script = ExtResource( 6 )
 
 [node name="Collecting" type="Node" parent="Machinary"]
-script = ExtResource( 8 )
+script = ExtResource( 7 )
+
+[node name="RangeWeapon" parent="." instance=ExtResource( 8 )]
+clipsize = 10
+damage = 30
+time_for_one_shoot = 0.1
 

@@ -37,16 +37,20 @@ color = Color( 0.772549, 0, 0, 1 )
 shape = SubResource( 1 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
+visible = false
 
 [node name="Area" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 2 )
 
 [node name="ShootDistance" type="Area2D" parent="."]
+visible = false
 
 [node name="Shape" type="CollisionShape2D" parent="ShootDistance"]
 shape = SubResource( 3 )
 
 [node name="RangeWeapon" parent="." instance=ExtResource( 2 )]
+clipsize = 10
+damage = 20
 
 [node name="Machinary" parent="." instance=ExtResource( 3 )]
 

@@ -1,29 +1,35 @@
 extends Node
 
-const BULLET = preload('res://Bullet.tscn')
 
+
+# TODO: initialize domain args from json
+export var clipsize: int
+export var damage: int
+export var autoshoot: bool = false
+export var time_for_one_shoot: float = 1.0
+
+const BULLET = preload('res://Bullet.tscn')
 onready var weapon_clip := $WeaponClip
 
-export var bullets_per_second: int = 1 
-
-var last_shoot := 0.0
+var last_shoot := self.time_for_one_shoot
 var global_position: Vector2
 var host: Node2D
-var time_for_one_shoot: float = 1.0
 
 func init(host):
-    time_for_one_shoot = 1.0 / bullets_per_second
     self.host = host
-
-func fire(delta, target: Vector2):
+    weapon_clip.max_value = clipsize
+    weapon_clip.value = clipsize
+    
+func _process(delta):
     last_shoot += delta
+    
+func fire(delta, target: Vector2):
     # last_shoot - seconds from last shoot
     # speed - shoot per second
     # get delta between shoots
     if last_shoot < time_for_one_shoot:
         return
         
-    print("shoot on ", last_shoot, " one: ", time_for_one_shoot)
     last_shoot = 0
     
     if not weapon_clip.get_one():
@@ -44,10 +50,10 @@ func fire(delta, target: Vector2):
     host.get_parent().add_child(bullet)
     # logic
     var space_state = host.get_world_2d().direct_space_state
-    var excepts = [host]
-    var cast_to = host.get_global_mouse_position()
+    var excepts = [self.host]
+    var cast_to = target
     var result = space_state.intersect_ray(global_position, cast_to, excepts)
     if result:
         bullet.path_end = result.position
         if result.collider.has_method('hit'):
-            result.collider.hit(20)
+            result.collider.hit(self.damage)
