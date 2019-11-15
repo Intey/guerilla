@@ -43,7 +43,7 @@ onready var states_map = {
 func _ready():
     $SM.init(states_map, ROAMING)
     self.unit = Unit.new(100, funcref(self, "on_dead"))
-    self.GT = get_node('/root/GT')
+    self.GT = get_node('/root/World/GlobalTime')
     if self.GT == null:
         self.GT = load('res://World/GlobalTime.tscn').instance()
      
