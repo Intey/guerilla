@@ -73,7 +73,7 @@ func _ready():
 func _process(delta):
     self.update()
     $AnimationPlayer.play("idle")    
-
+    
 func _draw():
     var color = colors.get($Machinary.current_state, Color(1, 1, 1))
     $Sprite/ColorRect.color = color

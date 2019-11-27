@@ -1,11 +1,17 @@
 extends Node
 class_name GameEvent
 
-export var timeout = 10
+# deley of event to really appers
+export var delay_seconds = 1
+# already waited dalay
 var wait_sec = 0
-var appears = false
-var GT: GlobalTime
 
+export var spawnAreaPath := '/root/World/SpawnArea'
+export var mainCampPath := '/root/World/MainCamp'
+# is event should appers
+var appears = false
+
+var GT: GlobalTime
 
 func _ready():
     GT = get_node('/root/World/GlobalTime')
@@ -20,26 +26,42 @@ func _process(delta):
 func process(delta):
     if self.appears:
         self.wait_sec += delta
-        if self.wait_sec >= timeout:
+        if self.wait_sec >= delay_seconds:
             print_debug("event fire: ", self.name, " at ", GT.time)
             self.event()
             self.appears = false
     
     
 func appear():
-    assert(GT != null)
     print_debug("appears event: ", self.name, " at ", GT.time)
     self.appears = true
 
 
-var Animal = preload("res://Animal/Animal.tscn")
-            
-            
 func event():
-    var world = get_node("/root/World")
-    var ani = Animal.instance()
+    spawn()
+    spawn()
+
+
+func spawn():
+    var world = $"/root/World"
     var player = world.get_node("Player")
-    ani.global_position = player.global_position + Vector2(50, 50)
+    var area = get_node(spawnAreaPath)
+    if not area:
+        print_debug("not found area")
+        get_tree().quit()   
+    var ani = self.create_animal()
+    area.spawn(ani)
     world.add_child(ani)
-    queue_free()
     
+    
+func create_animal() -> Animal:
+    var animal = load("res://Animal/Animal.tscn")
+    var ani: Animal = animal.instance()
+    var camp = get_node(mainCampPath)
+    if not camp:
+        print_debug("not camp found. random roam")
+    else:
+        print_debug("Camp position ", camp.global_position)
+        ani.random_roam = false
+        ani.roam_target = camp.global_position
+    return ani

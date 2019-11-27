@@ -35,7 +35,7 @@ func _process(delta):
         $Player.Blackboard.erase('crafting')
         craftHud.hide()
         $Player.hide_build_mode()
-    
+        
 func create_building(reciepe, position):
     var scene_path = reciepe.scene
     var BuildScene = load(scene_path)

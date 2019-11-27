@@ -1,4 +1,6 @@
 extends Node
+class_name Blackboard
+
 signal change_value(key, value)
 
 var _blackboard = {}

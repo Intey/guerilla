@@ -15,6 +15,16 @@ _global_script_classes=[ {
 "path": "res://Animal/AnimalKinematic.gd"
 }, {
 "base": "Node",
+"class": "Blackboard",
+"language": "GDScript",
+"path": "res://Utility/Blackboard.gd"
+}, {
+"base": "Node",
+"class": "ConditionalEvent",
+"language": "GDScript",
+"path": "res://World/Events/ConditionalEvent.gd"
+}, {
+"base": "Node",
 "class": "EventSheduler",
 "language": "GDScript",
 "path": "res://World/Events/EventSheduler.gd"
@@ -61,6 +71,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Animal": "",
+"Blackboard": "",
+"ConditionalEvent": "",
 "EventSheduler": "",
 "GameEvent": "",
 "GlobalTime": "",

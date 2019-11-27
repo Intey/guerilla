@@ -2,9 +2,11 @@ extends KinematicBody2D
 class_name Animal
 export var speed: float = 100.0
 var unit : Unit
-
+export var roam_target: Vector2
+export var random_roam: bool
 
 func on_dead():
+    print_debug("animal dead")
     queue_free()
     
 
@@ -41,12 +43,16 @@ onready var states_map = {
 # event | source | target
 # enter fear area | 
 func _ready():
+    var roam_state = states_map[ROAMING]
+    roam_state.target_direction = self.roam_target
+    roam_state.random_roam = self.random_roam
+    
     $SM.init(states_map, ROAMING)
     self.unit = Unit.new(100, funcref(self, "on_dead"))
     self.GT = get_node('/root/World/GlobalTime')
     if self.GT == null:
         self.GT = load('res://World/GlobalTime.tscn').instance()
-     
+    
 func move(delta, velocity):
     """
     Interface for state. All logic is in state.
@@ -61,13 +67,14 @@ func move(delta, velocity):
 func _draw():
     $ColorRect.color = colors.get($SM.current_state, Color(1, 1, 1))
     draw_line(Vector2(), velocity * 20, Color(0,1,0))
-    if BB.get('player'):
-        var target = BB['player']
-        var pos = target.position - position
-        draw_line(Vector2(), pos, Color(1,0,0))
+    #if BB.get('player'):
+    #    var target = BB['player']
+    #    var pos = target.position - position
+    #    draw_line(Vector2(), pos, Color(1,0,0))
  
 func _physics_process(delta):
     update() # for redrawing
+    
 
 func _on_DetectionArea_body_entered(body):
     if body.name == 'Player':
