@@ -2,7 +2,6 @@ extends KinematicBody2D
 class_name Animal
 export var speed: float = 100.0
 var unit : Unit
-export var roam_target: Vector2
 export var random_roam: bool
 
 func on_dead():
@@ -39,14 +38,21 @@ onready var states_map = {
     WAIT: $SM/Wait.init(self),
 }
 
+var roam_target = null
+
+func set_roam_target(target):
+    if states_map == null:
+        roam_target = target
+    else:
+        var roam_state = states_map[ROAMING]
+        roam_state.target_direction = target
+        roam_state.random_roam = self.random_roam
 # Transitions
 # event | source | target
 # enter fear area | 
 func _ready():
-    var roam_state = states_map[ROAMING]
-    roam_state.target_direction = self.roam_target
-    roam_state.random_roam = self.random_roam
-    
+    if roam_target:
+        set_roam_target(roam_target)
     $SM.init(states_map, ROAMING)
     self.unit = Unit.new(100, funcref(self, "on_dead"))
     self.GT = get_node('/root/World/GlobalTime')

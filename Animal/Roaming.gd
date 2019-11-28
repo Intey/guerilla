@@ -1,7 +1,7 @@
 extends 'res://Animal/BaseState.gd'
 var utils = preload("res://Utility/utils.gd").new()
 
-
+# TODO: random roaming in area
 export var target_direction: Vector2
 export var random_roam: bool = true
 

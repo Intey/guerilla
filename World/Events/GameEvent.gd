@@ -32,6 +32,8 @@ func spawn():
         get_tree().quit()   
     var ani = self.create_animal()
     area.spawn(ani)
+    # set target position is itself. animals stay
+    ani.set_roam_target(ani.global_position)
     world.add_child(ani)
     
     
@@ -42,8 +44,7 @@ func create_animal() -> Animal:
     if not camp:
         print_debug("not camp found. random roam")
     else:
-        ani.random_roam = false
-        ani.roam_target = camp.global_position
+        ani.set_roam_target(camp.global_position)
     return ani
     
 func predicate() -> bool:
