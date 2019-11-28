@@ -4,10 +4,10 @@ class_name GameEvent
 
 export var spawnAreaPath := '/root/World/SpawnArea'
 export var mainCampPath := '/root/World/MainCamp'
-
+var count = 4
 
 func _ready():
-    self.name = "Spawn 2 Animals" 
+    self.name = "Spawn " + str(self.count) + " Animals" 
 
 
 func start() -> bool:
@@ -19,9 +19,8 @@ func start() -> bool:
 
 
 func _run():
-    spawn()
-    spawn()
-    
+    for i in range(0, self.count):
+        spawn()
 
 func spawn():
     var world = $"/root/World"

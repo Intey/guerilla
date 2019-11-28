@@ -6,6 +6,7 @@ export var spawnAreaPath := '/root/World/SpawnArea'
 export var mainCampPath := '/root/World/MainCamp'
 
 var bodies = []
+var expected_count = 3
 
 func _ready():
     self.name = "Start Attack" 
@@ -29,4 +30,4 @@ func _run():
 func predicate() -> bool:
     var area = get_node(self.spawnAreaPath)
     self.bodies = area.get_overlapping_bodies()
-    return len(bodies) >= 3
+    return len(bodies) >= self.expected_count
