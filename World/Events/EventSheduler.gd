@@ -63,7 +63,8 @@ func create_spawn_event() -> Dictionary:
     
 func create_conditional_event() -> Dictionary:
     var event = ConditionalEvent.new()
-    return {'event': event, 'repeats': -1, 'repeat_delay': 8, 'starttime': 2}
+    # TODO: conditional should test condition every tick. It's not a repeatable
+    return {'event': event, 'repeats': -1, 'repeat_delay': 1, 'starttime': 2}
     
     
 func _process(delta):
