@@ -30,5 +30,5 @@ func update_impl(delta):
     print_debug("Not implemented state method 'update_impl' ", self.host.name, ".", self.name)
     
 func physics_process_impl(delta):
-    print_debug("Not implemented state method 'update_impl' ", self.host.name, ".", self.name)
+    print_debug("Not implemented state method 'physics_process_impl' ", self.host.name, ".", self.name)
     
