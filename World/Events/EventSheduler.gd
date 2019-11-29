@@ -15,10 +15,10 @@ func _ready():
     # TODO: skip done events(by globaltime)
     # TODO: run events, that already in progress(load game)
     # timeout from start
-    var event_data = self.create_spawn_event()
-    add_event(event_data)
-    event_data = self.create_conditional_event()
-    add_event(event_data)
+    #var event_data = self.create_spawn_event()
+    #add_event(event_data)
+    #event_data = self.create_conditional_event()
+    #add_event(event_data)
 
     
 func add_event(event_data):

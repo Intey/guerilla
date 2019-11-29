@@ -14,7 +14,6 @@ func connect_craft():
     $Player.connect('build', self, 'create_building')
     
 
-
 func connect_clip():
     var clip = $Player/RangeWeapon/WeaponClip
     var mv = clip.max_value

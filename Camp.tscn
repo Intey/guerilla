@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.0
+radius = 385.331
 
 [node name="Camp" type="Node2D"]
 

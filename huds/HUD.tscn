@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://huds/CraftHUD.tscn" type="PackedScene" id=1]
+[ext_resource path="res://huds/AmmoHUD.tscn" type="PackedScene" id=2]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 2
+
+[node name="CraftHUD" parent="." instance=ExtResource( 1 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -240.0
+
+[node name="Ammo" parent="." instance=ExtResource( 2 )]
+
