@@ -23,8 +23,9 @@ func start() -> bool:
 func _run():
     var camp = get_node(mainCampPath)
     for body in self.bodies:
-        print_debug("target body ", body, " to camp")
-        body.set_roam_target(camp.global_position)
+        if body.has_method('set_roam_target'):
+            print_debug("target body ", body, " to camp")
+            body.set_roam_target(camp.global_position)
     
     
 func predicate() -> bool:
