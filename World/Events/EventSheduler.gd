@@ -63,7 +63,7 @@ func create_spawn_event() -> Dictionary:
     
 func create_conditional_event() -> Dictionary:
     var event = ConditionalEvent.new()
-    return {'event': event, 'repeats': 0}
+    return {'event': event, 'repeats': -1, 'repeat_delay': 8, 'starttime': 2}
     
     
 func _process(delta):
