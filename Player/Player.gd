@@ -93,10 +93,6 @@ func collect_item(res_type):
     else:
         inventory[res_type] = collected
     print_debug('collected ', collected, ' ', res_type, ". now player has ", inventory)
-    var res := GameResource.new()
-    res.type = res_type
-    res.count = collected
-    emit_signal("gathers", res)
     emit_signal('inventory_update', self.inventory)
 
 
