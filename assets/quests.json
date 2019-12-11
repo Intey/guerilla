@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Wild Animals",
+    "description": "So you are there. We found many animals near camp. We need to kill them.",
+    "done_when": {
+      "in_area": {
+        "area_path": "./View",
+        "target_class": "Animal",
+        "target_count": "< 3"
+      }
+    },
+    "available_when": {
+      "in_area": {
+        "area_path": "./View",
+        "target_class": "Animal",
+        "target_count": >= 3"
+      }
+    }
+  }
+]

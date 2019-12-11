@@ -11,7 +11,7 @@ func on_dead():
 
 # state for select
 enum { 
-    PREVIOUS = Machinary.PREVIOUS_STATE,
+    PREVIOUS = FSM.PREVIOUS_STATE,
     ROAMING, 
     PURSUIT, 
     FLEEING,

@@ -1,5 +1,6 @@
 extends KinematicBody2D
 class_name Player
+
 var settings_filepath = "res://settings.json"
 
 const BULLET = preload('res://Bullet.tscn')
@@ -18,12 +19,14 @@ var Blackboard = preload("res://Utility/Blackboard.gd").new()
 
 signal inventory_update(inventory)
 signal build(reciepe, position)
+signal kills(victum)
+signal gathers(resource)
 
 var unit: Unit
 
 # State machinary
 enum {
-    PREVIOUS = Machinary.PREVIOUS_STATE,
+    PREVIOUS = FSM.PREVIOUS_STATE,
     IDLE,
     SLEEP,
     COLLECTING,
@@ -35,9 +38,9 @@ var colors = {
     COLLECTING: Color(0, 0, 0, 0),
 }
 onready var states_map = {
-    IDLE: $Machinary/Idle.init(self),
-    SLEEP: $Machinary/Sleep.init(self),
-    COLLECTING: $Machinary/Collecting.init(self),
+    IDLE: $FSM/Idle.init(self),
+    SLEEP: $FSM/Sleep.init(self),
+    COLLECTING: $FSM/Collecting.init(self),
 }
 
 # ============ State machinary
@@ -56,7 +59,7 @@ var CraftStation = null
 var godmode = false
 
 func _ready():
-    $Machinary.init(states_map, IDLE)
+    $FSM.init(states_map, IDLE)
     self.CraftStation = CS.new(self)
     var settings_file = File.new()
     settings_file.open(settings_filepath, File.READ)
@@ -74,8 +77,9 @@ func _process(delta):
     self.update()
     $AnimationPlayer.play("idle")    
     
+    
 func _draw():
-    var color = colors.get($Machinary.current_state, Color(1, 1, 1))
+    var color = colors.get($FSM.current_state, Color(1, 1, 1))
     $Sprite/ColorRect.color = color
     
 #func _draw():
@@ -89,6 +93,10 @@ func collect_item(res_type):
     else:
         inventory[res_type] = collected
     print_debug('collected ', collected, ' ', res_type, ". now player has ", inventory)
+    var res := GameResource.new()
+    res.type = res_type
+    res.count = collected
+    emit_signal("gathers", res)
     emit_signal('inventory_update', self.inventory)
 
 
@@ -177,7 +185,9 @@ func hide_build_mode():
         
 func fire(delta):
     var mpos = get_local_mouse_position() * shoot_range
-    $RangeWeapon.fire(delta, mpos)
+    var victum = $RangeWeapon.fire(delta, mpos)
+    if not victum.unit.alive:
+        emit_signal("kills", victum)
     
 func hit(dmg):
     if godmode:

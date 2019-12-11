@@ -14,7 +14,7 @@ var unit: Unit
 
 # State machinary
 enum {
-    PREVIOUS = Machinary.PREVIOUS_STATE,
+    PREVIOUS = FSM.PREVIOUS_STATE,
     ROAMING,
     PURSUIT,
     ATTACK,
@@ -33,18 +33,18 @@ var colors = {
 
 # ============ State machinary
 onready var states_map = {
-    ROAMING: $Machinary/Roaming.init(self),
-    PURSUIT: $Machinary/Pursuiting.init(self),
-    ATTACK: $Machinary/Attack.init(self),
+    ROAMING: $FSM/Roaming.init(self),
+    PURSUIT: $FSM/Pursuiting.init(self),
+    ATTACK: $FSM/Attack.init(self),
 }
 
 func _change_state(state):
-    $Machinary.change_state(state)
+    $FSM.change_state(state)
 # ============ END State machinary    
     
     
 func _ready():
-    $Machinary.init(states_map, ROAMING)
+    $FSM.init(states_map, ROAMING)
     $DetectionArea/Area.shape.radius = detection_radius
     self.unit = Unit.new(100, funcref(self, "queue_free"))
     $RangeWeapon.init(self)
@@ -63,7 +63,7 @@ func _physics_process(delta):
     
     
 func _draw():
-    $ColorRect.color = colors.get($Machinary.current_state, Color(1, 1, 1))
+    $ColorRect.color = colors.get($FSM.current_state, Color(1, 1, 1))
 
 
 func _on_DetectionArea_body_entered(body):

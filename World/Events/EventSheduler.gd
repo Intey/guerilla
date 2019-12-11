@@ -15,10 +15,10 @@ func _ready():
     # TODO: skip done events(by globaltime)
     # TODO: run events, that already in progress(load game)
     # timeout from start
-    #var event_data = self.create_spawn_event()
-    #add_event(event_data)
-    #event_data = self.create_conditional_event()
-    #add_event(event_data)
+    var event_data = self.create_spawn_event()
+    add_event(event_data)
+    event_data = self.create_conditional_event()
+    add_event(event_data)
 
     
 func add_event(event_data):
@@ -58,13 +58,13 @@ func add_to_forever(event, start_time, repeat_delay):
         
 func create_spawn_event() -> Dictionary:
     var event = GameEvent.new()
-    return {"event": event, "repeats": -1, 'repeat_delay': 8, 'starttime': 1}
+    return {"event": event, "repeats": 0, 'repeat_delay': 8, 'starttime': 1}
     
     
 func create_conditional_event() -> Dictionary:
     var event = ConditionalEvent.new()
     # TODO: conditional should test condition every tick. It's not a repeatable
-    return {'event': event, 'repeats': -1, 'repeat_delay': 1, 'starttime': 2}
+    return {'event': event, 'repeats': 0, 'repeat_delay': 1, 'starttime': 2}
     
     
 func _process(delta):

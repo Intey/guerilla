@@ -1,0 +1,38 @@
+{
+  "spawn animal": {
+    "action": {
+      "instance": { 
+        "type": "Animal", 
+        "position": "$SpawnArea",
+        "count": 2
+      },
+      "when": {
+        "time": 10
+      }
+    }
+  },
+  "StartAttack": {
+    "action": {
+      "move": {
+        "target": {
+          "type": "Animal",
+          "position": "$SpawnArea",
+          "count": "all"
+        }
+      },
+      "when": {
+        "$SpawnArea has 3 $Animal"
+      }
+    }
+  },
+  "KillBears": {
+    "action": { 
+      "quest": { 
+        "name": "Убить медведей", 
+        "prolog": "Наши братцы обнаружили группу враждебный медведей, надо бы с ними разобраться. Осилишь, товарищ?" 
+      },
+      "when": {
+        "condition": "3 $Bear in 5km"
+      }
+  }
+}

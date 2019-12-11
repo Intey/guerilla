@@ -27,8 +27,19 @@ func update_physics(delta):
     physics_process_impl(delta)
     
 func update_impl(delta):
-    print_debug("Not implemented state method 'update_impl' ", self.host.name, ".", self.name)
+    pass
+    #print_debug("Not implemented state method 'update_impl' ", self.host.name, ".", self.name)
     
 func physics_process_impl(delta):
-    print_debug("Not implemented state method 'physics_process_impl' ", self.host.name, ".", self.name)
+    pass
+    #print_debug("Not implemented state method 'physics_process_impl' ", self.host.name, ".", self.name)
     
+
+func on_enter():
+    pass
+    
+func on_exit():
+    pass
+    
+func soft_transit(state) -> bool:
+    return true

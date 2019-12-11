@@ -30,9 +30,19 @@ _global_script_classes=[ {
 "path": "res://World/Events/EventSheduler.gd"
 }, {
 "base": "Node",
+"class": "FSM",
+"language": "GDScript",
+"path": "res://states/FSM.gd"
+}, {
+"base": "Node",
 "class": "GameEvent",
 "language": "GDScript",
 "path": "res://World/Events/GameEvent.gd"
+}, {
+"base": "Area2D",
+"class": "GameResource",
+"language": "GDScript",
+"path": "res://Resources/Resource.gd"
 }, {
 "base": "Node",
 "class": "GlobalTime",
@@ -40,14 +50,24 @@ _global_script_classes=[ {
 "path": "res://World/GlobalTime.gd"
 }, {
 "base": "Node",
-"class": "Machinary",
+"class": "KillObjective",
 "language": "GDScript",
-"path": "res://states/Machinary.gd"
+"path": "res://Quest/Objectives/KillObjective.gd"
+}, {
+"base": "Node",
+"class": "ObjectInArea",
+"language": "GDScript",
+"path": "res://Quest/Conditions/ObjectInArea.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/Player.gd"
+}, {
+"base": "Node",
+"class": "Quest",
+"language": "GDScript",
+"path": "res://Quest/Quest.gd"
 }, {
 "base": "HBoxContainer",
 "class": "ReciepeItem",
@@ -74,10 +94,14 @@ _global_script_class_icons={
 "Blackboard": "",
 "ConditionalEvent": "",
 "EventSheduler": "",
+"FSM": "",
 "GameEvent": "",
+"GameResource": "",
 "GlobalTime": "",
-"Machinary": "",
+"KillObjective": "",
+"ObjectInArea": "",
 "Player": "",
+"Quest": "",
 "ReciepeItem": "",
 "Unit": "",
 "Value": "",
@@ -93,6 +117,7 @@ config/icon="res://icon.png"
 [autoload]
 
 utils="*res://Utility/utils.gd"
+questManager="*res://Quest/QuestManager.gd"
 
 [display]
 
