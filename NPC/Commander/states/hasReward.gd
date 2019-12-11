@@ -25,5 +25,6 @@ func interact(viewport, event, shape_idx):
     if event.is_action_pressed("ui_select"):
         questManager.reward(self.host.quest)
         
+
 func soft_transit(state):
     return false
