@@ -79,5 +79,5 @@ position = Vector2( -544, 272 )
 position = Vector2( 1440, -368 )
 
 [node name="Commander" parent="." instance=ExtResource( 14 )]
-position = Vector2( -496, 240 )
+position = Vector2( -496, 208.044 )
 

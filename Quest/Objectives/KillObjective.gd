@@ -7,12 +7,18 @@ var _target_type
 signal completed()
 signal changed(count)
 
-onready var player = $"/root/World/Player"
+var player
 
 func _init(type, count):
     self._count = count
     self._target_type = type
-    
+
+
+func _ready():
+    self.player = $"/root/World/Player"
+    assert(self.player != null)
+    self.bind()
+
 
 func on_kills(target):
     if self._count == 0:
@@ -25,4 +31,4 @@ func on_kills(target):
         emit_signal("changed", self._count)
 
 func bind():
-    player.connect("kills", self, "on_kills")
+    self.player.connect("kills", self, "on_kills")

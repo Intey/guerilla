@@ -182,6 +182,8 @@ func hide_build_mode():
 func fire(delta):
     var mpos = get_local_mouse_position() * shoot_range
     var victum = $RangeWeapon.fire(delta, mpos)
+    if not victum:
+        return
     if not victum.unit.alive:
         emit_signal("kills", victum)
     

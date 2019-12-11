@@ -38,7 +38,8 @@ func change_state(state: int, soft_transit=false):
     if from_state != new_cur_state:
         states_map[from_state].on_exit()
         states_map[new_cur_state].on_enter()        
-        #print_debug("change state from ", from_state, " to ", __get_current_state())
+        if self.debug:
+            print_debug("change state from ", from_state, " to ", __get_current_state())
     
     
 func _process(delta):
@@ -47,8 +48,6 @@ func _process(delta):
     var new_state = state.update(delta)
     if new_state == null:
         return
-    #if debug and new_state != null:
-        #print_debug("state ", state.name, " updates to state ", new_state)
     change_state(new_state)
     
 func _physics_process(delta):

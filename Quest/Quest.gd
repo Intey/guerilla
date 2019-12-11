@@ -22,24 +22,20 @@ var available := false
 var quest_done := false
 
 signal available(state)
-
 #for bind to UI
 signal objective_done(objective)
-signal objective_undone(objective)
 
-func _init(owner, name, description, objectives, available_conditions=null):
+
+func _init(owner, name, description, objectives, available_conditions):
     self.quest_owner = owner
     self.quest_name = name
     self.quest_description = description
-    
-    if available_conditions != null:
-        self.available_conditions = available_conditions
-    for c in self.available_conditions:
-        c.bind()
-    
+    self.available_conditions = available_conditions
     self.objectives = objectives
+
+
+func _ready():
     for objective in self.objectives:
-        objective.bind()
         objective.connect("completed", self, "on_complete_objective", [objective])
     
 
@@ -71,4 +67,5 @@ func _process(delta):
 func on_complete_objective(objective):
     self.objectives.erase(objective)
     self.done_objectives.append(objective)
+    emit_signal("objective_done", objective)
     
