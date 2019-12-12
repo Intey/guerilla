@@ -4,13 +4,11 @@ func update_impl(delta):
       
     # collecting
     if Input.is_action_just_pressed('ui_interact'):
-        print_debug("interacting...")
         if self.host.collectable_area:
             return self.host.COLLECTING
         elif self.host.Blackboard.get("sleep"):
             return self.host.SLEEP
     if Input.is_action_just_pressed('ui_select'):
-        print("is crafting: ", self.host.Blackboard.get('crafting'))
         if self.host.Blackboard.get('crafting'):
             if self.host.build_plan and not self.host.build_plan['node'].collided:
                 self.host.build_structure()

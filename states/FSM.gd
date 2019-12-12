@@ -10,7 +10,7 @@ var __states_stack := []
 
 var states_map: Dictionary
 
-const PREVIOUS_STATE = 1
+const PREVIOUS_STATE = "previous"
 
 func init(states: Dictionary, initial_state):
     if get_parent().get('debug') != null:
@@ -21,7 +21,7 @@ func init(states: Dictionary, initial_state):
     states_map[initial_state].on_enter()
     __states_stack.push_back(initial_state)
         
-func change_state(state: int, soft_transit=false):
+func change_state(state, soft_transit=false):
     var from_state = __get_current_state()
     if state == null: # state not changes
         return
@@ -34,10 +34,10 @@ func change_state(state: int, soft_transit=false):
     else:
         __states_stack.push_front(state)
     # state is changed
-    var new_cur_state = __get_current_state()
-    if from_state != new_cur_state:
+
+    if from_state != state:
         states_map[from_state].on_exit()
-        states_map[new_cur_state].on_enter()        
+        states_map[state].on_enter()        
         if self.debug:
             print_debug("change state from ", from_state, " to ", __get_current_state())
     

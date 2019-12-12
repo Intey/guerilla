@@ -10,13 +10,11 @@ func on_dead():
     
 
 # state for select
-enum { 
-    PREVIOUS = FSM.PREVIOUS_STATE,
-    ROAMING, 
-    PURSUIT, 
-    FLEEING,
-    WAIT, 
-}
+var PREVIOUS = FSM.PREVIOUS_STATE
+var ROAMING = "roaming"
+var PURSUIT = "pursuit" 
+var FLEEING = "fleeing"
+var WAIT = "wait" 
 
 var velocity: Vector2
 

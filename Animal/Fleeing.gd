@@ -2,7 +2,7 @@ extends 'res://Animal/BaseState.gd'
 var utils = preload("res://Utility/utils.gd")
 
 func update_impl(delta):
-    
+    # TODO: fleeing some time before change state
     var host = self.host
     var fp = host.BB.get('fear_point')
     var target = host.BB.get('player')

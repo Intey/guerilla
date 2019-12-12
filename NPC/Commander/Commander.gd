@@ -5,14 +5,20 @@ var quests := []
 # quests, that player can get
 var available_quests = []
 
-enum {
-    PREVIOUS = FSM.PREVIOUS_STATE,
-    IDLE,
-    HAS_QUEST,
-    SHOW_DETAILS,
-    HAS_REWARD,
-    QUEST_OUT,
-}
+#warning-ignore:unused_class_variable
+var PREVIOUS = FSM.PREVIOUS_STATE
+var IDLE = "idle"
+#warning-ignore:unused_class_variable
+var HAS_QUEST = "has quest"
+#warning-ignore:unused_class_variable
+var SHOW_DETAILS = "show details"
+#warning-ignore:unused_class_variable
+var HAS_REWARD = "has reward"
+#warning-ignore:unused_class_variable
+var QUEST_OUT = "quest out"
+
+export var debug: bool = false
+
 
 onready var states_map = {
     IDLE: $FSM/Idle.init(self),
@@ -44,6 +50,8 @@ func _ready():
         q.connect("available", self, "on_quest_available", [q])
 
 func on_quest_available(quest: Quest, available: bool):
+    if self.debug:
+        print_debug("quest ", quest.name, " available: ", available)
     if available:
         self.available_quests.append(quest)
     else:

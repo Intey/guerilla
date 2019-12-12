@@ -38,10 +38,29 @@ func physics_process_impl(delta):
     
 
 func on_enter():
-    pass
+    """
+    Executed when we transit into this state. 
+    What to do:
+        - connect
+        - reset state of state
+    """
+    
     
 func on_exit():
-    pass
+    """
+    Executed when transit from this state.
+    What to do:
+        - disconnect
+        - final accords.
+    """
+    
     
 func soft_transit(state) -> bool:
+    """
+    Used from FSM, for cases when we want transit by FSM or from it's parent, 
+    not other states, but current state can prevent from jumping from it.
+    Example is 'displayQuestDetails': user reads quest details, and if this 
+    moment, some another quest become available, we jumps back to view, that 
+    quest enabled.
+    """
     return true

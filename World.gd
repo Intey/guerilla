@@ -9,9 +9,10 @@ func _ready():
     
 func connect_craft():
     craftHud.init($Player)
-    $Player.connect('inventory_update', craftHud, "update_reciepes_view")
-    craftHud.connect('craft', $Player, 'craft')
-    $Player.connect('build', self, 'create_building')
+    assert $Player.connect('inventory_update', craftHud, "update_reciepes_view") == 0
+
+    assert craftHud.connect('craft', $Player, 'craft') == 0
+    assert $Player.connect('build', self, 'create_building') == 0
     
 
 func connect_clip():

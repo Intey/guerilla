@@ -25,12 +25,12 @@ signal gathers(resource)
 var unit: Unit
 
 # State machinary
-enum {
-    PREVIOUS = FSM.PREVIOUS_STATE,
-    IDLE,
-    SLEEP,
-    COLLECTING,
-}
+
+var PREVIOUS = FSM.PREVIOUS_STATE
+var IDLE = "idle"
+var SLEEP = "sleep"
+var COLLECTING = "collecting"
+
 # Debug colors for state visibility
 var colors = {
     IDLE: Color(0, 0, 0, 0),

@@ -32,7 +32,8 @@ func _process(delta):
     self.update_reciepes_view()
         
 # slot for signals: updates reciepes, ingridients
-func update_reciepes_view():
+#warning-ignore:unused_argument
+func update_reciepes_view(new_inventory=null):
     $Items/ItemList.clear()
     $Items/Counts.clear()
     render_ingridients(self.player.inventory)
