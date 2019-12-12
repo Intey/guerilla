@@ -30,6 +30,7 @@ func spawn():
         print_debug("not found area")
         get_tree().quit()   
     var ani = self.create_animal()
+    area.add_child(ani)
     area.spawn(ani)
     # set target position is itself. animals stay
     ani.set_roam_target(ani.global_position)
