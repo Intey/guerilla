@@ -47,7 +47,7 @@ func _ready():
 
     for q in self.quests:
         self.add_child(q)
-        q.connect("available", self, "on_quest_available", [q])
+        assert q.connect("available", self, "on_quest_available") == 0
 
 func on_quest_available(quest: Quest, available: bool):
     if self.debug:

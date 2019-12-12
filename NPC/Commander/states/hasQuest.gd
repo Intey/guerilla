@@ -1,6 +1,5 @@
 extends "res://states/state.gd"
 
-var animals := 0
 var show_describe = false
 var has_reward = false
 onready var click_area = $"../../ClickArea"
@@ -24,14 +23,11 @@ func update_impl(delta):
         return self.host.HAS_REWARD
     if show_describe:
         return self.host.SHOW_DETAILS
-    if self.animals < 3:
-        return self.host.IDLE
-    
     
 func physics_process_impl(delta):
     pass
 
 
 func _on_ClickArea_input_event(viewport, event, shape_idx):
-    if event.is_action_pressed("ui_select"):
+    if event.is_action_just_pressed("ui_select"):
         self.show_describe = true

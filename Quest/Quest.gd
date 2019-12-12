@@ -13,15 +13,13 @@ class_name Quest
 var quest_name: String
 var quest_description: String
 var quest_owner
-var player_gets := true
 var objectives = []
 var done_objectives = []
 var available_conditions = []
 
-var available := false
-var quest_done := false
+var _available := false
 
-signal available(state)
+signal available(quest, state)
 #for bind to UI
 signal objective_done(objective)
 
@@ -37,6 +35,8 @@ func _init(owner, name, description, objectives, available_conditions):
 func _ready():
     for objective in self.objectives:
         objective.connect("completed", self, "on_complete_objective", [objective])
+    for c in self.available_conditions:
+        self.add_child(c)
     
 
 func is_done():
@@ -47,21 +47,24 @@ func is_available():
     """
     Can owner take this quest to player?
     """
-    if self.available:
+    if self._available:
         return true
     for condition in self.available_conditions:
         if not condition.meet():
             return false
+        print_debug("meet condition")
     return true
 
 
+#warning-ignore:unused_argument
 func _process(delta):
     # OPTZ: timer for check 
     var new_available = self.is_available()
     # only when state changes
-    if self.available != new_available:
-        self.available = new_available
-        emit_signal("available", new_available)
+    
+    if self._available != new_available:
+        self._available = new_available
+        emit_signal("available", self, new_available)
         
         
 func on_complete_objective(objective):

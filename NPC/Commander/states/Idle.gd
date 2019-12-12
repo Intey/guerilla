@@ -2,8 +2,5 @@ extends "res://states/state.gd"
 
 
 func update_impl(delta):
-    if self.debug:
-        pass
-        
-    if self.host.available_quests:
+    if not self.host.available_quests.empty():
         return self.host.HAS_QUEST

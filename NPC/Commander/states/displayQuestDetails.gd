@@ -9,18 +9,17 @@ var assigned := false
 
 func on_enter():
     description_view.visible = true
-    var quest = self.host.available_quests[0]    
+    var quest = self.host.available_quests[0]  
     description_view.text = quest.quest_description
-    click_area.connect("input_event", self, "_on_ClickArea_input_event")
+    self.assigned = false
+    self.has_reward = false
+    self.has_quest = true
+    assert click_area.connect("input_event", self, "_on_ClickArea_input_event") == 0
 
     
 func on_exit():
-    description_view.visible = false
     click_area.disconnect("input_event", self, "_on_ClickArea_input_event")
-    self.has_reward = false
-    self.has_quest = true
-    self.assigned = false
-    
+
 
 func update_impl(delta):
     # when we show quest, and it's gone away, we needs to show this
@@ -35,8 +34,10 @@ func update_impl(delta):
 
 
 func _on_ClickArea_input_event(viewport, event, shape_idx):
-    var quest = self.host.available_quests[0]    
-    questManager.assign_to_player(quest)
+    if event.is_action_just_pressed("ui_select"):
+        var quest = self.host.available_quests[0]    
+        questManager.assign_to_player(quest)
+        self.assigned = true
 
 
 func soft_trainsit(state):
