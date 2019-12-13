@@ -23,6 +23,6 @@ func physics_process_impl(delta):
     
 func pursuit(delta, target):
     var host = self.host
-    var pos = target.position - host.position
+    var pos = target.global_position - host.global_position
     host.velocity = pos.normalized() * host.speed
     host.move(delta, host.velocity)
