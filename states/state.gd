@@ -50,8 +50,8 @@ func on_exit():
     """
     Executed when transit from this state.
     What to do:
-        - disconnect
-        - final accords.
+        - disconnect from connected nodes
+        - hiding some nodes, that was shown by on_enter
     """
     
     

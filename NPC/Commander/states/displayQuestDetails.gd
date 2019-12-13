@@ -17,6 +17,7 @@ func on_enter():
 
     
 func on_exit():
+    self.description_view.visible = false
     click_area.disconnect("input_event", self, "_on_ClickArea_input_event")
 
 
@@ -36,7 +37,7 @@ func _on_ClickArea_input_event(viewport, event, shape_idx):
         var quest = self.host.available_quests[0]    
         questManager.assign_to_player(quest)
         self.assigned = true
-
+        
 
 func soft_trainsit(state):
     return false
