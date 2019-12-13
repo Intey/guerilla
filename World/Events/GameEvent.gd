@@ -23,8 +23,7 @@ func _run():
         spawn()
 
 func spawn():
-    var world = $"/root/World"
-    var player = world.get_node("Player")
+    var player = get_node("/root/World/Player")
     var area = get_node(spawnAreaPath)
     if not area:
         print_debug("not found area")
@@ -34,7 +33,6 @@ func spawn():
     area.spawn(ani)
     # set target position is itself. animals stay
     ani.set_roam_target(ani.global_position)
-    world.add_child(ani)
     
     
 func create_animal() -> Animal:
