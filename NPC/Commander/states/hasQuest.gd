@@ -28,6 +28,6 @@ func physics_process_impl(delta):
     pass
 
 
-func _on_ClickArea_input_event(viewport, event, shape_idx):
-    if event.is_action_just_pressed("ui_select"):
+func _on_ClickArea_input_event(viewport, event: InputEvent, shape_idx):
+    if event.is_action_pressed("ui_select") and Input.is_action_just_pressed("ui_select"):
         self.show_describe = true
