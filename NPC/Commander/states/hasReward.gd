@@ -3,8 +3,6 @@ extends "res://states/state.gd"
 onready var click_area := $"../../ClickArea"
 onready var quest_reward := $"../../ClickArea/QuestReward"
 
-var rewarded := false
-
 
 func on_enter():
     self.quest_reward.visible = true
@@ -17,13 +15,14 @@ func on_exit():
     
 
 func update_impl(delta):
-    if self.rewarded:
+    if not self.host.has_reward():
         return self.host.IDLE
         
         
 func interact(viewport, event, shape_idx):
     if event.is_action_pressed("ui_select"):
-        questManager.reward(self.host.quest)
+        #TODO: select rewarding quest
+        self.host.reward()
         
 
 func soft_transit(state):

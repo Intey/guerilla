@@ -185,6 +185,7 @@ func fire(delta):
     if not victum:
         return
     if not victum.unit.alive:
+        print_debug("player killed ", victum)
         emit_signal("kills", victum)
     
 func hit(dmg):

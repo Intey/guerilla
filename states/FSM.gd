@@ -21,7 +21,14 @@ func init(states: Dictionary, initial_state):
     states_map[initial_state].on_enter()
     __states_stack.push_back(initial_state)
         
-func change_state(state, soft_transit=false):
+func change_state(state: String, soft_transit=true):
+    """
+    Change current state to state. 
+    soft_transit - flag, used to change state from FSM itself by it's owner. 
+    It's like "direct change", that not handled by FSM, but it's owner. 
+    One of cases is to simplify state changes by external events, but without 
+    state cycling.
+    """
     var from_state = __get_current_state()
     if state == null: # state not changes
         return
@@ -48,7 +55,7 @@ func _process(delta):
     var new_state = state.update(delta)
     if new_state == null:
         return
-    change_state(new_state)
+    change_state(new_state, false)
     
 func _physics_process(delta):
     var state = states_map[__get_current_state()]

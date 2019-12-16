@@ -18,8 +18,10 @@ var done_objectives = []
 var available_conditions = []
 
 var _available := false
+var _done := false
 
 signal available(quest, state)
+signal completed(quest)
 #for bind to UI
 signal objective_done(objective)
 
@@ -34,13 +36,17 @@ func _init(owner, name, description, objectives, available_conditions):
 
 func _ready():
     for objective in self.objectives:
-        objective.connect("completed", self, "on_complete_objective", [objective])
+        self.add_child(objective)
+        var error = objective.connect("completed", self, "on_complete_objective", [objective])
+        assert error == 0
+        
     for c in self.available_conditions:
         self.add_child(c)
     
 
 func is_done():
-    return self.objectives.size() == 0
+    self._done = self.objectives.empty()
+    return self._done
         
     
 func is_available():
@@ -58,13 +64,16 @@ func is_available():
 
 #warning-ignore:unused_argument
 func _process(delta):
+    if self._done:
+        return
     # OPTZ: timer for check 
     var new_available = self.is_available()
     # only when state changes
-    
     if self._available != new_available:
         self._available = new_available
         emit_signal("available", self, new_available)
+    if is_done():
+        emit_signal("completed", self)
         
         
 func on_complete_objective(objective):

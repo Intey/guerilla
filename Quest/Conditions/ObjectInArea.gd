@@ -20,7 +20,6 @@ func _init(count: int, type, area, debug=false):
         print_debug(self.name, " tracks ", self._type, " in ", self.area)
 
 func _ready():
-
     self.bind()
     
 func bind():
