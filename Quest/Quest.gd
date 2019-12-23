@@ -26,7 +26,7 @@ signal completed(quest)
 signal objective_done(objective)
 
 
-func _init(owner, name, description, objectives, available_conditions):
+func _init(owner, name, description, objectives, available_conditions=[]):
     self.quest_owner = owner
     self.quest_name = name
     self.quest_description = description
