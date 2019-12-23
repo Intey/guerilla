@@ -10,6 +10,9 @@ export var collection_speed = 1
 export var max_sleep_time := 10.0
 export var sleep_time := 10.0
 export var shoot_range := 20
+
+var inventory setget , _get_inventory
+
 export var debug = false
 
 var CS = preload('res://CraftStation.gd')
@@ -46,12 +49,7 @@ onready var states_map = {
 # ============ State machinary
 
 
-var inventory = {
-    'sticks': 10,
-    'logs': 3,
-    'meat': 6,
-    "leafs": 20,
-   }
+
 #var craftHud = null
 var collectable_area = null
 var build_plan = null
@@ -82,28 +80,28 @@ func _draw():
     var color = colors.get($FSM.current_state, Color(1, 1, 1))
     $Sprite/ColorRect.color = color
     
+    
 #func _draw():
 #    var mpos = get_local_mouse_position()
 #    draw_circle(mpos, 3, Color(1, 0, 0))
 
-func collect_item(res_type):
+
+func collect_item():
     var collected = collectable_area.pop(collection_speed)
-    if res_type in inventory:
-        inventory[res_type] += collected
-    else:
-        inventory[res_type] = collected
-    print_debug('collected ', collected, ' ', res_type, ". now player has ", inventory)
-    emit_signal('inventory_update', self.inventory)
+    $Inventory.add(collected)
+    emit_signal("gathers", collected)
 
 
 func enter_collectable_area(area):
-    print_debug('enter ', area)
-    collectable_area = area
+    if area is CollectableResource:
+        print_debug('enter ', area)
+        collectable_area = area
 
 
 func exit_collectable_area(area):
-    print_debug('exit ', area)
-    collectable_area = null
+    if area == collectable_area:
+        print_debug('exit ', area)
+        collectable_area = null
         
 func enter_campfire_zone():
     self.Blackboard.check('campfire')
@@ -128,8 +126,22 @@ func craft(name):
     print_debug("craft reciepe ", reciepe)
     if self.CraftStation.can_build(reciepe):
         if reciepe.type == crafts.Types.ITEM:
-            subtract_from_inventory(reciepe)
-            add_to_inventory(name, reciepe.count)
+            for res_name in reciepe.ingridients:
+                var count = reciepe.ingridients[res_name]
+                var res = ResourceItem.new()
+                res.name = res_name
+                res.count = count
+                self.subtract_from_inventory(res)
+                
+            var result = self.CraftStation.craft(reciepe)
+            var res
+            if name == "stick":
+                res = ResourceStick.new(reciepe.count)
+            else:
+                res = ResourceItem.new()
+                res.name = name
+                res.count = reciepe.count
+            $Inventory.add(res)
             
         elif reciepe.type == crafts.Types.BUILDING:
             var plan_node = BuildPlan.instance()
@@ -141,26 +153,18 @@ func craft(name):
             $BuildArea.visible = true
         
 
-func add_to_inventory(name, count):
-    if self.inventory.get(name) == null:
-        self.inventory[name] = 0
-    self.inventory[name] += count
-    emit_signal('inventory_update', self.inventory)
-
-
-func subtract_from_inventory(reciepe):
-    for res_name in reciepe.ingridients:
-        var count = reciepe.ingridients[res_name]
-        self.inventory[res_name] -= count
-        if self.inventory[res_name] == 0:
-            self.inventory.erase(res_name)
-    emit_signal('inventory_update', self.inventory)
-    
+func subtract_from_inventory(res):
+    return $Inventory.subtract(res)
+            
     
 func build_structure():
     if build_plan == null:
         return
     var reciepe = build_plan['reciepe']
+    if not self.CraftStation.can_build(reciepe):
+        self.hide_build_mode()
+        return
+        
     subtract_from_inventory(reciepe)
     var position = build_plan['node'].position
     emit_signal('build', reciepe, position)
@@ -200,3 +204,6 @@ func start_collect():
     
 func stop_collect():
     $CollectTimer.stop()
+    
+func _get_inventory():
+    return $Inventory.inventory

@@ -9,7 +9,7 @@ func _ready():
     
 func connect_craft():
     craftHud.init($Player)
-    assert $Player.connect('inventory_update', craftHud, "update_reciepes_view") == 0
+    assert $Player/Inventory.connect('update', craftHud, "update_reciepes_view") == 0
 
     assert craftHud.connect('craft', $Player, 'craft') == 0
     assert $Player.connect('build', self, 'create_building') == 0

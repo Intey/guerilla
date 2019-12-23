@@ -14,3 +14,8 @@ func can_build(reciepe):
         if player.inventory.get(res_name, 0) < count:
             return false
     return true
+
+func craft(reciepe):
+    var count = reciepe.count
+    var name = reciepe.name
+    return count

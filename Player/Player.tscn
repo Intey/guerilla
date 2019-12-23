@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/craft_area.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Player/Sleep.gd" type="Script" id=6]
 [ext_resource path="res://Player/Collecting.gd" type="Script" id=7]
 [ext_resource path="res://Weapons/RangeWeapon.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Player/Inventory.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 100.0
@@ -32,6 +33,9 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=3]
 radius = 31.1473
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 60.0
+
 [node name="Player" type="KinematicBody2D"]
 z_index = 4
 collision_mask = 15
@@ -39,6 +43,8 @@ script = ExtResource( 1 )
 shoot_range = 50
 
 [node name="BuildArea" type="Area2D" parent="."]
+editor/display_folded = true
+visible = false
 __meta__ = {
 "_edit_group_": true
 }
@@ -54,6 +60,7 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+editor/display_folded = true
 texture = ExtResource( 3 )
 hframes = 3
 frame = 1
@@ -71,12 +78,14 @@ playback_speed = 0.5
 anims/idle = SubResource( 2 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
+debug = true
 
 [node name="Idle" type="Node" parent="FSM"]
 script = ExtResource( 5 )
@@ -92,3 +101,12 @@ clipsize = 10
 damage = 30
 time_for_one_shoot = 0.1
 
+[node name="CollectionArea" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="CollectionArea"]
+modulate = Color( 1, 0, 1, 1 )
+shape = SubResource( 4 )
+
+[node name="Inventory" parent="." instance=ExtResource( 9 )]
+
+[connection signal="area_entered" from="CollectionArea" to="." method="enter_collectable_area"]

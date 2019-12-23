@@ -11,6 +11,4 @@ func update_impl(delta):
     __collect_time += delta
     if __collect_time > collecting_timeout:
         __collect_time = 0
-        if self.host.collectable_area:
-            var res_type = self.host.collectable_area.type
-            self.host.collect_item(res_type)
+        self.host.collect_item()
