@@ -21,7 +21,7 @@ func init(states: Dictionary, initial_state):
     states_map[initial_state].on_enter()
     __states_stack.push_back(initial_state)
         
-func change_state(state: String, soft_transit=true):
+func change_state(new_state: String, soft_transit=true):
     """
     Change current state to state. 
     soft_transit - flag, used to change state from FSM itself by it's owner. 
@@ -30,21 +30,26 @@ func change_state(state: String, soft_transit=true):
     state cycling.
     """
     var from_state = __get_current_state()
-    if state == null: # state not changes
+    if new_state == null: # state not changes
         return
+        
+    var real_new_state = new_state
+    if new_state == PREVIOUS_STATE:
+        assert len(__states_stack) > 1
+        real_new_state = __states_stack[-2]
     if soft_transit:
-        if not self.states_map[from_state].soft_transit(state):
+        if not self.states_map[from_state].soft_transit(real_new_state):
             return
             
-    elif state == PREVIOUS_STATE:
+    elif new_state == PREVIOUS_STATE:
         __states_stack.pop_front()
     else:
-        __states_stack.push_front(state)
+        if new_state != PREVIOUS_STATE:
+            __states_stack.push_front(new_state)
     # state is changed
-
-    if from_state != state:
+    if from_state != real_new_state:
         states_map[from_state].on_exit()
-        states_map[state].on_enter()        
+        states_map[real_new_state].on_enter()        
         if self.debug:
             print_debug("change state from ", from_state, " to ", __get_current_state())
     
