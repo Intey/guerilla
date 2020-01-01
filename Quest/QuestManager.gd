@@ -13,44 +13,48 @@ var _available_quests = 'available'
 var _reward_quests = 'reward'
 var _assigned_quests = 'assigned'
 var _completed_quests = 'completed'
-var quests := {
-    _idle_quests: [],
-    _available_quests: [],
-    _reward_quests: [],
-    _assigned_quests: [],
-    _completed_quests: []
-}
+var quests := {} # look at __init_quests_struct
 
+func _init():
+    self.quests = __init_quests_struct()
+    
 signal quest_available(quest, available)
 
 
-func add_quest(owner, quest: Quest):
-    if not self.quests.has(owner):
-        self.quests[owner] = self.__init_quests_struct()
-    self.quests[owner][_idle_quests].append(quest)
+func add_quest(quest: Quest):
+    for k in [_idle_quests, _available_quests, _reward_quests, 
+              _assigned_quests, _completed_quests]:
+        if quest in self.quests[k]:
+            return
+    
+    self.quests[_idle_quests].append(quest)
     self.add_child(quest)
-    var error = quest.connect("available", self, "on_quest_available", [owner])
+    var error = quest.connect("available", self, "on_quest_available")
     assert error == 0
     
     
-func assign_to_player(owner, quest: Quest):
-    print_debug("assign quest to player")
-    self.quests[owner][_available_quests].erase(quest)
-    self.quests[owner][_assigned_quests].append(quest)
+func assign_quest(quest: Quest, assignee):
+    #TODO: assignee to any pawn
+    print_debug("assign quest to ", assignee)
+    quest.assign_to(assignee)
     
-    quest.connect("completed", self, "on_quest_completed", [owner])
+    self.quests[_available_quests].erase(quest)
+    self.quests[_assigned_quests].append(quest)
+    
+    quest.connect("completed", self, "on_quest_completed")
     
     
-func reward(owner, quest: Quest):
-    print_debug("reward player")
-    self.quests[owner][_reward_quests].erase(quest)
-    self.quests[owner][_completed_quests].append(quest)
+func reward(quest: Quest):
+    assert quest in self.quests[_reward_quests]
+    print_debug("reward ", quest)
+    self.quests[_reward_quests].erase(quest)
+    self.quests[_completed_quests].append(quest)
         
     
-func on_quest_available(quest: Quest, available: bool, owner):
+func on_quest_available(quest: Quest, available: bool):
     # not emit signal, if quest availability not changed
     print_debug("new quest available?")
-    var owner_quests = self.quests[owner]
+    var owner_quests = self.quests
     if available and owner_quests[_available_quests].has(quest):
         return
     print_debug("new quest available")
@@ -61,21 +65,26 @@ func on_quest_available(quest: Quest, available: bool, owner):
         
     emit_signal("quest_available", quest, available)
     
-func on_quest_completed(quest: Quest, owner):
-    self.quests[owner][_assigned_quests].erase(quest)
-    self.quests[owner][_reward_quests].append(quest)
+    
+func on_quest_completed(quest: Quest):
+    var assigned_quests = self.quests[_assigned_quests]
+    assert quest in assigned_quests
+    assigned_quests.erase(quest)
+    self.quests[_reward_quests].append(quest)
+    
     
 func get_reward_quests(owner):
-    if self.quests.has(owner):
-        return self.quests[owner][_reward_quests]
-    return []
-    
+    return self._filter_owner_quests(owner, self.quests[_reward_quests])
     
 func get_available_quests(owner):
-    if self.quests.has(owner):
-        return self.quests[owner][_available_quests]
-    return []
+    return self._filter_owner_quests(owner, self.quests[_available_quests])
     
+func _filter_owner_quests(owner, quests):
+    var result = []
+    for q in quests:
+        if q.quest_owner == owner:
+            result.append(q)
+    return result
     
 func __init_quests_struct():
     return {

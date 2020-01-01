@@ -18,9 +18,6 @@ func _init(count: int, type, area, debug=false):
     self.debug = debug
     if self.debug:
         print_debug(self.name, " tracks ", self._type, " in ", self.area)
-
-func _ready():
-    self.bind()
     
 func bind():
     self.area.connect("body_entered", self, "on_enters")

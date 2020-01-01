@@ -12,10 +12,11 @@ class_name Quest
 
 var quest_name: String
 var quest_description: String
-var quest_owner
+var quest_owner = null
 var objectives = []
 var done_objectives = []
-var available_conditions = []
+var requirements = []
+var assignee = null
 
 var _available := false
 var _done := false
@@ -26,11 +27,11 @@ signal completed(quest)
 signal objective_done(objective)
 
 
-func _init(owner, name, description, objectives, available_conditions=[]):
+func _init(owner, name, description, objectives, requirements=[]):
     self.quest_owner = owner
     self.quest_name = name
     self.quest_description = description
-    self.available_conditions = available_conditions
+    self.requirements = requirements
     self.objectives = objectives
 
 
@@ -40,8 +41,9 @@ func _ready():
         var error = objective.connect("completed", self, "on_complete_objective", [objective])
         assert error == 0
         
-    for c in self.available_conditions:
+    for c in self.requirements:
         self.add_child(c)
+        c.bind()
     
 
 func is_done():
@@ -55,7 +57,7 @@ func is_available():
     """
     if self._available:
         return true
-    for condition in self.available_conditions:
+    for condition in self.requirements:
         if not condition.meet():
             return false
         print_debug("meet condition")
@@ -81,3 +83,9 @@ func on_complete_objective(objective):
     self.done_objectives.append(objective)
     emit_signal("objective_done", objective)
     
+func assign_to(assignee):
+    self.assignee = assignee
+    for obj in self.objectives:
+        obj.bind(assignee)
+    for requirement in self.requirements:
+        requirement.debind(assignee)

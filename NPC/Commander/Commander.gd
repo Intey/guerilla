@@ -32,12 +32,15 @@ onready var states_map = {
     
 func _ready():
     $FSM.init(states_map, IDLE)
-    questManager.add_quest(self, 
+    questManager.add_quest( 
         Quest.new(self, "Wild Animals", 
             "Comrade, we detects many animals. You need to kill them!",
             [KillObjective.new(Animal, 3)],
             [ObjectInArea.new(3, Animal, $View)]))
-
+    questManager.add_quest(
+        Quest.new(self, "More sticks",
+        "Comrade, collest sticks",
+        [GatherObjective.new(ResourceStick, 2)]))
     
 # Quest Giver Component
 func assign_current_quest():
@@ -45,13 +48,14 @@ func assign_current_quest():
     Curent quest, that player currently view
     """
     # Looks like a hack. 
-    questManager.assign_to_player(self, self.current_quest)
+    questManager.assign_quest(self.current_quest, $'/root/World/Player')
     self.current_quest = null
     
     
 func reward():
     var quests = questManager.get_reward_quests(self)
-    questManager.reward(self, quests[0])
+    print_debug("reward with assigned quest", quests[0])
+    questManager.reward(quests[0])
     
     
 func has_quest():
