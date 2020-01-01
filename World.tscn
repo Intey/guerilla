@@ -1,19 +1,17 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Resources/Logs.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Resources/Leafs.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Resources/Sticks.tscn" type="PackedScene" id=6]
-[ext_resource path="res://huds/HUD.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Tree.tscn" type="PackedScene" id=8]
-[ext_resource path="res://World/GlobalTime.tscn" type="PackedScene" id=9]
-[ext_resource path="res://World/Events/EventSheduler.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Campfire.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Camp.tscn" type="PackedScene" id=12]
-[ext_resource path="res://SpawnArea.tscn" type="PackedScene" id=13]
-[ext_resource path="res://NPC/Commander/Commander.tscn" type="PackedScene" id=14]
+[ext_resource path="res://huds/HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Tree.tscn" type="PackedScene" id=5]
+[ext_resource path="res://World/GlobalTime.tscn" type="PackedScene" id=6]
+[ext_resource path="res://World/Events/EventSheduler.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Campfire.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Camp.tscn" type="PackedScene" id=9]
+[ext_resource path="res://SpawnArea.tscn" type="PackedScene" id=10]
+[ext_resource path="res://NPC/Commander/Commander.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Resources/Scenes/Sticks.tscn" type="PackedScene" id=12]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -27,57 +25,46 @@ tile_data = PoolIntArray( -2359352, 10, 0, -2359351, 10, 0, -2359350, 10, 0, -23
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( -392, 272 )
 
-[node name="Logs" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1190, 161.84 )
-collision_layer = 2
-collision_mask = 3
+[node name="HUD" parent="." instance=ExtResource( 4 )]
 
-[node name="Leafs" parent="." instance=ExtResource( 5 )]
-position = Vector2( 66.128, 60.636 )
-collision_layer = 2
-collision_mask = 3
-
-[node name="Sticks" parent="." instance=ExtResource( 6 )]
-position = Vector2( 430.873, 80.636 )
-collision_layer = 2
-collision_mask = 3
-
-[node name="HUD" parent="." instance=ExtResource( 7 )]
-
-[node name="Tree" parent="." instance=ExtResource( 8 )]
+[node name="Tree" parent="." instance=ExtResource( 5 )]
 position = Vector2( -648, -80 )
 
-[node name="Tree2" parent="." instance=ExtResource( 8 )]
+[node name="Tree2" parent="." instance=ExtResource( 5 )]
 position = Vector2( -336, 80.636 )
 
-[node name="Tree3" parent="." instance=ExtResource( 8 )]
+[node name="Tree3" parent="." instance=ExtResource( 5 )]
 position = Vector2( -256, 449 )
 
-[node name="Tree4" parent="." instance=ExtResource( 8 )]
+[node name="Tree4" parent="." instance=ExtResource( 5 )]
 position = Vector2( -424, 704 )
 
-[node name="Tree5" parent="." instance=ExtResource( 8 )]
+[node name="Tree5" parent="." instance=ExtResource( 5 )]
 position = Vector2( -880, 736 )
 
-[node name="Tree6" parent="." instance=ExtResource( 8 )]
+[node name="Tree6" parent="." instance=ExtResource( 5 )]
 position = Vector2( -1104, 448 )
 
-[node name="Tree7" parent="." instance=ExtResource( 8 )]
+[node name="Tree7" parent="." instance=ExtResource( 5 )]
 position = Vector2( -992, 64 )
 
-[node name="GlobalTime" parent="." instance=ExtResource( 9 )]
+[node name="GlobalTime" parent="." instance=ExtResource( 6 )]
 
-[node name="EventSheduler" parent="." instance=ExtResource( 10 )]
+[node name="EventSheduler" parent="." instance=ExtResource( 7 )]
 
-[node name="Campfire" parent="." instance=ExtResource( 11 )]
+[node name="Campfire" parent="." instance=ExtResource( 8 )]
 position = Vector2( -688, 336 )
 
-[node name="MainCamp" parent="." instance=ExtResource( 12 )]
+[node name="MainCamp" parent="." instance=ExtResource( 9 )]
 position = Vector2( -544, 272 )
 
-[node name="SpawnArea" parent="." instance=ExtResource( 13 )]
+[node name="SpawnArea" parent="." instance=ExtResource( 10 )]
 position = Vector2( 1440, -368 )
 
-[node name="Commander" parent="." instance=ExtResource( 14 )]
+[node name="Commander" parent="." instance=ExtResource( 11 )]
 position = Vector2( -496, 208.044 )
+
+[node name="Sticks" parent="." instance=ExtResource( 12 )]
+position = Vector2( -320, 272 )
+count = 20
 

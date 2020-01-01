@@ -4,7 +4,7 @@
     "scene": "",
     "type": 1,
     "ingridients": {
-      "sticks": 10,
+      "stick": 10,
       "rope": 3,
       "mud": 1
     },
@@ -25,7 +25,7 @@
     "type": 0,
     "ingridients": {
       "logs": 1,
-      "sticks": 4    
+      "stick": 4    
     },
     "count": 1
   },
@@ -35,7 +35,7 @@
     "type": 1,
     "ingridients" : {
       "meat": 1, 
-      "sticks": 3
+      "stick": 3
     },
     "count": 1,
     "place": "campfire"
@@ -46,7 +46,7 @@
     "type": 0,
     "ingridients" : {
       "leafs": 20, 
-      "sticks": 8
+      "stick": 8
     },
     "count": 1
   }

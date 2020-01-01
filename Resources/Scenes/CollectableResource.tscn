@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Resources/Resource.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Scenes/CollectableResource.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 20 )
 
-[node name="Resource" type="Area2D"]
+[node name="CollectableResource" type="Area2D"]
 collision_layer = 8
 script = ExtResource( 1 )
 count = 10
