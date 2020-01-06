@@ -83,6 +83,7 @@ shape = SubResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+smoothing_enabled = true
 
 [node name="FSM" parent="." instance=ExtResource( 4 )]
 debug = true

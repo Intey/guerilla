@@ -2,14 +2,19 @@
 
 ## What is this
 
-It's all about having quests, assigning and finishing quests.
+It's all about having quests, assigning and finishing quests. 
+We don't need standard quests, but more dynamic: quests should be gerated from
+world state and NPC AI. Quests exists not only for player - for npc too. Player
+may not participate in game - game will play.
 
 ## What's needed
 
-- make quests available
-- coupling with events
-- assign quests to player
-- finish quest(by player, or by other)
+- quest objects
+- quests availability, objectives(todo list)
+- runtime everywhere generation
+- assign quests to pawn(player, npc)
+- finish quest (without return to quest giver)
+- NPC AI for handling quests
 
 Event available when it's prerequisites available - `predicate() == true`.
 After available, we checks `done_predicate`, that determines finishing of quest.
@@ -33,8 +38,10 @@ not have time?
 
 Problem types:
 - Killing someone/sometype in some place
-Every unit should participate in some event, or group. Killing quests targets
-preventing appears of event. So, quest owner tracks events, groups.
+Think about what someone (that should be killed) can do (what events appears)
+if he is not die. 
+Every unit should participate in some event. Killing quests targets preventing
+appears of event. So, quest owner tracks events.
 
 - Talks with someone / move info to someoune / Deliver something
 Info need for starting some events. If events can't be started - drop karma.
@@ -86,4 +93,31 @@ Issues:
 - (RQ) Needs to know about exist quest, and connect it to appear one by one.
 - More coupling with owner and state. 
 - Needs instantiate all quests, before they available. 
+
+## Quests state
+
+- Available quests
+- Assigned quests
+- Done quests (ready for reward)
+- Repeatable quests
+
+- Quest owner has FSM, that changes from quest
+> FSM Extension?
+
+- Quest owner has nodes, that participate in quest state changing. Maybe they
+  needs only for this
+
+Owner contains lists of quests: by it's state.
+When state enters, it's connected to quests, that can change it's state.
+Idle connects to:
+- unavailable quests, waiting when they available
+- assigned quests, waiting when then done to show reward
+
+
+## Does we need quest rewards? 
+
+We doing quests, because we need them for some tasks. We go to kill some
+enemies, for prevent gameover or some event (this again about "quest relly
+done?" and karma). We gather resources for extend camp. 
+
 
