@@ -72,11 +72,15 @@ func _ready():
     
 func _process(delta):
     self.update()
-    if Input.is_action_just_released("ui_troop"):
+    if Input.is_action_just_released("ui_untroop"):
+        print_debug("untroop")
+        troopSystem.untroop(self)
+    elif Input.is_action_just_released("ui_troop"):
+        print_debug("craete troop")
         var p1 = $"/root/World/Pawn"
         var p2 = $"/root/World/Pawn2"
         troopSystem.create_troop([self, p1, p2])
-        
+    
     $AnimationPlayer.play("idle")    
     
     

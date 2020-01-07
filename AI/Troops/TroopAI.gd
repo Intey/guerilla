@@ -3,9 +3,8 @@ class_name TroopAI
 
 var troop: Troop
 var follow = false
-var leader: Pawn
 
-var FOLLOW ='follow'
+const FOLLOW = 'follow'
 
 var position setget set_pos,get_pos
 
@@ -13,6 +12,7 @@ var states = {}
 
     
 func init(troop):
+    self.name = "TroopAI"
     print_debug("init TroopAI")
     self.troop = troop
 
@@ -32,6 +32,14 @@ func detect_body(body):
     elif body is Pawn:
         print_debug("TroopAI detect Pawn ", body.name)
         
+func teach(pawn: Pawn):
+    print_debug(" teach pawn ", pawn, " to trooping")
+    pawn.add_child(self)
+    var vv = pawn.find_node("ViewArea")
+    if vv == null:
+        print_debug("View Area not found in Pawn")
+    else:
+        vv.connect("body_entered", self, "detect_body")
     
 func set_pos(pos):
     var pawn: Pawn = get_parent()
@@ -41,4 +49,6 @@ func set_pos(pos):
 func get_pos():
     var pawn: Pawn = get_parent()
     return pawn.position
+    
+
     
