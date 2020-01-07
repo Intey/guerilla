@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Buildings/SleepBag.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Resources/Sticks.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Scenes/Sticks.tscn" type="PackedScene" id=3]
 
 [node name="Node2D" type="Node2D"]
 
