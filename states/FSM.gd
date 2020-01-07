@@ -1,4 +1,51 @@
 extends Node
+"""
+Finite state machine.
+Instantiate scene FSM in target object, that need states.
+
+```
+MyObject
+    |
+    +- FSM
+```
+
+Create state - Node with script, that inherits states/state.gd, child of FSM.
+
+```
+MyObject
+    |
+    +- FSM
+        |
+        + - State1
+        + - State2
+```
+
+Declare states as strings (constants) in target class.
+
+```
+var STATE_1 = 'state1'
+var STATE_2 = 'state2'
+```
+
+Declare mapping, from state name (string contant) to state Node.
+init for each state needs to accept current root node. In state it's accesible as host
+
+```
+var states = {
+    STATE_1: $FSM/State1.init(self),
+    STATE_2: $FSM/State2.init(self),
+}
+```
+
+in _ready(), initialize FSM with created states and initial state
+
+```
+func _ready():
+    $FSM.init(states, IDLE)
+```
+
+"""
+
 class_name FSM
 
 export var debug = false

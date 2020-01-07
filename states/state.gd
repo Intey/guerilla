@@ -29,12 +29,14 @@ func update_physics(delta):
     physics_process_impl(delta)
     
 func update_impl(delta):
-    pass
-    #print_debug("Not implemented state method 'update_impl' ", self.host.name, ".", self.name)
+    """
+    Same as update, but delta is time lapsed by current time
+    """
     
 func physics_process_impl(delta):
-    pass
-    #print_debug("Not implemented state method 'physics_process_impl' ", self.host.name, ".", self.name)
+    """
+    Same as physics_update, but delta is time lapsed by current time
+    """
     
 
 func on_enter():
