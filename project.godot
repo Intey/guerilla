@@ -105,6 +105,21 @@ _global_script_classes=[ {
 "path": "res://NPC/Solder/Solder.gd"
 }, {
 "base": "Node",
+"class": "Troop",
+"language": "GDScript",
+"path": "res://AI/Troops/Troop.gd"
+}, {
+"base": "Node",
+"class": "TroopAI",
+"language": "GDScript",
+"path": "res://AI/Troops/TroopAI.gd"
+}, {
+"base": "Node",
+"class": "TroopSystem",
+"language": "GDScript",
+"path": "res://AI/Troops/TroopSystem.gd"
+}, {
+"base": "Node",
 "class": "Unit",
 "language": "GDScript",
 "path": "res://Abstracts/Unit.gd"
@@ -139,6 +154,9 @@ _global_script_class_icons={
 "ResourceItem": "",
 "ResourceStick": "",
 "Solder": "",
+"Troop": "",
+"TroopAI": "",
+"TroopSystem": "",
 "Unit": "",
 "Value": "",
 "utils": ""
@@ -154,10 +172,15 @@ config/icon="res://icon.png"
 
 utils="*res://Utility/utils.gd"
 questManager="*res://Quest/QuestManager.gd"
+troopSystem="*res://AI/Troops/TroopSystem.gd"
 
 [display]
 
 window/size/height=768
+
+[editor_plugins]
+
+enabled=PoolStringArray( "wakatime" )
 
 [input]
 
@@ -215,6 +238,11 @@ open_craft={
 ui_timelapse={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"unicode":0,"echo":false,"script":null)
+ ]
+}
+ui_troop={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"unicode":0,"echo":false,"script":null)
  ]
 }
 

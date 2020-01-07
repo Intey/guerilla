@@ -8,7 +8,9 @@ func _ready():
     connect_clip()
     
 func connect_craft():
-    craftHud.init($Player)
+    var p = $Player
+    assert p != null
+    craftHud.init(p)
     assert $Player/Inventory.connect('update', craftHud, "update_reciepes_view") == 0
 
     assert craftHud.connect('craft', $Player, 'craft') == 0

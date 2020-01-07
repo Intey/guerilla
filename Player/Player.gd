@@ -1,11 +1,10 @@
-extends KinematicBody2D
+extends "res://Chars/Pawn.gd"
 class_name Player
 
 var settings_filepath = "res://settings.json"
 
 const BULLET = preload('res://Bullet.tscn')
 
-export var speed = 250
 export var collection_speed = 1
 export var max_sleep_time := 10.0
 export var sleep_time := 10.0
@@ -73,6 +72,11 @@ func _ready():
     
 func _process(delta):
     self.update()
+    if Input.is_action_just_released("ui_troop"):
+        var p1 = $"/root/World/Pawn"
+        var p2 = $"/root/World/Pawn2"
+        troopSystem.create_troop([self, p1, p2])
+        
     $AnimationPlayer.play("idle")    
     
     

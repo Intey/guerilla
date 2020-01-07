@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://NPC/Commander/Commander.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Resources/Scenes/Sticks.tscn" type="PackedScene" id=11]
 [ext_resource path="res://NPC/NPC/NPC.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=13]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -67,7 +68,12 @@ count = 20
 
 [node name="Pawn2" parent="." instance=ExtResource( 12 )]
 position = Vector2( -148.253, 179.757 )
+speed = 250
 
 [node name="Pawn" parent="." instance=ExtResource( 12 )]
 position = Vector2( -124.625, 403.99 )
+speed = 250
+
+[node name="Player" parent="." instance=ExtResource( 13 )]
+speed = 250
 
