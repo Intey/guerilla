@@ -9,18 +9,22 @@ var FOLLOW ='follow'
 
 var position setget set_pos,get_pos
 
-var states = {
-    FOLLOW: $FSM/FollowLeader.init(self)
-}
-    
-    
-func _ready():
-    $FSM.init(states, FOLLOW)
+var states = {}
 
-
-func set_troop(troop):
+    
+func init(troop):
+    print_debug("init TroopAI")
     self.troop = troop
 
+
+func _ready():
+    assert self.troop != null
+    self.states = {
+        FOLLOW: $FSM/FollowLeader.init(self)
+    }
+    print_debug("ready")
+    $FSM.init(states, FOLLOW)
+    
     
 func detect_body(body):
     if body in self.troop.teammates:
