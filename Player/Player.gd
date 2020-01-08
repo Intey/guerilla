@@ -1,4 +1,4 @@
-extends "res://Chars/Pawn.gd"
+extends Pawn
 class_name Player
 
 var settings_filepath = "res://settings.json"
