@@ -1,7 +1,7 @@
 extends Node
 class_name TroopSystem
 
-var TroopAIScene = preload("res://AI/Troops/TroopAI.tscn")
+var TroopAIScene = preload("res://AI/Troops/TroopAI/TroopAI.tscn")
 var troops = []
 var pawns_troops = {}
 
