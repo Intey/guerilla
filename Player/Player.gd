@@ -10,8 +10,6 @@ export var max_sleep_time := 10.0
 export var sleep_time := 10.0
 export var shoot_range := 20
 
-var inventory setget , _get_inventory
-
 export var debug = false
 
 var CS = preload('res://CraftStation.gd')
@@ -19,9 +17,7 @@ var BuildPlan = preload('res://BuildPlan.tscn')
 var crafts = preload('res://crafts.gd')
 var Blackboard = preload("res://Utility/Blackboard.gd").new()
 
-signal inventory_update(inventory)
 signal build(reciepe, position)
-signal kills(victum)
 signal gathers(resource)
 
 var unit: Unit
@@ -71,16 +67,7 @@ func _ready():
     $RangeWeapon.init(self)
     
 func _process(delta):
-    self.update()
-    if Input.is_action_just_released("ui_untroop"):
-        print_debug("untroop")
-        troopSystem.untroop(self)
-    elif Input.is_action_just_released("ui_troop"):
-        print_debug("craete troop")
-        var p1 = $"/root/World/Pawn"
-        var p2 = $"/root/World/Pawn2"
-        troopSystem.create_troop([self, p1, p2])
-    
+    self.update()    
     $AnimationPlayer.play("idle")    
     
     
@@ -149,7 +136,7 @@ func craft(name):
                 res = ResourceItem.new()
                 res.name = name
                 res.count = reciepe.count
-            $Inventory.add(res)
+            self.add_to_inventory(res)
             
         elif reciepe.type == crafts.Types.BUILDING:
             var plan_node = BuildPlan.instance()
@@ -161,8 +148,6 @@ func craft(name):
             $BuildArea.visible = true
         
 
-func subtract_from_inventory(res):
-    return $Inventory.subtract(res)
             
     
 func build_structure():
@@ -193,18 +178,14 @@ func hide_build_mode():
         
 func fire(delta):
     var mpos = get_local_mouse_position() * shoot_range
-    var victum = $RangeWeapon.fire(delta, mpos)
-    if not victum:
-        return
-    if not victum.unit.alive:
-        print_debug("player killed ", victum)
-        emit_signal("kills", victum)
+    .shoot(delta, mpos)
     
 func hit(dmg):
     if godmode:
         return 
     self.unit.take_damage(dmg)
     if not self.unit.alive:
+        # TODO: change to other pawn
         get_tree().change_scene("res://UIScreens/MainMenu.tscn")
         
 func start_collect():
@@ -213,5 +194,4 @@ func start_collect():
 func stop_collect():
     $CollectTimer.stop()
     
-func _get_inventory():
-    return $Inventory.inventory
+

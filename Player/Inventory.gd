@@ -1,8 +1,9 @@
-extends Node2D
+extends Node
 
 var inventory = {}
 
 signal update(inventory)
+
 
 func add(collected: ResourceItem):
     if collected.name in inventory:
@@ -11,6 +12,7 @@ func add(collected: ResourceItem):
         inventory[collected.name] = collected.count
     print_debug('collected ', collected.count, ' ', collected.name, ". now player has ", inventory)
     emit_signal('update', self.inventory)
+    
     
 func subtract(res: ResourceItem):
     if self.inventory[res.name] < res.count:

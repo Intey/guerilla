@@ -55,6 +55,11 @@ _global_script_classes=[ {
 "path": "res://World/GlobalTime.gd"
 }, {
 "base": "Node",
+"class": "InitialGenerator",
+"language": "GDScript",
+"path": "res://World/InitialGenerator.gd"
+}, {
+"base": "Node",
 "class": "KillObjective",
 "language": "GDScript",
 "path": "res://Quest/Objectives/KillObjective.gd"
@@ -74,7 +79,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Chars/Pawn.gd"
 }, {
-"base": "KinematicBody2D",
+"base": "Pawn",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/Player.gd"
@@ -112,12 +117,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "TroopAI",
 "language": "GDScript",
-"path": "res://AI/Troops/TroopAI.gd"
+"path": "res://AI/Troops/TroopAI/TroopAI.gd"
 }, {
 "base": "Node",
-"class": "TroopSystem",
+"class": "TroopsManager",
 "language": "GDScript",
-"path": "res://AI/Troops/TroopSystem.gd"
+"path": "res://AI/Troops/TroopsManager.gd"
 }, {
 "base": "Node",
 "class": "Unit",
@@ -144,6 +149,7 @@ _global_script_class_icons={
 "GameEvent": "",
 "GatherObjective": "",
 "GlobalTime": "",
+"InitialGenerator": "",
 "KillObjective": "",
 "NPC": "",
 "ObjectInArea": "",
@@ -156,7 +162,7 @@ _global_script_class_icons={
 "Solder": "",
 "Troop": "",
 "TroopAI": "",
-"TroopSystem": "",
+"TroopsManager": "",
 "Unit": "",
 "Value": "",
 "utils": ""
@@ -172,7 +178,8 @@ config/icon="res://icon.png"
 
 utils="*res://Utility/utils.gd"
 questManager="*res://Quest/QuestManager.gd"
-troopSystem="*res://AI/Troops/TroopSystem.gd"
+troopsManager="*res://AI/Troops/TroopsManager.gd"
+troopAIBrain="*res://AI/Troops/TroopAIBrain.gd"
 
 [display]
 

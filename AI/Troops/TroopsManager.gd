@@ -1,5 +1,5 @@
 extends Node
-class_name TroopSystem
+class_name TroopsManager
 
 var TroopAIScene = preload("res://AI/Troops/TroopAI/TroopAI.tscn")
 var troops = []

@@ -87,5 +87,5 @@ script = ExtResource( 9 )
 wait_time = 0.95
 
 [connection signal="body_entered" from="View" to="FSM/Idle" method="_on_View_body_entered"]
-[connection signal="body_exited" from="View" to="FSM/showDetails" method="_on_View_body_exited"]
 [connection signal="body_exited" from="View" to="FSM/hasQuest" method="_on_View_body_exited"]
+[connection signal="body_exited" from="View" to="FSM/showDetails" method="_on_View_body_exited"]

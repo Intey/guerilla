@@ -12,7 +12,7 @@ var player: Player
 func init(player: Player):
     self.player = player
     self.reciepes = crafts.get_crafts()
-    self.render_ingridients(self.player.inventory)        
+    self.render_ingridients(self.player._get_inventory())        
     self.init_reciepes()
 
 func init_reciepes():
@@ -27,16 +27,16 @@ func init_reciepes():
         $Reciepes.add_child(reciepeItem)
         reciepeItem.connect('selected', self, '_on_reciepe_selected')
         
+        
 func _process(delta):
     self.reciepes = crafts.get_crafts()
-    self.update_reciepes_view()
+    self.update_reciepes_view(self.player._get_inventory())
         
-# slot for signals: updates reciepes, ingridients
-#warning-ignore:unused_argument
-func update_reciepes_view(new_inventory=null):
+        
+func update_reciepes_view(new_inventory):
     $Items/ItemList.clear()
     $Items/Counts.clear()
-    render_ingridients(self.player.inventory)
+    render_ingridients(new_inventory)
     
     for ch in $Reciepes.get_children():
         var buildable = self.player.CraftStation.can_build(self.reciepes[ch.get_item_name()])

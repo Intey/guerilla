@@ -14,6 +14,16 @@ func update_impl(delta):
                 self.host.build_structure()
         else:
             self.host.fire(delta)
+    if Input.is_action_just_released("ui_untroop"):
+        print_debug("untroop")
+        troopsManager.untroop(self.host)
+
+    elif Input.is_action_just_released("ui_troop"):
+        print_debug("craete troop")
+        # search nearest pawns
+        var p1 = $"/root/World/Pawn"
+        var p2 = $"/root/World/Pawn2"
+        troopsManager.create_troop([self.host, p1, p2])
             
 func get_input() -> Vector2:
     var velocity = Vector2()

@@ -11,7 +11,7 @@ func can_build(reciepe):
         
     for res_name in reciepe.ingridients:
         var count = reciepe.ingridients[res_name]
-        if player.inventory.get(res_name, 0) < count:
+        if player._get_inventory().get(res_name, 0) < count:
             return false
     return true
 
