@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Vector2 Lab.gd" type="Script" id=1]
+
+[node name="Vector2 Lab" type="Node2D"]
+position = Vector2( 416, 288 )
+script = ExtResource( 1 )
+
+[node name="Green" type="Node2D" parent="."]
+position = Vector2( 64, 16 )
+
+[node name="Green" type="ColorRect" parent="Green"]
+margin_right = 4.0
+margin_bottom = 4.0
+color = Color( 0.180392, 0.741176, 0, 1 )
+
+[node name="Red" type="Node2D" parent="."]
+position = Vector2( 192, 144 )
+
+[node name="Red" type="ColorRect" parent="Red"]
+margin_right = 4.0
+margin_bottom = 4.0
+color = Color( 1, 0, 0, 1 )
+
+[node name="White" type="Node2D" parent="."]
+position = Vector2( 192, -44 )
+
+[node name="White" type="ColorRect" parent="White"]
+margin_right = 4.0
+margin_bottom = 4.0
+
+[node name="LeadDir" type="Node2D" parent="."]
+position = Vector2( 208, 64 )
+
+[node name="Red" type="ColorRect" parent="LeadDir"]
+margin_right = 4.0
+margin_bottom = 4.0
+color = Color( 0.4, 0, 0, 1 )
+
