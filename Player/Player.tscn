@@ -84,6 +84,7 @@ visible = false
 shape = SubResource( 3 )
 
 [node name="FSM" parent="." index="6" instance=ExtResource( 5 )]
+editor/display_folded = true
 debug = true
 
 [node name="Idle" type="Node" parent="FSM" index="0"]
@@ -96,6 +97,7 @@ script = ExtResource( 7 )
 script = ExtResource( 8 )
 
 [node name="CollectionArea" type="Area2D" parent="." index="7"]
+editor/display_folded = true
 
 [node name="Shape" type="CollisionShape2D" parent="CollectionArea" index="0"]
 modulate = Color( 1, 0, 1, 1 )

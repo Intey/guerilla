@@ -8,7 +8,6 @@ const BULLET = preload('res://Bullet.tscn')
 export var collection_speed = 1
 export var max_sleep_time := 10.0
 export var sleep_time := 10.0
-export var shoot_range := 20
 
 export var debug = false
 
@@ -19,8 +18,6 @@ var Blackboard = preload("res://Utility/Blackboard.gd").new()
 
 signal build(reciepe, position)
 signal gathers(resource)
-
-var unit: Unit
 
 # State machinary
 
@@ -63,8 +60,8 @@ func _ready():
     # TODO: Hide mouse when aiming, and enable on gui opened
     # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
-    unit = Unit.new(1000, funcref(self, "queue_free"))
     $RangeWeapon.init(self)
+    $RangeWeapon.time_for_one_shoot = self.shoot_rate
     
 func _process(delta):
     self.update()    
@@ -147,8 +144,6 @@ func craft(name):
             # hide/show - не работает
             $BuildArea.visible = true
         
-
-            
     
 func build_structure():
     if build_plan == null:
@@ -176,21 +171,24 @@ func hide_build_mode():
     #if collision:
         #print_debug('collide ', collision)
         
+
 func fire(delta):
     var mpos = get_local_mouse_position() * shoot_range
     .shoot(delta, mpos)
+
     
-func hit(dmg):
+func take_damage(dmg):
     if godmode:
         return 
-    self.unit.take_damage(dmg)
-    if not self.unit.alive:
-        # TODO: change to other pawn
+    .take_damage(dmg)
+    if not self.alive: # TODO: change to other pawn
         get_tree().change_scene("res://UIScreens/MainMenu.tscn")
         
+
 func start_collect():
     $CollectTimer.start()
     
+
 func stop_collect():
     $CollectTimer.stop()
     

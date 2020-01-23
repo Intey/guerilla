@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Animal
 export var speed: float = 100.0
-var unit : Unit
+# var unit : Unit
 export var random_roam: bool
 
 func on_dead():
@@ -52,7 +52,7 @@ func _ready():
     if roam_target:
         set_roam_target(roam_target)
     $SM.init(states_map, ROAMING)
-    self.unit = Unit.new(100, funcref(self, "on_dead"))
+    # self.unit = Unit.new(100, funcref(self, "on_dead"))
     self.GT = get_node('/root/World/GlobalTime')
     if self.GT == null:
         self.GT = load('res://World/GlobalTime.tscn').instance()
@@ -107,4 +107,4 @@ func _on_PursuitArea_body_exited(body):
 func hit(dmg: int):
     print_debug("animal hitted")
     $AnimationPlayer.play("hit")
-    self.unit.take_damage(dmg)
+    # self.unit.take_damage(dmg)
