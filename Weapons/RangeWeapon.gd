@@ -7,6 +7,7 @@ export var clipsize: int
 export var damage: int
 export var autoshoot: bool = false
 export var time_for_one_shoot: float = 1.0
+export var critical: int = 0.4
 
 const BULLET = preload('res://Bullet.tscn')
 onready var weapon_clip := $WeaponClip
@@ -55,6 +56,9 @@ func fire(delta, target: Vector2):
     var result = space_state.intersect_ray(global_position, cast_to, excepts)
     if result:
         bullet.path_end = result.position
-        if result.collider.has_method('hit'):
-            result.collider.hit(self.damage)
+        if result.collider.has_method('take_damage'):
+            if randf() <= self.critical:
+                result.collider.take_damage(result.collider.health.value)
+            else:
+                result.collider.take_damage(self.damage)
             return result.collider
