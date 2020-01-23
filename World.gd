@@ -6,6 +6,8 @@ onready var ammoHud = $HUD/Ammo
 func _ready():
     connect_craft()
     connect_clip()
+    var gen = InitialGenerator.new(self, $LeftCamp, $RightCamp)
+    gen.generate()
     
 func connect_craft():
     var p = $Player
@@ -44,4 +46,3 @@ func create_building(reciepe, position):
     var instance = BuildScene.instance()
     instance.position = position
     add_child(instance)
-

@@ -21,9 +21,13 @@ func update_impl(delta):
     elif Input.is_action_just_released("ui_troop"):
         print_debug("craete troop")
         # search nearest pawns
-        var p1 = $"/root/World/Pawn"
-        var p2 = $"/root/World/Pawn2"
-        troopsManager.create_troop([self.host, p1, p2])
+        var pawns = []
+        var comm_range = self.host.get_node("CommRange")
+        for body in comm_range.get_overlapping_bodies():
+            if body is Pawn and body.fraction == self.host.fraction:
+                pawns.append(body)
+
+        troopsManager.create_troop(self.host, pawns)
             
 func get_input() -> Vector2:
     var velocity = Vector2()
