@@ -59,7 +59,14 @@ var states_map: Dictionary
 
 const PREVIOUS_STATE = "previous"
 
-func init(states: Dictionary, initial_state):
+func init(states=null, initial_state=null):
+    # reverse self
+    if states == null:
+        states = self.__init_states_from_nodes()
+        assert len(states) > 0
+    if initial_state == null:
+        initial_state = states.values()[0].get_name()
+
     if get_parent().get('debug') != null:
         self.debug = get_parent().debug or self.debug
         
@@ -113,5 +120,19 @@ func _physics_process(delta):
     var state = states_map[__get_current_state()]
     state.update_physics(delta)
     
+
 func __get_current_state():
     return __states_stack[0]
+
+
+func __init_states_from_nodes():
+    var states = {}
+    var host = get_parent()
+    for s in get_children():
+        var name = s.get_name()
+        if self.debug:
+            print_debug("init state ", name)
+        assert name != null
+        states[name] = s.init(host)
+
+    return states
