@@ -65,5 +65,7 @@ func take_damage(dmg: int):
     self.health.value -= dmg
     if self.health.value == 0:
         alive = false
+        # after queue_free, we need to remove reference on this pawn from other
+        # objects (in arrays e.g.)
         emit_signal("dead", self)
         self.queue_free()
