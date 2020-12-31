@@ -15,12 +15,13 @@ func update_impl(delta):
         return self.host.PURSUIT_STATE
 
 func physics_process_impl(delta):
-    var host = self.host
-    target_direction = self.select_direction()
-    # TODO: remember path or came_from point, or last point. 
-    # move until not find other farest_direction in other direction
-    var velocity_dir = (target_direction - host.global_position).normalized()
-    self.host.move_and_slide(velocity_dir * host.speed)
+    pass
+#    var host = self.host
+#    target_direction = self.select_direction()
+#    # TODO: remember path or came_from point, or last point. 
+#    # move until not find other farest_direction in other direction
+#    var velocity_dir = (target_direction - host.global_position).normalized()
+#    self.host.move_and_slide(velocity_dir * host.speed)
 
 func select_direction() -> Vector2:
     return find_farest_visible_direction()
@@ -36,11 +37,11 @@ func find_farest_visible_direction() -> Vector2:
     var max_distance = 0
     
     var max_direction_angle = 0
-    # RayCast на каждые 5 градусов, чтобы найти самую дальнюю позицию
+    # RayCast each 5 degree - searching farest position
     for angle in range(0, 360, 5):
         var cast_to = Vector2(cos(angle), sin(angle))        
         var result = space_state.intersect_ray(host.global_position, cast_to, excepts)
-        # если есть коллизия - проверяем дистанцию до объекта 
+        # check distance to found object
         if result:
             result = result.collider
             var distance = host.global_position.distance_to(result.global_position)
@@ -49,14 +50,18 @@ func find_farest_visible_direction() -> Vector2:
                 # print_debug("angle for farest direction ", angle)
                 max_direction = result.global_position
                 max_distance = distance
+        else:
+            # roll the dice for random degree - prevent all pawns to move in
+            # one direction. set this ange as max direction.
+            pass 
     
-    # чтобы не ходить вперед-назад
+    # prevent movent forward-backward
     if target_direction != null:
         var angle = max_direction.dot(target_direction)
-         # смотрим что новая позиция перед нами(в секторе на 180%)
+        # if angle has positive value - move in same direction
         if angle > 0:
             return max_direction
-    # Если где-то за нами - продолжаем идти вперед
+        # we get backward direction. ignore it
         else:
             return target_direction
     else:

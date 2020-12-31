@@ -104,6 +104,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Resources/ResourceStick.gd"
 }, {
+"base": "Node",
+"class": "Sector",
+"language": "GDScript",
+"path": "res://AI/Sector.gd"
+}, {
 "base": "Pawn",
 "class": "Solder",
 "language": "GDScript",
@@ -125,14 +130,14 @@ _global_script_classes=[ {
 "path": "res://AI/Troops/TroopsManager.gd"
 }, {
 "base": "Node",
-"class": "Unit",
-"language": "GDScript",
-"path": "res://Abstracts/Unit.gd"
-}, {
-"base": "Node",
 "class": "Value",
 "language": "GDScript",
 "path": "res://Value/Value.gd"
+}, {
+"base": "Node",
+"class": "Velik",
+"language": "GDScript",
+"path": "res://Utility/vector.gd"
 }, {
 "base": "Node",
 "class": "utils",
@@ -159,12 +164,13 @@ _global_script_class_icons={
 "ReciepeItem": "",
 "ResourceItem": "",
 "ResourceStick": "",
+"Sector": "",
 "Solder": "",
 "Troop": "",
 "TroopAI": "",
 "TroopsManager": "",
-"Unit": "",
 "Value": "",
+"Velik": "",
 "utils": ""
 }
 

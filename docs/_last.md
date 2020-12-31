@@ -36,5 +36,51 @@ TroopAI знает слишком много про то, где он наход
 
 ## Pawn просматривает все компоненты и собирает с них изменения
 
-
 ## Системы, которые управляют всем процессом
+
+
+# Combat AI
+
+Предусловия:
+
+1. Враг в поле зрения
+
+Модификаторы:
+
+- many-e: вграгов много
+- troop: мы в группе
+
+Как ведется бой:
+
+1. if many-e - бежим
+2. if troop: стреляем в ближайшего врага
+
+
+# ECS 
+
+Inheritance 
+
+```plantuml
+Animal -|> Alive
+Pawn -|> Alive
+Neutral -|> Pawn
+Solder -|> Pawn
+
+```
+
+ECS
+
+```
+C:Health
+C:Damage -<> Rifle,Knife,Self
+C:Defence
+
+Animal -<> Health,Damage
+
+Pawn -<> Health,Damage
+
+Solder -|> Pawn
+Solder -<> Defence
+Neutral -<> Health
+
+```

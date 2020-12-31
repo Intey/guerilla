@@ -60,5 +60,5 @@ speed = 250
 shoot_rate = 0.5
 
 [node name="RightCamp" parent="." instance=ExtResource( 7 )]
-position = Vector2( 336, 178 )
+position = Vector2( 2144, 178 )
 

@@ -45,9 +45,8 @@ func set_roam_target(target):
         var roam_state = states_map[ROAMING]
         roam_state.target_direction = target
         roam_state.random_roam = self.random_roam
-# Transitions
-# event | source | target
-# enter fear area | 
+
+
 func _ready():
     if roam_target:
         set_roam_target(roam_target)

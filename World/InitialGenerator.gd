@@ -3,6 +3,7 @@ class_name InitialGenerator
 
 
 var NPCScene = preload("res://NPC/NPC/NPC.tscn")
+Var CommanderScene = preload("res://NPC/Commander/Commander.tscn")
 
 var world = null
 var left_camp = null
@@ -18,17 +19,15 @@ func generate():
     for i in range(10):
         # TOOD: 
         # - pass weapons (eg. 3 melee, 7 ranged)
+        generate_commander()
         generate_npc(Pawn.Fraction.Left)
+
     for i in range(10):
         generate_npc(Pawn.Fraction.Right)
         
+
 func generate_npc(fraction):
-    var pos = null
-    if fraction == Pawn.Fraction.Left:
-        pos = random_position_in(left_camp.get_node('Area/Shape'))
-    elif fraction == Pawn.Fraction.Right:
-        pos = random_position_in(right_camp.get_node('Area/Shape'))
-    
+    var pos = generate_pos_for_fraction(fraction)
     var npc = NPCScene.instance()
     
     npc.global_position = pos
@@ -39,6 +38,13 @@ func generate_npc(fraction):
     weap.time_for_one_shoot = 0.5
     self.world.add_child(npc)
     
+
+func generate_commander(fraction):
+    var commander = CommanderScene.instance()
+    commander.behaviour = RiskyCommander.new()
+    commander.fraction = fraction
+    return commander
+
 func random_position_in(shape):
     var pos = shape.global_position
     shape = shape.shape
@@ -61,7 +67,10 @@ func random_position_in(shape):
     result.y = rand_range(min_y, max_y)
     return result
     
-    
-    
-    
-    
+
+func generate_pos_for_fraction(fraction):
+    if fraction == Pawn.Fraction.Left:
+        pos = random_position_in(left_camp.get_node('Area/Shape'))
+    elif fraction == Pawn.Fraction.Right:
+        pos = random_position_in(right_camp.get_node('Area/Shape'))
+    return pos
