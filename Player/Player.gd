@@ -11,7 +11,7 @@ export var debug = false
 var CS = preload('./craft/CraftStation.gd')
 var BuildPlan = preload('./craft/BuildPlan.tscn')
 var crafts = preload('./craft/crafts.gd')
-var Blackboard = preload("res://Utility/Blackboard.gd").new()
+
 
 signal build(reciepe, position)
 signal gathers(resource)
@@ -85,11 +85,6 @@ func exit_collectable_area(area):
         print_debug('exit ', area)
         collectable_area = null
 
-func enter_campfire_zone():
-    self.Blackboard.check('campfire')
-
-func exit_campfire_zone():
-    self.Blackboard.erase('campfire')
 
 func set_sleep_zone(in_zone=true):
     if in_zone:

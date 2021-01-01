@@ -19,6 +19,14 @@ var alive := true
 var on_dead: FuncRef
 
 var target_pos: Vector2
+var Blackboard = preload("res://Utility/Blackboard.gd").new()
+
+
+func enter_campfire_zone():
+    self.Blackboard.check('campfire')
+
+func exit_campfire_zone():
+    self.Blackboard.erase('campfire')
 
 signal kills(victum)
 signal dead(this)
