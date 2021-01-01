@@ -105,6 +105,11 @@ _global_script_classes=[ {
 "path": "res://Resources/ResourceStick.gd"
 }, {
 "base": "Node",
+"class": "RiskyCommander",
+"language": "GDScript",
+"path": "res://AI/RiskyCommander.gd"
+}, {
+"base": "Node",
 "class": "Sector",
 "language": "GDScript",
 "path": "res://AI/Sector.gd"
@@ -164,6 +169,7 @@ _global_script_class_icons={
 "ReciepeItem": "",
 "ResourceItem": "",
 "ResourceStick": "",
+"RiskyCommander": "",
 "Sector": "",
 "Solder": "",
 "Troop": "",

@@ -12,13 +12,15 @@ class_name Sector
 
 var position: Vector2
 
-var cols = 'QWERTYUIOPASDFGHJKLZXCVBNM'
+const cols = 'QWERTYUIOPASDFGHJKLZXCVBNM'
 
 var has_enemy := false
+var last_update := 1000
 
 
 func _init(name: String, size: int):
-    self.position = Sector.position_of(name, size)
+    pass
+#    self.position = position_of(name, size)
 
 
 func name(size):
@@ -28,7 +30,7 @@ func name(size):
     return col + str(row)
 
 
-static func position_of(name: String, size: int) -> Vector2:
-    var col = cols.index(name[0])
-    var row = int(name[1])
-    return Vector2(col * size, row * size)
+#static func position_of(name: String, size: int) -> Vector2:
+#    var col = cols.index(name[0])
+#    var row = int(name[1])
+#    return Vector2(col * size, row * size)

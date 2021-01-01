@@ -53,22 +53,32 @@ func _process(delta):
 
 
 func create_scout():
+    """
+    Create scout group to sector from `select_scout_sector` 
+    """
     var participants = search_participants()
     if len(participants) == 0:
         var lead = participants.pop_front()
         var target_sector = select_scout_sector()
         # TODO: pawn can has destination sector, not vector
         lead.target_pos = target_sector.position
-        var troop = troopManager.create_troop(lead, participants)
+        var troop = troopsManager.create_troop(lead, participants)
         # TODO: send with battle mode
-        scouts.append({'troop': troop, 'sector': target_sector)
+        scouts.append({'troop': troop, 'sector': target_sector})
 
 
 func search_participants():
+    """
+    return possible participants for some adventure
+    """
     # TODO: process near area, select 1/3 pawns     return []
+    return []
 
 
-func select_scout_sector() -> Sector:
+func select_scout_sector():
+    """
+    Returns sector, that should be scanned
+    """
     var target = self.sectors[0]
     for s in self.sectors:
         if s.last_update > target.last_update:
@@ -120,7 +130,6 @@ func analize():
     var dist = 0
     for s in self.sectors:
         if s.has_enemy():
-            enemy_known = true
             var new_dist = current_position.distance_to(s.position)
             if  new_dist < dist:
                 dist = new_dist
@@ -146,4 +155,4 @@ func make_attack():
     # TODO: use commander as lead of troop. Swap behaviour, Hierarhy FSM
     var lead = participants[0]
     lead.target_pos = self.nearest_enemy_sector.position
-    self.attack_troop = troopManager.create_troop(lead, participants)
+    self.attack_troop = troopsManager.create_troop(lead, participants)

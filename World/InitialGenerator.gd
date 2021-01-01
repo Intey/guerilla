@@ -3,7 +3,7 @@ class_name InitialGenerator
 
 
 var NPCScene = preload("res://NPC/NPC/NPC.tscn")
-Var CommanderScene = preload("res://NPC/Commander/Commander.tscn")
+var CommanderScene = preload("res://NPC/Commander/Commander.tscn")
 
 var world = null
 var left_camp = null
@@ -19,7 +19,7 @@ func generate():
     for i in range(10):
         # TOOD: 
         # - pass weapons (eg. 3 melee, 7 ranged)
-        generate_commander()
+#        generate_commander(Pawn.Fraction.Left)
         generate_npc(Pawn.Fraction.Left)
 
     for i in range(10):
@@ -69,6 +69,7 @@ func random_position_in(shape):
     
 
 func generate_pos_for_fraction(fraction):
+    var pos: Vector2
     if fraction == Pawn.Fraction.Left:
         pos = random_position_in(left_camp.get_node('Area/Shape'))
     elif fraction == Pawn.Fraction.Right:

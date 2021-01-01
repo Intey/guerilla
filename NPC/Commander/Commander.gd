@@ -17,6 +17,8 @@ var QUEST_OUT = "quest out"
 
 var current_quest: Quest = null
 
+var behavior = null
+
 #warning-ignore:unused_signal
 signal quest_available(quest, available)
     
