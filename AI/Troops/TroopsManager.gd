@@ -8,14 +8,15 @@ var pawns_troops = {}
 
 func create_troop(lead, teammates, distance: int = 45):
     var t = []
-    t.append(lead)
     for tm in teammates:
         # filter pawns, that already in some group
         if pawns_troops.get(tm) == null:
             t.append(tm)
         
-    var troop = Troop.new(t, distance)
+    var troop = Troop.new(lead, t, distance)
     troops.append(troop)
+    
+    pawns_troops[lead] = troop
     for tm in troop.teammates:
         pawns_troops[tm] = troop
     
@@ -37,11 +38,9 @@ func untroop(pawn: Pawn):
     
     for tm in troop.teammates:
         var ai = tm.find_node("TroopAI", true, false)
-        if ai == null:
-            print_debug("teammate has no AI")
-        else:
-            tm.remove_child(ai)
-            ai.free()
+        assert(ai != null) # "troop teammate didn't has TroopAI"
+        tm.remove_child(ai)
+        ai.free()
         
     for p in troop.teammates:
         self.pawns_troops.erase(p)

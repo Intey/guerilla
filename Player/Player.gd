@@ -38,9 +38,6 @@ onready var states_map = {
     COLLECTING: $FSM/Collecting.init(self),
 }
 
-# ============ State machinary
-
-
 
 #var craftHud = null
 var collectable_area = null
@@ -71,11 +68,8 @@ func _process(delta):
 func _draw():
     var color = colors.get($FSM.current_state, Color(1, 1, 1))
     $Sprite/ColorRect.color = color
-    
-    
-#func _draw():
-#    var mpos = get_local_mouse_position()
-#    draw_circle(mpos, 3, Color(1, 0, 0))
+    var mpos = get_local_mouse_position()
+    draw_circle(mpos, 3, Color(1, 0, 0))
 
 
 func collect_item():

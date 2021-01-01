@@ -36,7 +36,7 @@ func detect_body(body):
                 self.nearest_enemy = body 
             elif (
                 self.pawn.position.distance_to(body.position) 
-                    < self.pawn.distance_to(self.nearest_enemy.position)
+                    < self.pawn.position.distance_to(self.nearest_enemy.position)
                 ):
                 nearest_enemy = body
             
@@ -48,6 +48,9 @@ func is_view_enemy():
     
     
 func teach(pawn: Pawn):
+    if pawn in Player:
+        print_debug("dont teach AI to player")
+        return
     print_debug(" teach pawn ", pawn, " to trooping")
     pawn.add_child(self)
     self.pawn = pawn

@@ -15,11 +15,11 @@ func update_impl(delta):
         else:
             self.host.fire(delta)
     if Input.is_action_just_released("ui_untroop"):
-        print_debug("untroop")
+        print_debug("player untroop")
         troopsManager.untroop(self.host)
 
     elif Input.is_action_just_released("ui_troop"):
-        print_debug("craete troop")
+        print_debug("player craete troop")
         # search nearest pawns
         var pawns = []
         var comm_range = self.host.get_node("CommRange")
@@ -44,5 +44,5 @@ func get_input() -> Vector2:
     
 func physics_process_impl(delta):
      var velocity = get_input()
-     var collision = self.host.move_and_collide(velocity * delta)
+     var collision = self.host.move_and_slide(velocity)
     
