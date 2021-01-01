@@ -8,7 +8,7 @@ func on_enter():
     description_view.visible = true
     var quest = self.host.current_quest
     description_view.text = quest.quest_description
-    assert click_area.connect("input_event", self, "_on_ClickArea_input_event") == 0
+    assert(click_area.connect("input_event", self, "_on_ClickArea_input_event") == 0)
 
     
 func on_exit():

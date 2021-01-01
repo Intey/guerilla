@@ -3,3 +3,6 @@ env/
 *.code-workspace
 addons/
 
+*.gdns
+*.gdnlib
+*.dylib

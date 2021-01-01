@@ -8,6 +8,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 82.0
@@ -24,7 +27,5 @@ margin_top = 24.0
 margin_right = 82.0
 margin_bottom = 44.0
 text = "Options"
-
-[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_Start_pressed"]
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="start_game"]
 [connection signal="pressed" from="VBoxContainer/Options" to="." method="options"]

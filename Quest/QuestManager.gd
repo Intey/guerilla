@@ -32,7 +32,7 @@ func add_quest(quest: Quest):
     self.quests[_idle_quests].append(quest)
     self.add_child(quest)
     var error = quest.connect("available", self, "on_quest_available")
-    assert error == 0
+    assert(error == 0)
     
     
 func assign_quest(quest: Quest, assignee):
@@ -47,7 +47,7 @@ func assign_quest(quest: Quest, assignee):
     
     
 func reward(quest: Quest):
-    assert quest in self.quests[_reward_quests]
+    assert(quest in self.quests[_reward_quests])
     print_debug("reward ", quest)
     self.quests[_reward_quests].erase(quest)
     self.quests[_completed_quests].append(quest)
@@ -70,7 +70,7 @@ func on_quest_available(quest: Quest, available: bool):
     
 func on_quest_completed(quest: Quest):
     var assigned_quests = self.quests[_assigned_quests]
-    assert quest in assigned_quests
+    assert(quest in assigned_quests)
     assigned_quests.erase(quest)
     self.quests[_reward_quests].append(quest)
     

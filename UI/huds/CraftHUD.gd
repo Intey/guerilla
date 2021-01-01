@@ -10,9 +10,9 @@ var reciepes = []
 var player
 
 func init(_player):
-    self.player = _player        
+    self.player = _player
     self.reciepes = crafts.get_crafts()
-    self.render_ingridients(self.player._get_inventory())        
+    self.render_ingridients(self.player._get_inventory())
     self.init_reciepes()
 
 func init_reciepes():

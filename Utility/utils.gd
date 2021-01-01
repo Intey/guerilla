@@ -1,6 +1,5 @@
 tool
 extends Node
-class_name utils
 
 var debug_print_timeout = 0
 

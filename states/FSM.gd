@@ -63,7 +63,7 @@ func init(states=null, initial_state=null):
     # reverse self
     if states == null:
         states = self.__init_states_from_nodes()
-        assert len(states) > 0
+        assert(len(states) > 0)
     if initial_state == null:
         initial_state = states.values()[0].get_name()
 
@@ -89,7 +89,7 @@ func change_state(new_state: String, soft_transit=true):
         
     var real_new_state = new_state
     if new_state == PREVIOUS_STATE:
-        assert len(__states_stack) > 1
+        assert(len(__states_stack) > 1)
         real_new_state = __states_stack[-2]
     if soft_transit:
         if not self.states_map[from_state].soft_transit(real_new_state):
@@ -132,7 +132,7 @@ func __init_states_from_nodes():
         var name = s.get_name()
         if self.debug:
             print_debug("init state ", name)
-        assert name != null
+        assert(name != null)
         states[name] = s.init(host)
 
     return states

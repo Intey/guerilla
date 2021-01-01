@@ -60,7 +60,7 @@ func random_position_in(shape):
         max_y += shape.radius
         min_y -= shape.radius
     else:
-        assert false
+        assert(false) # not implemented random position generator for other shapes
         
     var result: Vector2 = pos
     result.x = rand_range(min_x, max_x)

@@ -19,7 +19,7 @@ func _ready():
         self.debug = get_parent().debug or self.debug
     
 func update(delta):
-    assert inited and "State " + str(self) + " should be initialized with 'init'"
+    assert(inited and "State " + str(self) + " should be initialized with 'init'")
     
     delta = self.GT.timespeed * delta
     var new_state = self.update_impl(delta)

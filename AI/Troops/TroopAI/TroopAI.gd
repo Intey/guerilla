@@ -20,7 +20,7 @@ func init(troop):
 
 
 func _ready():
-    assert self.troop != null
+    assert(self.troop != null)
     self.states = {
         FOLLOW: $FSM/FollowLeader.init(self),
         COMBAT: $FSM/Combat.init(self)

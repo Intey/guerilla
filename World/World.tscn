@@ -61,4 +61,3 @@ shoot_rate = 0.5
 position = Vector2( 620.793, 379.508 )
 
 [node name="HUD" parent="." instance=ExtResource( 9 )]
-

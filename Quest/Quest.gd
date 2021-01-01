@@ -39,7 +39,7 @@ func _ready():
     for objective in self.objectives:
         self.add_child(objective)
         var error = objective.connect("completed", self, "on_complete_objective", [objective])
-        assert error == 0
+        assert(error == 0)
         
     for c in self.requirements:
         self.add_child(c)
