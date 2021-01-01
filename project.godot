@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Animal",
 "language": "GDScript",
-"path": "res://Animal/AnimalKinematic.gd"
+"path": "res://NPC/Animal/AnimalKinematic.gd"
 }, {
 "base": "Node",
 "class": "Blackboard",
@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "CollectableResource",
 "language": "GDScript",
-"path": "res://Resources/Scenes/CollectableResource.gd"
+"path": "res://Items/Resources/Scenes/CollectableResource.gd"
 }, {
 "base": "Node",
 "class": "ConditionalEvent",
@@ -52,7 +52,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "GlobalTime",
 "language": "GDScript",
-"path": "res://World/GlobalTime.gd"
+"path": "res://World/GlobalEffects/GlobalTime.gd"
 }, {
 "base": "Node",
 "class": "InitialGenerator",
@@ -92,17 +92,17 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "ReciepeItem",
 "language": "GDScript",
-"path": "res://ReciepeItem.gd"
+"path": "res://Player/craft/ReciepeItem.gd"
 }, {
 "base": "Node",
 "class": "ResourceItem",
 "language": "GDScript",
-"path": "res://Resources/ResourceItem.gd"
+"path": "res://Items/Resources/ResourceItem.gd"
 }, {
 "base": "ResourceItem",
 "class": "ResourceStick",
 "language": "GDScript",
-"path": "res://Resources/ResourceStick.gd"
+"path": "res://Items/Resources/ResourceStick.gd"
 }, {
 "base": "Node",
 "class": "RiskyCommander",
@@ -137,7 +137,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Value",
 "language": "GDScript",
-"path": "res://Value/Value.gd"
+"path": "res://Utility/Value/Value.gd"
 }, {
 "base": "Node",
 "class": "Velik",
@@ -183,7 +183,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Guerilla"
-run/main_scene="res://UIScreens/MainMenu.tscn"
+run/main_scene="res://UI/UIScreens/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]

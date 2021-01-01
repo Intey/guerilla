@@ -4,6 +4,8 @@ var host = null
 export var debug = false
 var GT = null
 
+var GlobalTime = preload("res://World/GlobalEffects/GlobalTime.tscn")
+
 func init(host):
     self.host = host
     inited = true
@@ -12,7 +14,7 @@ func init(host):
 func _ready():
     self.GT = get_node('/root/World/GlobalTime')
     if self.GT == null:
-        self.GT = load('res://World/GlobalTime.tscn').instance()
+        self.GT = GlobalTime.instance()
     if get_parent().get('debug') != null:
         self.debug = get_parent().debug or self.debug
     

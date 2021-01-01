@@ -49,6 +49,14 @@
       "stick": 8
     },
     "count": 1
+  },
+  "logs": {
+    "type": 1,
+    "icon": "",
+    "scene": "",
+    "ingridients":  {
+      "stick": 4
+    }
   }
 
 }

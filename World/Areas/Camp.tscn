@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 385.331
+
+[node name="Camp" type="Node2D"]
+position = Vector2( 0, 1 )
+
+[node name="Area" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="Area"]
+shape = SubResource( 1 )
+

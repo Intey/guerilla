@@ -8,9 +8,11 @@ enum Fraction {
 }
     
 export(Fraction) var fraction = Fraction.Neutral
+#warning-ignore:unused_class_variable
 export var speed := 100
+#warning-ignore:unused_class_variable
 export var shoot_range := 100
-export var shoot_rate: float = 1.0
+export var shoot_rate: float = 0.5
 
 var health := Value.new()
 var alive := true

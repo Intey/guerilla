@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Player/craft/ReciepeItem.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+
+[node name="Item" type="HBoxContainer"]
+margin_right = 101.0
+margin_bottom = 32.0
+script = ExtResource( 1 )
+item_name = "Text"
+item_img = ExtResource( 2 )
+
+[node name="SomeImage" type="TextureRect" parent="."]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+margin_left = 36.0
+margin_top = 9.0
+margin_right = 63.0
+margin_bottom = 23.0
+text = "Text"
+
+[connection signal="gui_input" from="." to="." method="_on_Item_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_Item_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Item_mouse_exited"]

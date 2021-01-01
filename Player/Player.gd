@@ -3,17 +3,14 @@ class_name Player
 
 var settings_filepath = "res://settings.json"
 
-const BULLET = preload('res://Bullet.tscn')
-
 export var collection_speed = 1
 export var max_sleep_time := 10.0
 export var sleep_time := 10.0
-
 export var debug = false
 
-var CS = preload('res://CraftStation.gd')
-var BuildPlan = preload('res://BuildPlan.tscn')
-var crafts = preload('res://crafts.gd')
+var CS = preload('./craft/CraftStation.gd')
+var BuildPlan = preload('./craft/BuildPlan.tscn')
+var crafts = preload('./craft/crafts.gd')
 var Blackboard = preload("res://Utility/Blackboard.gd").new()
 
 signal build(reciepe, position)
@@ -176,7 +173,7 @@ func take_damage(dmg):
         return 
     .take_damage(dmg)
     if not self.alive: # TODO: change to other pawn
-        get_tree().change_scene("res://UIScreens/MainMenu.tscn")
+        get_tree().change_scene("res://UI/UIScreens/MainMenu.tscn")
         
 
 func start_collect():
@@ -185,5 +182,4 @@ func start_collect():
 
 func stop_collect():
     $CollectTimer.stop()
-    
 

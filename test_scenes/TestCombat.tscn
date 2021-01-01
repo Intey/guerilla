@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://NPC/NPC/NPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/GlobalEffects/GlobalTime.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=3]
+
+[node name="TestCombat" type="Node2D"]
+
+[node name="Right" parent="." instance=ExtResource( 1 )]
+position = Vector2( 213, 68 )
+fraction = 2
+
+[node name="Left" parent="." instance=ExtResource( 1 )]
+position = Vector2( 666.242, 140.447 )
+
+[node name="World" type="Node" parent="."]
+
+[node name="GlobalTime" parent="World" instance=ExtResource( 2 )]
+
+[node name="Right2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 210.006, 120.689 )
+fraction = 2
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 660.407, 62.2687 )
+fraction = 0
+speed = 100
+shoot_range = 100
+shoot_rate = 1.0
+

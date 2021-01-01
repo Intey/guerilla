@@ -5,7 +5,9 @@ Quest manager handle
 """
 extends Node
 
-var active_quests = []
+#warning-ignore:unused_class_variable
+var active_quests = [] 
+#warning-ignore:unused_class_variable
 var available_quests = []
 
 var _idle_quests = 'idle'
@@ -41,7 +43,7 @@ func assign_quest(quest: Quest, assignee):
     self.quests[_available_quests].erase(quest)
     self.quests[_assigned_quests].append(quest)
     
-    quest.connect("completed", self, "on_quest_completed")
+    assert(quest.connect("completed", self, "on_quest_completed"))
     
     
 func reward(quest: Quest):
