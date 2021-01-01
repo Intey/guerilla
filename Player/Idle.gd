@@ -13,7 +13,8 @@ func update_impl(delta):
             if not self.host.build_plan['node'].collided:
                 self.host.build_structure()
         else:
-            self.host.fire(delta)
+            if not self.host.Blackboard.get("crafting"):
+                self.host.fire(delta)
     if Input.is_action_just_released("ui_untroop"):
         print_debug("player untroop")
         troopsManager.untroop(self.host)
@@ -28,14 +29,16 @@ func update_impl(delta):
                 pawns.append(body)
         troopsManager.create_troop(self.host, pawns)
         
-    if Input.is_action_just_released('open_craft'):
-        self.host.Blackboard.check('crafting')
-        self.host.emit_signal("craft_on")
+    if Input.is_action_just_released('toggle_craft'):
+        if self.host.Blackboard.get("crafting"):
+            self.host.unset_craft_mode()
+        else:
+            self.host.set_craft_mode()
     if Input.is_action_just_pressed('ui_cancel'):
-        self.host.Blackboard.erase('crafting')
-        self.host.emit_signal("craft_off")
-        self.host.hide_build_mode()
-    
+        # NOTE: maybe "crafting" state?
+        if self.host.Blackboard.get("crafting"):
+            self.host.unset_craft_mode()
+        
             
 func get_input() -> Vector2:
     var velocity = Vector2()

@@ -13,6 +13,7 @@ func connect_craft():
     var p = $Player
     assert(p != null)
     craftHud.init(p)
+    craftHud.hide()
     assert($Player/Inventory.connect('update', craftHud, "update_reciepes_view") == 0)
 
     assert(craftHud.connect('craft', $Player, 'craft') == OK)

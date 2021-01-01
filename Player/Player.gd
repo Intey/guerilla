@@ -94,6 +94,7 @@ func set_sleep_zone(in_zone=true):
     else:
         self.Blackboard.erase("sleep")
 
+
 func craft(name):
     # CraftStation.craft(name)
     var reciepes = crafts.get_crafts()
@@ -180,4 +181,15 @@ func start_collect():
 
 func stop_collect():
     $CollectTimer.stop()
+    
+
+func set_craft_mode():
+    Blackboard.check('crafting')
+    emit_signal("craft_on")
+    
+    
+func unset_craft_mode():
+    Blackboard.erase('crafting')
+    emit_signal("craft_off")
+    hide_build_mode()
 
