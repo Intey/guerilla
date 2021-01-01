@@ -7,201 +7,12 @@
 [ext_resource path="res://Player/Idle.gd" type="Script" id=5]
 [ext_resource path="res://Player/Sleep.gd" type="Script" id=6]
 [ext_resource path="res://Player/Collecting.gd" type="Script" id=7]
+[ext_resource path="res://Player/Player.gd" type="Script" id=8]
 
-[sub_resource type="GDScript" id=5]
-script/source = "extends Pawn
-class_name Player
-
-var settings_filepath = \"res://settings.json\"
-
-export var collection_speed = 1
-export var max_sleep_time := 10.0
-export var sleep_time := 10.0
-export var debug = false
-
-var CS = preload('craft/CraftStation.gd')
-var BuildPlan = preload('craft/BuildPlan.tscn')
-var crafts = preload('craft/crafts.gd')
-var Blackboard = preload(\"res://Utility/Blackboard.gd\").new()
-
-signal build(reciepe, position)
-signal gathers(resource)
-
-# State machinary
-
-var PREVIOUS = FSM.PREVIOUS_STATE
-var IDLE = \"idle\"
-var SLEEP = \"sleep\"
-var COLLECTING = \"collecting\"
-
-# Debug colors for state visibility
-var colors = {
-    IDLE: Color(0, 0, 0, 0),
-    SLEEP: Color(0, 0, 1, 0.4),
-    COLLECTING: Color(0, 0, 0, 0),
-}
-onready var states_map = {
-    IDLE: $FSM/Idle.init(self),
-    SLEEP: $FSM/Sleep.init(self),
-    COLLECTING: $FSM/Collecting.init(self),
-}
-
-
-#var craftHud = null
-var collectable_area = null
-var build_plan = null
-var CraftStation = null
-var godmode = false
-
-func _ready():
-    $FSM.init(states_map, IDLE)
-    self.CraftStation = CS.new(self)
-    var settings_file = File.new()
-    settings_file.open(settings_filepath, File.READ)
-    var line = settings_file.get_line()
-    var settings = parse_json(line)
-    godmode = settings.get('godmode', false)
-    
-    # TODO: Hide mouse when aiming, and enable on gui opened
-    # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-
-    $RangeWeapon.init(self)
-    $RangeWeapon.time_for_one_shoot = self.shoot_rate
-    
-func _process(delta):
-    self.update()    
-    $AnimationPlayer.play(\"idle\")    
-    
-    
-func _draw():
-    var color = colors.get($FSM.current_state, Color(1, 1, 1))
-    $Sprite/ColorRect.color = color
-    var mpos = get_local_mouse_position()
-    draw_circle(mpos, 3, Color(1, 0, 0))
-
-
-func collect_item():
-    var collected = collectable_area.pop(collection_speed)
-    $Inventory.add(collected)
-    emit_signal(\"gathers\", collected)
-
-
-func enter_collectable_area(area):
-    if area is CollectableResource:
-        print_debug('enter ', area)
-        collectable_area = area
-
-
-func exit_collectable_area(area):
-    if area == collectable_area:
-        print_debug('exit ', area)
-        collectable_area = null
-        
-func enter_campfire_zone():
-    self.Blackboard.check('campfire')
-
-func exit_campfire_zone():
-    self.Blackboard.erase('campfire')
-
-func set_sleep_zone(in_zone=true):
-    if in_zone:
-        self.Blackboard.check(\"sleep\")    
-    else:
-        self.Blackboard.erase(\"sleep\")
-
-func craft(name):
-    # CraftStation.craft(name)
-    var reciepes = crafts.get_crafts()
-    var reciepe = reciepes.get(name)
-    if reciepe == null:
-        print_debug('unknown reciepe ', name, \". Variants: \", reciepes.keys())
-        return
-    # check reciepe buildable
-    print_debug(\"craft reciepe \", reciepe)
-    if self.CraftStation.can_build(reciepe):
-        if reciepe.type == crafts.Types.ITEM:
-            for res_name in reciepe.ingridients:
-                var count = reciepe.ingridients[res_name]
-                var res = ResourceItem.new()
-                res.name = res_name
-                res.count = count
-                self.subtract_from_inventory(res)
-                
-            var result = self.CraftStation.craft(reciepe)
-            var res
-            if name == \"stick\":
-                res = ResourceStick.new(reciepe.count)
-            else:
-                res = ResourceItem.new()
-                res.name = name
-                res.count = reciepe.count
-            self.add_to_inventory(res)
-            
-        elif reciepe.type == crafts.Types.BUILDING:
-            var plan_node = BuildPlan.instance()
-            build_plan = {'node': plan_node, 'reciepe': reciepe}
-            plan_node.set_area(self, $BuildArea/Shape.shape.radius)
-            get_parent().add_child(plan_node)
-            # нам нужно показывать|скрывать дочерние спрайты. 
-            # hide/show - не работает
-            $BuildArea.visible = true
-        
-    
-func build_structure():
-    if build_plan == null:
-        return
-    var reciepe = build_plan['reciepe']
-    if not self.CraftStation.can_build(reciepe):
-        self.hide_build_mode()
-        return
-        
-    subtract_from_inventory(reciepe)
-    var position = build_plan['node'].position
-    emit_signal('build', reciepe, position)
-    if not self.CraftStation.can_build(reciepe):
-        self.hide_build_mode()
-    # TODO: add to camp
-
-
-func hide_build_mode():
-    if build_plan:
-        build_plan['node'].queue_free()
-        build_plan = null
-    # нам нужно показывать|скрывать дочерние спрайты. 
-    # hide/show - не работает
-    $BuildArea.visible = false
-    #if collision:
-        #print_debug('collide ', collision)
-        
-
-func fire(delta):
-    var mpos = get_local_mouse_position() * shoot_range
-    .shoot(delta, mpos)
-
-    
-func take_damage(dmg):
-    if godmode:
-        return 
-    .take_damage(dmg)
-    if not self.alive: # TODO: change to other pawn
-        get_tree().change_scene(\"res://UIScreens/MainMenu.tscn\")
-        
-
-func start_collect():
-    $CollectTimer.start()
-    
-
-func stop_collect():
-    $CollectTimer.stop()
-    
-
-"
-
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=6]
 radius = 100.0
 
-[sub_resource type="Animation" id=2]
-resource_name = "idle"
+[sub_resource type="Animation" id=7]
 length = 0.3
 loop = true
 tracks/0/type = "value"
@@ -217,27 +28,22 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=8]
 radius = 31.1473
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=5]
 radius = 60.0
 
 [node name="Player" instance=ExtResource( 1 )]
 z_index = 4
 collision_mask = 15
-script = SubResource( 5 )
-fraction = 0
-speed = 100
-shoot_range = 100
-shoot_rate = 1.0
+script = ExtResource( 8 )
 
 [node name="Camera2D" parent="." index="0"]
 current = true
 smoothing_enabled = true
 
 [node name="BuildArea" type="Area2D" parent="." index="2"]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_group_": true
@@ -245,16 +51,15 @@ __meta__ = {
 
 [node name="Shape" type="CollisionShape2D" parent="BuildArea" index="0"]
 show_behind_parent = true
-shape = SubResource( 1 )
+shape = SubResource( 6 )
 
 [node name="BuildSprite" type="Sprite" parent="BuildArea" index="1"]
 modulate = Color( 0, 1, 0.929412, 0.333333 )
-position = Vector2( 1.14441e-005, -7.62939e-006 )
+position = Vector2( 1.14441e-05, -7.62939e-06 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="." index="3"]
-editor/display_folded = true
 texture = ExtResource( 3 )
 hframes = 3
 frame = 1
@@ -269,14 +74,13 @@ color = Color( 1, 1, 1, 0.254902 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 playback_speed = 0.5
-anims/idle = SubResource( 2 )
+anims/idle = SubResource( 7 )
 
 [node name="Shape" type="CollisionShape2D" parent="." index="5"]
 visible = false
-shape = SubResource( 3 )
+shape = SubResource( 8 )
 
 [node name="FSM" parent="." index="6" instance=ExtResource( 4 )]
-editor/display_folded = true
 debug = true
 
 [node name="Idle" type="Node" parent="FSM" index="0"]
@@ -289,10 +93,8 @@ script = ExtResource( 6 )
 script = ExtResource( 7 )
 
 [node name="CollectionArea" type="Area2D" parent="." index="7"]
-editor/display_folded = true
 
 [node name="Shape" type="CollisionShape2D" parent="CollectionArea" index="0"]
 modulate = Color( 1, 0, 1, 1 )
-shape = SubResource( 4 )
-
+shape = SubResource( 5 )
 [connection signal="area_entered" from="CollectionArea" to="." method="enter_collectable_area"]

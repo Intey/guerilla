@@ -97,7 +97,7 @@ _global_script_classes=[ {
 "base": "HBoxContainer",
 "class": "ReciepeItem",
 "language": "GDScript",
-"path": "res://Player/craft/ReciepeItem.gd"
+"path": "res://UI/huds/ReciepeItem.gd"
 }, {
 "base": "Node",
 "class": "ResourceItem",

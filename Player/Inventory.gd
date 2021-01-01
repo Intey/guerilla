@@ -10,7 +10,14 @@ func add(collected: ResourceItem):
         inventory[collected.name] += collected.count
     else:
         inventory[collected.name] = collected.count
-    print_debug('collected ', collected.count, ' ', collected.name, ". now player has ", inventory)
+    print_debug(
+        'collected ', 
+        collected.count, 
+        ' ', 
+        collected.name, 
+        ". now player has ", 
+        inventory
+    )
     emit_signal('update', self.inventory)
     
     

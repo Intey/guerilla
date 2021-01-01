@@ -115,36 +115,36 @@ func craft(name):
                 res.name = res_name
                 res.count = count
                 self.subtract_from_inventory(res)
-                
-            var result = self.CraftStation.craft(reciepe)
-            var res
-            if name == "stick":
-                res = ResourceStick.new(reciepe.count)
-            else:
-                res = ResourceItem.new()
-                res.name = name
-                res.count = reciepe.count
-            self.add_to_inventory(res)
             
+            self.CraftStation.craft(reciepe)
+            var res = ResourceItem.new()
+            res.name = name
+            res.count = reciepe.count
+            self.add_to_inventory(res)
+
         elif reciepe.type == crafts.Types.BUILDING:
             var plan_node = BuildPlan.instance()
             build_plan = {'node': plan_node, 'reciepe': reciepe}
             plan_node.set_area(self, $BuildArea/Shape.shape.radius)
             get_parent().add_child(plan_node)
-            # нам нужно показывать|скрывать дочерние спрайты. 
+            # нам нужно показывать|скрывать дочерние спрайты.
             # hide/show - не работает
             $BuildArea.visible = true
-        
-    
+
+
 func build_structure():
     if build_plan == null:
         return
     var reciepe = build_plan['reciepe']
     if not self.CraftStation.can_build(reciepe):
+        print_debug("cannot build" + build_plan["reciepe"])
         self.hide_build_mode()
         return
-        
-    subtract_from_inventory(reciepe)
+    for ingr in reciepe["ingridients"]:
+        var res = ResourceItem.new()
+        res.name = ingr
+        res.count = reciepe["ingridients"][ingr]
+        subtract_from_inventory(res)
     var position = build_plan['node'].position
     emit_signal('build', reciepe, position)
     if not self.CraftStation.can_build(reciepe):
@@ -173,8 +173,10 @@ func take_damage(dmg):
         return 
     .take_damage(dmg)
     if not self.alive: # TODO: change to other pawn
-        get_tree().change_scene("res://UI/UIScreens/MainMenu.tscn")
-        
+        assert(
+            get_tree().change_scene("res://UI/UIScreens/MainMenu.tscn") == OK
+        )
+
 
 func start_collect():
     $CollectTimer.start()

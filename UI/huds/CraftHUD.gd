@@ -1,6 +1,6 @@
 extends Panel
 
-var ReciepeItem = preload('res://Player/craft/ReciepeItem.tscn')
+var ReciepeItem = preload('ReciepeItem.tscn')
 var crafts = preload('res://Player/craft/crafts.gd')
 
 signal craft(reciepe_name)
@@ -30,7 +30,7 @@ func init_reciepes():
         
 func _process(delta):
     self.reciepes = crafts.get_crafts()
-    self.update_reciepes_view(self.player._get_inventory())
+#    self.update_reciepes_view(self.player._get_inventory())
         
         
 func update_reciepes_view(new_inventory):

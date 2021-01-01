@@ -39,11 +39,11 @@ func shoot(delta, target: Vector2):
         emit_signal("kills", victum)
 
         
-func subtract_from_inventory(res):
+func subtract_from_inventory(res: ResourceItem):
     return $Inventory.subtract(res)
 
 
-func add_to_inventory(res):
+func add_to_inventory(res: ResourceItem):
     $Inventory.add(res)
 
 

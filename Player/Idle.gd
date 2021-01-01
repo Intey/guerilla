@@ -9,8 +9,8 @@ func update_impl(delta):
         elif self.host.Blackboard.get("sleep"):
             return self.host.SLEEP
     if Input.is_action_just_pressed('ui_select'):
-        if self.host.Blackboard.get('crafting'):
-            if self.host.build_plan and not self.host.build_plan['node'].collided:
+        if self.host.build_plan:
+            if not self.host.build_plan['node'].collided:
                 self.host.build_structure()
         else:
             self.host.fire(delta)

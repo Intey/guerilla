@@ -21,11 +21,11 @@
   },
   "campfire": {
     "icon": "res://assets/icons/campfire.png",
-    "scene": "res://Campfire.tscn",
+    "scene": "res://Buildings/Campfire.tscn",
     "type": 0,
     "ingridients": {
       "logs": 1,
-      "stick": 4    
+      "stick": 4
     },
     "count": 1
   },
@@ -34,7 +34,7 @@
     "scene": "",
     "type": 1,
     "ingridients" : {
-      "meat": 1, 
+      "meat": 1,
       "stick": 3
     },
     "count": 1,
@@ -45,7 +45,7 @@
     "scene": "res://Buildings/SleepBag.tscn",
     "type": 0,
     "ingridients" : {
-      "leafs": 20, 
+      "leafs": 20,
       "stick": 8
     },
     "count": 1
@@ -56,7 +56,8 @@
     "scene": "",
     "ingridients":  {
       "stick": 4
-    }
+    },
+    "count": 1
   }
 
 }
