@@ -35,7 +35,6 @@ onready var states_map = {
     COLLECTING: $FSM/Collecting.init(self),
 }
 
-
 #var craftHud = null
 var collectable_area = null
 var build_plan = null
@@ -50,18 +49,18 @@ func _ready():
     var line = settings_file.get_line()
     var settings = parse_json(line)
     godmode = settings.get('godmode', false)
-    
+
     # TODO: Hide mouse when aiming, and enable on gui opened
     # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
     $RangeWeapon.init(self)
     $RangeWeapon.time_for_one_shoot = self.shoot_rate
-    
+
 func _process(delta):
-    self.update()    
-    $AnimationPlayer.play("idle")    
-    
-    
+    self.update()
+    $AnimationPlayer.play("idle")
+
+
 func _draw():
     var color = colors.get($FSM.current_state, Color(1, 1, 1))
     $Sprite/ColorRect.color = color
@@ -85,7 +84,7 @@ func exit_collectable_area(area):
     if area == collectable_area:
         print_debug('exit ', area)
         collectable_area = null
-        
+
 func enter_campfire_zone():
     self.Blackboard.check('campfire')
 
@@ -94,7 +93,7 @@ func exit_campfire_zone():
 
 func set_sleep_zone(in_zone=true):
     if in_zone:
-        self.Blackboard.check("sleep")    
+        self.Blackboard.check("sleep")
     else:
         self.Blackboard.erase("sleep")
 
@@ -156,21 +155,21 @@ func hide_build_mode():
     if build_plan:
         build_plan['node'].queue_free()
         build_plan = null
-    # нам нужно показывать|скрывать дочерние спрайты. 
+    # нам нужно показывать|скрывать дочерние спрайты.
     # hide/show - не работает
     $BuildArea.visible = false
     #if collision:
         #print_debug('collide ', collision)
-        
+
 
 func fire(delta):
     var mpos = get_local_mouse_position() * shoot_range
     .shoot(delta, mpos)
 
-    
+
 func take_damage(dmg):
     if godmode:
-        return 
+        return
     .take_damage(dmg)
     if not self.alive: # TODO: change to other pawn
         assert(
@@ -180,7 +179,7 @@ func take_damage(dmg):
 
 func start_collect():
     $CollectTimer.start()
-    
+
 
 func stop_collect():
     $CollectTimer.stop()

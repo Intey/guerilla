@@ -18,4 +18,7 @@ func can_build(reciepe):
 func craft(reciepe):
     var count = reciepe.count
     var name = reciepe.name
-    return count
+    var result = ResourceItem.new()
+    result.count = count
+    result.name = name
+    return result

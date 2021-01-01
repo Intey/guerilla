@@ -4,4 +4,3 @@
 
 [node name="FSM" type="Node"]
 script = ExtResource( 1 )
-

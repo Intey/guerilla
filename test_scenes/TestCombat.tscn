@@ -12,6 +12,7 @@ fraction = 2
 
 [node name="Left" parent="." instance=ExtResource( 1 )]
 position = Vector2( 666.242, 140.447 )
+fraction = 1
 
 [node name="World" type="Node" parent="."]
 
@@ -23,8 +24,4 @@ fraction = 2
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 660.407, 62.2687 )
-fraction = 0
-speed = 100
-shoot_range = 100
-shoot_rate = 1.0
-
+fraction = 1
