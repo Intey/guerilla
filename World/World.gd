@@ -15,10 +15,11 @@ func connect_craft():
     craftHud.init(p)
     assert($Player/Inventory.connect('update', craftHud, "update_reciepes_view") == 0)
 
-    assert(craftHud.connect('craft', $Player, 'craft') == 0)
-    assert($Player.connect('build', self, 'create_building') == 0)
+    assert(craftHud.connect('craft', $Player, 'craft') == OK)
+    assert($Player.connect('build', self, 'create_building') == OK)
+    assert($Player.connect("craft_on", craftHud, "show") == OK)
+    assert($Player.connect("craft_off", craftHud, "hide") == OK)
     
-
 func connect_clip():
     var clip = $Player/RangeWeapon/WeaponClip
     var mv = clip.max_value
@@ -30,16 +31,6 @@ func connect_clip():
     clip.connect("clip_reload_start", ammoHud, "start_reload")
     
     
-func _process(delta):
-    if Input.is_action_just_released('open_craft'):
-        $Player.Blackboard.check('crafting')
-#        craftHud.update_reciepes_view(self.player._get_inventory())  
-        craftHud.show()
-    if Input.is_action_just_pressed('ui_cancel'): # and craftHud != null:
-        $Player.Blackboard.erase('crafting')
-        craftHud.hide()
-        $Player.hide_build_mode()
-        
 func create_building(reciepe, position):
     var scene_path = reciepe.scene
     var BuildScene = load(scene_path)

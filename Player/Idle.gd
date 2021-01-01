@@ -26,8 +26,16 @@ func update_impl(delta):
         for body in comm_range.get_overlapping_bodies():
             if body is Pawn and body.fraction == self.host.fraction:
                 pawns.append(body)
-
         troopsManager.create_troop(self.host, pawns)
+        
+    if Input.is_action_just_released('open_craft'):
+        self.host.Blackboard.check('crafting')
+        self.host.emit_signal("craft_on")
+    if Input.is_action_just_pressed('ui_cancel'):
+        self.host.Blackboard.erase('crafting')
+        self.host.emit_signal("craft_off")
+        self.host.hide_build_mode()
+    
             
 func get_input() -> Vector2:
     var velocity = Vector2()

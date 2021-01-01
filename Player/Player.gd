@@ -15,6 +15,8 @@ var crafts = preload('./craft/crafts.gd')
 
 signal build(reciepe, position)
 signal gathers(resource)
+signal craft_on()
+signal craft_off()
 
 # State machinary
 
