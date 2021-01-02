@@ -97,4 +97,8 @@ script = ExtResource( 7 )
 [node name="Shape" type="CollisionShape2D" parent="CollectionArea" index="0"]
 modulate = Color( 1, 0, 1, 1 )
 shape = SubResource( 4 )
+
+[node name="CollisionShape2D" parent="CommRange" index="0"]
+position = Vector2( -2, 0 )
 [connection signal="area_entered" from="CollectionArea" to="." method="enter_collectable_area"]
+[connection signal="area_exited" from="CollectionArea" to="." method="exit_collectable_area"]

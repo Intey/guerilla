@@ -4,6 +4,7 @@ class_name Player
 var settings_filepath = "res://settings.json"
 
 export var collection_speed = 1
+export var collection_batch = 1
 export var max_sleep_time := 10.0
 export var sleep_time := 10.0
 export var debug = false
@@ -71,7 +72,9 @@ func _draw():
 
 
 func collect_item():
-    var collected = collectable_area.pop(collection_speed)
+    if not collectable_area:
+        return
+    var collected = collectable_area.pop(collection_batch)
     $Inventory.add(collected)
     emit_signal("gathers", collected)
 
@@ -174,14 +177,6 @@ func take_damage(dmg):
             get_tree().change_scene("res://UI/UIScreens/MainMenu.tscn") == OK
         )
 
-
-func start_collect():
-    $CollectTimer.start()
-
-
-func stop_collect():
-    $CollectTimer.stop()
-    
 
 func set_craft_mode():
     Blackboard.check('crafting')

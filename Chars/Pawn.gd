@@ -26,7 +26,7 @@ func enter_campfire_zone():
     self.Blackboard.check('campfire')
 
 func exit_campfire_zone():
-    self.Blackboard.erase('campfire')
+    self.Blackboard.uncheck('campfire')
 
 signal kills(victum)
 signal dead(this)

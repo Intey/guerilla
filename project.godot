@@ -148,6 +148,11 @@ _global_script_classes=[ {
 "class": "Velik",
 "language": "GDScript",
 "path": "res://Utility/vector.gd"
+}, {
+"base": "ResourceItem",
+"class": "Water",
+"language": "GDScript",
+"path": "res://Items/Resources/water.gd"
 } ]
 _global_script_class_icons={
 "Animal": "",
@@ -177,7 +182,8 @@ _global_script_class_icons={
 "TroopAI": "",
 "TroopsManager": "",
 "Value": "",
-"Velik": ""
+"Velik": "",
+"Water": ""
 }
 
 [application]

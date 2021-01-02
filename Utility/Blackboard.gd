@@ -9,15 +9,26 @@ func write(key, value):
         _blackboard[key] = value
         emit_signal("change_value", key, value)
     
+    
 func check(key):
     write(key, true)
+    emit_signal("change_value", _blackboard.get(key))
+    
+    
+func uncheck(key):
+    erase(key)
+    
     
 func toggle(key):
-    write(key, _blackboard.get('key', false))
+    var prev = _blackboard.get('key', false)
+    write(key, not prev)
+    emit_signal("change_value", _blackboard.get(key))
+    
     
 func erase(key):
     _blackboard.erase(key)
-    emit_signal("change_value", key, null)
+    emit_signal("change_value", _blackboard.get(key))
+    
     
 func get(key):
     return _blackboard.get(key)

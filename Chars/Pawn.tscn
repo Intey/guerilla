@@ -4,7 +4,6 @@
 [ext_resource path="res://Items/Weapons/RangeWeapon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/Inventory.tscn" type="PackedScene" id=3]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
 
@@ -29,4 +28,3 @@ damage = 30
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CommRange"]
 shape = SubResource( 2 )
-

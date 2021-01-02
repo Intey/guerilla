@@ -3,7 +3,7 @@ Base class for nodes, that renders on scene
 """
 extends Area2D
 class_name CollectableResource
-var type: GDScript  # type is class of resource
+export var type: GDScript  # type is class of resource
 export var count = 0    
 
 

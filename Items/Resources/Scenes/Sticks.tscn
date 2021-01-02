@@ -1,13 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Items/Resources/Scenes/CollectableResource.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Items/Resources/Scenes/Sticks.gd" type="Script" id=2]
-
+[ext_resource path="res://Items/Resources/ResourceStick.gd" type="Script" id=3]
 
 [node name="Sticks" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+type = ExtResource( 3 )
 count = 0
 
 [node name="ColorRect" parent="." index="1"]
 color = Color( 0.462745, 0.333333, 0.172549, 1 )
-
