@@ -1,8 +1,8 @@
 
 var player
 
-func _init(player):
-    self.player = player
+func _init(player_):
+    self.player = player_
 
 func can_build(reciepe):
     var required_place = reciepe.get('place')

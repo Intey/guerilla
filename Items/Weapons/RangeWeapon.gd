@@ -16,15 +16,15 @@ var last_shoot := self.time_for_one_shoot
 var global_position: Vector2
 var host: Node2D
 
-func init(host):
-    self.host = host
+func init(host_):
+    self.host = host_
     weapon_clip.max_value = clipsize
     weapon_clip.value = clipsize
     
 func _process(delta):
     last_shoot += delta
     
-func fire(delta, target: Vector2):
+func fire(_delta, target: Vector2):
     # last_shoot - seconds from last shoot
     # speed - shoot per second
     # get delta between shoots
@@ -40,11 +40,11 @@ func fire(delta, target: Vector2):
     # start view
 
     var bullet = BULLET.instance()
-    var global_position = host.global_position
+    var global_position_ = host.global_position
     
-    bullet.global_position = global_position
+    bullet.global_position = global_position_
     
-    var bullet_velocity = (target - global_position).normalized()
+    var bullet_velocity = (target - global_position_).normalized()
 
     bullet.velocity = bullet_velocity
     
@@ -53,7 +53,7 @@ func fire(delta, target: Vector2):
     var space_state = host.get_world_2d().direct_space_state
     var excepts = [self.host]
     var cast_to = target
-    var result = space_state.intersect_ray(global_position, cast_to, excepts)
+    var result = space_state.intersect_ray(global_position_, cast_to, excepts)
     if result:
         bullet.path_end = result.position
         if result.collider.has_method('take_damage'):

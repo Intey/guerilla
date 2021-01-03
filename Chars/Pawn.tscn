@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Chars/Pawn.gd" type="Script" id=1]
 [ext_resource path="res://Items/Weapons/RangeWeapon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/Inventory.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Utility/AutoValue.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -28,3 +29,11 @@ damage = 30
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CommRange"]
 shape = SubResource( 2 )
+
+[node name="Thirst" parent="." instance=ExtResource( 4 )]
+change_per_tick = -1.0
+tick_seconds = 1.0
+
+[node name="Starving" parent="." instance=ExtResource( 4 )]
+change_per_tick = -1.0
+tick_seconds = 1.0

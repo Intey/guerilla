@@ -7,7 +7,7 @@ var color := Color(0.07, 0.56, 0.11, 0.77)
 var collided := false
 
 
-func _process(delta):
+func _process(_delta):
     # перемещаем план постройки в радиусе допустимой стройки
     var mouse_pos = get_global_mouse_position() 
     if node == null:
@@ -18,16 +18,16 @@ func _process(delta):
         position = (mouse_pos - node.position).clamped(radius) + node.position
 
 
-func set_area(near_node: Node2D, radius: float):
+func set_area(near_node: Node2D, radius_: float):
     self.node = near_node
-    self.radius = radius
+    self.radius = radius_
 
 
-func _on_Area2D_area_entered(area):
+func _on_Area2D_area_entered(_area):
     $ColorRect.color = Color(1, 0, 0.77)
     collided = true
 
 
-func _on_Area2D_area_exited(area):
+func _on_Area2D_area_exited(_area):
     $ColorRect.color = self.color
     collided = false

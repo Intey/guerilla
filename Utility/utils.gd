@@ -3,13 +3,13 @@ extends Node
 
 var debug_print_timeout = 0
 
-func throttle_print(delta, args):
+func throttle_print(_delta, _args):
     return 
-    debug_print_timeout += delta
-    if debug_print_timeout > 1:
-        debug_print_timeout = 0
-        print_debug(args)
-        
+#    debug_print_timeout += delta
+#    if debug_print_timeout > 1:
+#        debug_print_timeout = 0
+#        print_debug(args)
+#
 
 static func read_json(path):
     var file = File.new()

@@ -53,7 +53,7 @@ func get_input() -> Vector2:
     velocity = velocity.normalized() * self.host.speed
     return velocity
     
-func physics_process_impl(delta):
+func physics_process_impl(_delta):
      var velocity = get_input()
-     var collision = self.host.move_and_slide(velocity)
+     var _collision = self.host.move_and_slide(velocity)
     

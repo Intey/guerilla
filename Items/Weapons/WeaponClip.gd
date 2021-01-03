@@ -12,10 +12,11 @@ func _init():
     ._init()
    
  
-"""
-Initialize values of clip
-"""
+
 func upload(maxv, v=null):
+    """
+    Initialize values of clip
+    """
     if v == null:
         v = maxv
     max_value = maxv

@@ -47,8 +47,8 @@ func get_item_img():
         return $SomeImage.texture
         
         
-func set_disabled(disabled: bool):
-    self.disabled = disabled
+func set_disabled(disabled_: bool):
+    self.disabled = disabled_
     update_color()
 
 

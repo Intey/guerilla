@@ -1,4 +1,4 @@
-extends Control
+extends ProgressBar
 
 
 func start_reload():
@@ -6,16 +6,16 @@ func start_reload():
 
 
 func upload(v, maxv):
-    $ProgressBar.value = v
-    $ProgressBar.max_value = maxv
-    var animation = $AnimationPlayer.get_animation("Reload")
+    value = v
+    max_value = maxv
+    var _animation = $AnimationPlayer.get_animation("Reload")
 
 
 func reload_done(v):
-    $ProgressBar.value = v
+    value = v
     $AnimationPlayer.stop()
     
     
 func set_value(v):
-    $ProgressBar.value = v
+    value = v
     

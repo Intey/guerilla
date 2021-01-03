@@ -19,16 +19,17 @@ func init_reciepes():
     for reciepe_name in self.reciepes:
         var reciepeItem = ReciepeItem.instance()
         reciepeItem.set_item_name(reciepe_name)
-        var rec_icon = load(self.reciepes[reciepe_name].icon)
-        if rec_icon:
-            reciepeItem.set_item_img(rec_icon)
+        if self.reciepes[reciepe_name].icon != "":
+            var rec_icon = load(self.reciepes[reciepe_name].icon)
+            if rec_icon:
+                reciepeItem.set_item_img(rec_icon)
         var buildable = self.player.CraftStation.can_build(self.reciepes[reciepe_name])
         reciepeItem.set_disabled(not buildable)
         $Reciepes.add_child(reciepeItem)
         reciepeItem.connect('selected', self, '_on_reciepe_selected')
         
         
-func _process(delta):
+func _process(_delta):
     self.reciepes = crafts.get_crafts()
 #    self.update_reciepes_view(self.player._get_inventory())
         
