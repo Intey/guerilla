@@ -15,4 +15,3 @@ script = ExtResource( 3 )
 
 [node name="Combat" type="Node" parent="FSM"]
 script = ExtResource( 4 )
-

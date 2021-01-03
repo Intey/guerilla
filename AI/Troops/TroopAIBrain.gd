@@ -56,8 +56,10 @@ func _physics_process(delta):
 
             var formation_half: int = 0 
             if followers % 2 == 0:
+# warning-ignore:narrowing_conversion
                 formation_half = round(followers / 2)
             else:
+# warning-ignore:narrowing_conversion
                 formation_half = round((followers + 1) / 2)
 
             for i in range(followers):

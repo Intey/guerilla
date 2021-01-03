@@ -12,17 +12,17 @@ enum Formation {
 }
 
 
-func _init(lead, teammates, distance=45):
-    if len(teammates) == 0:
+func _init(lead, teammates_, distance_=45):
+    if len(teammates_) == 0:
         return
-    for i in range(1, len(teammates)):
-        self.teammates.push_back(teammates[i])
+    for i in range(1, len(teammates_)):
+        self.teammates.push_back(teammates_[i])
         
     self.leader = lead
-    self.distance = distance
+    self.distance = distance_
 
 
-func get_my_leader(pawn: Pawn) -> Pawn:
+func get_my_leader(_pawn: Pawn) -> Pawn:
     return self.leader
 
 

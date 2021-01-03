@@ -6,8 +6,8 @@ var GT = null
 
 var GlobalTime = preload("res://World/GlobalEffects/GlobalTime.tscn")
 
-func init(host):
-    self.host = host
+func init(host_):
+    self.host = host_
     inited = true
     return self
     
@@ -30,12 +30,12 @@ func update_physics(delta):
     delta = self.GT.timespeed * delta
     physics_process_impl(delta)
     
-func update_impl(delta):
+func update_impl(_delta):
     """
     Same as update, but delta is time lapsed by current time
     """
     
-func physics_process_impl(delta):
+func physics_process_impl(_delta):
     """
     Same as physics_update, but delta is time lapsed by current time
     """
@@ -59,7 +59,7 @@ func on_exit():
     """
     
     
-func soft_transit(state) -> bool:
+func soft_transit(_state) -> bool:
     """
     Used from FSM, for cases when we want transit by FSM or from it's parent, 
     not other states, but current state can prevent from jumping from it.

@@ -14,9 +14,9 @@ var states = {}
 
 var nearest_enemy = null
     
-func init(troop):
+func init(troop_):
     self.name = "TroopAI"
-    self.troop = troop
+    self.troop = troop_
 
 
 func _ready():
@@ -47,14 +47,16 @@ func is_view_enemy():
     return nearest_enemy != null
     
     
-func teach(pawn: Pawn):
-    if pawn in Player:
+func teach(pawn_: Pawn):
+    if pawn_ in Player:
         print_debug("dont teach AI to player")
         return
-    print_debug(" teach pawn ", pawn, " to trooping")
-    pawn.add_child(self)
-    self.pawn = pawn
-    var vv = pawn.find_node("ViewArea")
+    print_debug(" teach pawn ", pawn_, " to trooping")
+    
+    pawn_.add_child(self)
+    self.pawn = pawn_
+    
+    var vv = pawn_.find_node("ViewArea")
     if vv == null:
         print_debug("View Area not found in Pawn")
     else:

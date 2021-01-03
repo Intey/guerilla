@@ -27,12 +27,12 @@ signal completed(quest)
 signal objective_done(objective)
 
 
-func _init(owner, name, description, objectives, requirements=[]):
+func _init(owner, name, description, objectives_, requirements_=[]):
     self.quest_owner = owner
     self.quest_name = name
     self.quest_description = description
-    self.requirements = requirements
-    self.objectives = objectives
+    self.requirements = requirements_
+    self.objectives = objectives_
 
 
 func _ready():
@@ -83,8 +83,8 @@ func on_complete_objective(objective):
     self.done_objectives.append(objective)
     emit_signal("objective_done", objective)
     
-func assign_to(assignee):
-    self.assignee = assignee
+func assign_to(assignee_):
+    self.assignee = assignee_
     for obj in self.objectives:
         obj.bind(assignee)
     for requirement in self.requirements:

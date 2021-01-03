@@ -1,7 +1,7 @@
 extends Node2D
 
 
-func _process(delta):
+func _process(_delta):
     pass
 
 func _on_Area2D_body_entered(body):

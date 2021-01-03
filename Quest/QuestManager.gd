@@ -81,9 +81,9 @@ func get_reward_quests(owner):
 func get_available_quests(owner):
     return self._filter_owner_quests(owner, self.quests[_available_quests])
     
-func _filter_owner_quests(owner, quests):
+func _filter_owner_quests(owner, quests_):
     var result = []
-    for q in quests:
+    for q in quests_:
         if q.quest_owner == owner:
             result.append(q)
     return result

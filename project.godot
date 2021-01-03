@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://NPC/Animal/AnimalKinematic.gd"
 }, {
+"base": "Value",
+"class": "AutoValue",
+"language": "GDScript",
+"path": "res://Utility/AutoValue.gd"
+}, {
 "base": "Node",
 "class": "Blackboard",
 "language": "GDScript",
@@ -156,6 +161,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Animal": "",
+"AutoValue": "",
 "Blackboard": "",
 "CollectableResource": "",
 "ConditionalEvent": "",
