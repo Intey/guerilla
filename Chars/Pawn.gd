@@ -15,7 +15,9 @@ export var shoot_range := 100
 export var shoot_rate: float = 0.5
 export var THIRST_HEALTH_DIFF: float = -1.0
 export var STARVATION_HEALTH_DIFF: float = -1.0
-var health := AutoValue.new()
+
+var health: AutoValue
+
 var alive := true
 var on_dead: FuncRef
 
@@ -35,26 +37,19 @@ signal dead(this)
 
 func _init():
     ._init()
-    health.change_per_tick = 0.0
-    health.tick_seconds = 5.0
-
+    
 func _ready():
     self.on_dead = funcref(self, "queue_free")
     $RangeWeapon.init(self)
     $RangeWeapon.time_for_one_shoot = self.shoot_rate
+    # TODO: backcompat for old code
+    self.health = $Health
     
-func _process(_delta):
-    # maybe it's will be easier to connect Autovalue changes signals
-    # and in handler change value of health. But, possible async issues with 
-    # messages order or etc
-    if $Thirst.value == 0:
-        health.change_per_tick +=  THIRST_HEALTH_DIFF
-    else:
-        health.change_per_tick -= THIRST_HEALTH_DIFF
-    if $Starving.value == 0:
-        health.change_per_tick += STARVATION_HEALTH_DIFF
-    else:
-        health.change_per_tick -= STARVATION_HEALTH_DIFF
+    $Thirst.connect("value_at_bottom", self, "__start_thirsting")
+    $Starving.connect("value_at_bottom", self, "__start_starving")
+    $Thirst.connect("value_at_middle", self, "__stop_thirsting")
+    $Starving.connect("value_at_middle", self, "__stop_starving")
+    
     
 func shoot(delta, target: Vector2):
     var victum = $RangeWeapon.fire(delta, target)
@@ -96,3 +91,16 @@ func take_damage(dmg: int):
         # objects (in arrays e.g.)
         emit_signal("dead", self)
         self.queue_free()
+
+
+func __start_thirsting():
+    $Health.change_per_tick += THIRST_HEALTH_DIFF
+    
+func __stop_thirsting():
+    $Health.change_per_tick -= THIRST_HEALTH_DIFF
+    
+func __start_starving():
+    $Health.change_per_tick += STARVATION_HEALTH_DIFF
+    
+func __stop_starving():
+    $Health.change_per_tick -= STARVATION_HEALTH_DIFF

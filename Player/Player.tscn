@@ -101,7 +101,11 @@ shape = SubResource( 4 )
 [node name="CollisionShape2D" parent="CommRange" index="0"]
 position = Vector2( -2, 0 )
 
+[node name="Thirst" parent="." index="11"]
+change_per_tick = -2.0
+tick_seconds = 10.0
+
 [node name="Starving" parent="." index="12"]
-change_per_tick = -0.5
+tick_seconds = 10.0
 [connection signal="area_entered" from="CollectionArea" to="." method="enter_collectable_area"]
 [connection signal="area_exited" from="CollectionArea" to="." method="exit_collectable_area"]

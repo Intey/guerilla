@@ -37,3 +37,6 @@ tick_seconds = 1.0
 [node name="Starving" parent="." instance=ExtResource( 4 )]
 change_per_tick = -1.0
 tick_seconds = 1.0
+
+[node name="Health" parent="." instance=ExtResource( 4 )]
+tick_seconds = 2.0
