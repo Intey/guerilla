@@ -27,13 +27,13 @@ func get_value():
 func change(diff: float):
     var prev_value = get_value()
     set_value(prev_value + diff)
-    print_debug(
-        "value_changed: "
-        , self.name
-        , " from "
-        , prev_value
-        , " to "
-        , value
-        , " with ", diff
-        )
+#    print_debug(
+#        "value_changed: "
+#        , self.name
+#        , " from "
+#        , prev_value
+#        , " to "
+#        , value
+#        , " with ", diff
+#        )
     emit_signal("value_changed", prev_value, value)

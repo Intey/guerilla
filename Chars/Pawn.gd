@@ -50,6 +50,8 @@ func _ready():
     $Thirst.connect("value_at_middle", self, "__stop_thirsting")
     $Starving.connect("value_at_middle", self, "__stop_starving")
     
+func _process(delta):
+    pass
     
 func shoot(delta, target: Vector2):
     var victum = $RangeWeapon.fire(delta, target)
@@ -104,3 +106,22 @@ func __start_starving():
     
 func __stop_starving():
     $Health.change_per_tick -= STARVATION_HEALTH_DIFF
+
+func __appease():
+    print_debug("appease")
+    if $Thirst.value == 0:
+        var item = ResourceItem.new()
+        item.name = "water"
+        item.count = 1
+        if $Inventory.subtract(item):
+            print_debug("appease thirst")
+            $Thirst.set_value(100)
+            $Thirst.set_delay(30)
+            
+    if $Starving.value == 0:
+        var item = ResourceItem.new()
+        item.name = "food"
+        item.count = 1
+        if $Inventory.subtract(item):
+            print_debug("appease starve")
+            $Starving.set_value(100)

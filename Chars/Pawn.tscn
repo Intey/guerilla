@@ -32,11 +32,13 @@ shape = SubResource( 2 )
 
 [node name="Thirst" parent="." instance=ExtResource( 4 )]
 change_per_tick = -1.0
-tick_seconds = 1.0
 
 [node name="Starving" parent="." instance=ExtResource( 4 )]
 change_per_tick = -1.0
-tick_seconds = 1.0
 
 [node name="Health" parent="." instance=ExtResource( 4 )]
-tick_seconds = 2.0
+
+[node name="CheckStarvThirst" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+[connection signal="timeout" from="CheckStarvThirst" to="." method="__appease"]

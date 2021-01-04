@@ -60,6 +60,7 @@ func _ready():
     $RangeWeapon.time_for_one_shoot = self.shoot_rate
 
 func _process(_delta):
+    ._process(_delta)
     self.update()
     $AnimationPlayer.play("idle")
 
