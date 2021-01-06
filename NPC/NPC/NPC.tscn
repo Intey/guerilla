@@ -34,4 +34,3 @@ script = ExtResource( 5 )
 
 [node name="Attack" type="Node" parent="FSM" index="2"]
 script = ExtResource( 6 )
-

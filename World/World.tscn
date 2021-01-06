@@ -61,8 +61,6 @@ collection_speed = 4
 [node name="RightCamp" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1452.54, 284.099 )
 
-[node name="HUD" parent="." instance=ExtResource( 9 )]
-
 [node name="Sticks" parent="." instance=ExtResource( 11 )]
 position = Vector2( -22.2214, 1.48143 )
 type = ExtResource( 7 )
@@ -78,3 +76,5 @@ count = 5000
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Waterfill1"]
 polygon = PoolVector2Array( -164.494, -107.924, -163.117, 85.1176, 87.479, 84.8422, 90.7836, 22.3308, 188.819, 26.1862, 190.471, -104.069 )
+
+[node name="HUD" parent="." instance=ExtResource( 9 )]
