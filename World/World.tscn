@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Items/Resources/Scenes/CollectableResource.tscn" type="PackedScene" id=11]
 [ext_resource path="res://NPC/Animal/Animal.tscn" type="PackedScene" id=12]
 [ext_resource path="res://NPC/Commander/Commander.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Chars/Corpse.tscn" type="PackedScene" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -56,7 +57,6 @@ position = Vector2( -545.482, 272 )
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( -97.7198, 112.8 )
-speed = 250
 fraction = 1
 collection_speed = 4
 
@@ -89,5 +89,8 @@ visible = false
 
 [node name="Animal" parent="." instance=ExtResource( 12 )]
 position = Vector2( 176, -128 )
+
+[node name="Corpse" parent="." instance=ExtResource( 14 )]
+position = Vector2( 32, 208 )
 
 [editable path="HUD"]

@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://World/Events/ConditionalEvent.gd"
 }, {
+"base": "Node2D",
+"class": "Corpse",
+"language": "GDScript",
+"path": "res://Chars/Corpse.gd"
+}, {
 "base": "Node",
 "class": "EventSheduler",
 "language": "GDScript",
@@ -176,6 +181,7 @@ _global_script_class_icons={
 "CollectableResource": "",
 "Commander": "",
 "ConditionalEvent": "",
+"Corpse": "",
 "EventSheduler": "",
 "FSM": "",
 "FSMState": "",

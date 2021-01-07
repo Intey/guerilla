@@ -12,6 +12,8 @@ var on_dead: FuncRef
 export var THIRST_HEALTH_DIFF: float = -1.0
 export var STARVATION_HEALTH_DIFF: float = -1.0
 
+var corpseScene = preload("res://Chars/Corpse.tscn")
+
 signal kills(victum)
 signal dead(this)
 
@@ -37,7 +39,18 @@ func take_damage(dmg: int):
         # after queue_free, we need to remove reference on this pawn from other
         # objects (in arrays e.g.)
         emit_signal("dead", self)
+        var corpse = create_corpse()
         self.queue_free()
+        var parent = get_parent()
+        print_debug("parent ", parent.name)
+        parent.add_child(corpse)
+        
+        
+func create_corpse() -> Corpse:
+    print_debug("corpse created")
+    var corpse =  corpseScene.instance()
+    corpse.global_position = self.global_position
+    return corpse
 
 
 func __start_thirsting():

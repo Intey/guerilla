@@ -68,7 +68,7 @@ script = ExtResource( 7 )
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 1 )
 
-[node name="ColorRect" type="ColorRect" parent="." index="10"]
+[node name="ColorRect" type="ColorRect" parent="." index="6"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -79,7 +79,7 @@ margin_right = 16.0
 margin_bottom = 16.0
 color = Color( 1, 0, 0, 1 )
 
-[node name="DetectionArea" type="Area2D" parent="." index="11"]
+[node name="DetectionArea" type="Area2D" parent="." index="7"]
 visible = false
 collision_layer = 2
 collision_mask = 15
@@ -87,7 +87,7 @@ collision_mask = 15
 [node name="Circle" type="CollisionShape2D" parent="DetectionArea" index="0"]
 shape = SubResource( 2 )
 
-[node name="FSM" type="Node" parent="." index="12"]
+[node name="FSM" type="Node" parent="." index="8"]
 script = ExtResource( 2 )
 debug = true
 
@@ -107,16 +107,16 @@ debug = true
 script = ExtResource( 3 )
 debug = true
 
-[node name="PursuitArea" type="Area2D" parent="." index="13"]
+[node name="PursuitArea" type="Area2D" parent="." index="9"]
 visible = false
 
 [node name="PursuitCircle" type="CollisionShape2D" parent="PursuitArea" index="0"]
 shape = SubResource( 3 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="14"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="10"]
 anims/hit = SubResource( 4 )
 
-[node name="DamageRect" type="ColorRect" parent="." index="15"]
+[node name="DamageRect" type="ColorRect" parent="." index="11"]
 margin_left = -16.0
 margin_top = -16.0
 margin_right = 16.0

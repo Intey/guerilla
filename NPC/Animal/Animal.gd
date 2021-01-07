@@ -1,11 +1,6 @@
 extends Pawn
 class_name Animal
 
-
-func on_dead():
-    print_debug("animal dead")
-    
-
 var velocity: Vector2
 
 # BlackBoard. Used for collect knowledges with events, that came from detection area, collision shape, etc.
