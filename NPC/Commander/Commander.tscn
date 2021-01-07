@@ -1,50 +1,79 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://NPC/Commander/Commander.gd" type="Script" id=1]
-[ext_resource path="res://assets/icons/quest/QuestFrame1.png" type="Texture" id=2]
-[ext_resource path="res://assets/icons/quest/QuestFrame3.png" type="Texture" id=3]
+[ext_resource path="res://Chars/Pawn.tscn" type="PackedScene" id=2]
 [ext_resource path="res://states/FSM.tscn" type="PackedScene" id=4]
 [ext_resource path="res://NPC/Commander/states/Idle.gd" type="Script" id=5]
 [ext_resource path="res://NPC/Commander/states/hasQuest.gd" type="Script" id=6]
 [ext_resource path="res://NPC/Commander/states/displayQuestDetails.gd" type="Script" id=7]
 [ext_resource path="res://NPC/Commander/states/hasReward.gd" type="Script" id=8]
 [ext_resource path="res://NPC/Commander/states/questOut.gd" type="Script" id=9]
+[ext_resource path="res://assets/icons/quest/QuestFrame1.png" type="Texture" id=10]
+[ext_resource path="res://assets/icons/quest/QuestFrame3.png" type="Texture" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 32 )
+extents = Vector2( 8, 32 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 2 ) ],
+"frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "default",
 "speed": 6.0
 } ]
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 1840.28
-
-[node name="Commander" type="Node2D"]
+[node name="Commander" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+fraction = 0
+speed = 100
+shoot_range = 100
+shoot_rate = 0.5
+THIRST_HEALTH_DIFF = -1.0
+STARVATION_HEALTH_DIFF = -1.0
 
-[node name="ClickArea" type="Area2D" parent="."]
+[node name="Camera2D" parent="." index="0"]
+visible = false
 
-[node name="Shape" type="CollisionShape2D" parent="ClickArea"]
-position = Vector2( 0, -16 )
+[node name="CommRange" parent="." index="4"]
+visible = false
+
+[node name="Thirst" parent="." index="5"]
+visible = false
+
+[node name="Starving" parent="." index="6"]
+visible = false
+
+[node name="Health" parent="." index="7"]
+visible = false
+
+[node name="Experience" parent="." index="8"]
+visible = false
+
+[node name="FSM" parent="." index="10" instance=ExtResource( 4 )]
+
+[node name="Idle" type="Node" parent="FSM" index="0"]
+script = ExtResource( 5 )
+
+[node name="hasQuest" type="Node" parent="FSM" index="1"]
+script = ExtResource( 6 )
+
+[node name="showDetails" type="Node" parent="FSM" index="2"]
+script = ExtResource( 7 )
+
+[node name="questOut" type="Node" parent="FSM" index="3"]
+script = ExtResource( 9 )
+
+[node name="hasReward" type="Node" parent="FSM" index="4"]
+script = ExtResource( 8 )
+
+[node name="ClickArea" type="Area2D" parent="." index="11"]
+position = Vector2( 0, -24 )
+
+[node name="Shape" type="CollisionShape2D" parent="ClickArea" index="0"]
+position = Vector2( 0, 1.90735e-06 )
 shape = SubResource( 1 )
 
-[node name="QuestAvailable" type="AnimatedSprite" parent="ClickArea"]
-visible = false
-position = Vector2( 0, -32 )
-frames = SubResource( 2 )
-
-[node name="ColorRect" type="ColorRect" parent="ClickArea"]
-margin_left = -16.0
-margin_top = -16.0
-margin_right = 16.0
-margin_bottom = 16.0
-
-[node name="QuestDescription" type="RichTextLabel" parent="ClickArea"]
+[node name="QuestDescription" type="RichTextLabel" parent="ClickArea" index="1"]
 visible = false
 anchor_left = 0.5
 anchor_right = 0.5
@@ -55,37 +84,21 @@ margin_bottom = -16.0
 mouse_filter = 2
 text = "here you are. We need to kill this animals. Fight them!"
 
-[node name="QuestReward" type="Sprite" parent="ClickArea"]
+[node name="QuestReward" type="Sprite" parent="ClickArea" index="2"]
 visible = false
 position = Vector2( 0, -16 )
-texture = ExtResource( 3 )
+texture = ExtResource( 11 )
 
-[node name="View" type="Area2D" parent="."]
+[node name="QuestAvailable" type="AnimatedSprite" parent="ClickArea" index="3"]
 visible = false
+position = Vector2( 0, -16 )
+frames = SubResource( 2 )
 
-[node name="Shape" type="CollisionShape2D" parent="View"]
-shape = SubResource( 3 )
-
-[node name="FSM" parent="." instance=ExtResource( 4 )]
-
-[node name="Idle" type="Node" parent="FSM"]
-script = ExtResource( 5 )
-
-[node name="hasQuest" type="Node" parent="FSM"]
-script = ExtResource( 6 )
-
-[node name="showDetails" type="Node" parent="FSM"]
-script = ExtResource( 7 )
-
-[node name="hasReward" type="Node" parent="FSM"]
-script = ExtResource( 8 )
-
-[node name="questOut" type="Node" parent="FSM"]
-script = ExtResource( 9 )
-
-[node name="Timer" type="Timer" parent="FSM/questOut"]
-wait_time = 0.95
-
-[connection signal="body_entered" from="View" to="FSM/Idle" method="_on_View_body_entered"]
-[connection signal="body_exited" from="View" to="FSM/hasQuest" method="_on_View_body_exited"]
-[connection signal="body_exited" from="View" to="FSM/showDetails" method="_on_View_body_exited"]
+[node name="ColorRect" type="ColorRect" parent="." index="12"]
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

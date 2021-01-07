@@ -1,4 +1,5 @@
-extends Node2D
+extends Pawn
+class_name Commander
 
 #warning-ignore:unused_class_variable
 export var debug: bool = false
@@ -34,15 +35,11 @@ onready var states_map = {
     
 func _ready():
     $FSM.init(states_map, IDLE)
-    questManager.add_quest( 
-        Quest.new(self, "Wild Animals", 
-            "Comrade, we detects many animals. You need to kill them!",
-            [KillObjective.new(Animal, 3)],
-            [ObjectInArea.new(3, Animal, $View)]))
     questManager.add_quest(
         Quest.new(self, "More sticks",
         "Comrade, collest sticks",
-        [GatherObjective.new(ResourceStick, 2)]))
+        [GatherObjective.new(ResourceStick, 2)], 
+        30))
     
 # Quest Giver Component
 func assign_current_quest():
@@ -56,7 +53,7 @@ func assign_current_quest():
     
 func reward():
     var quests = questManager.get_reward_quests(self)
-    print_debug("reward with assigned quest", quests[0])
+    print_debug("reward with assigned quest: ", quests[0])
     questManager.reward(quests[0])
     
     

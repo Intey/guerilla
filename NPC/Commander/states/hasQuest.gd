@@ -5,7 +5,7 @@ onready var quest_sign = $"../../ClickArea/QuestAvailable"
 
 
 func on_enter():            
-    click_area.connect("input_event", self, "_on_ClickArea_input_event")
+    assert(click_area.connect("input_event", self, "_on_ClickArea_input_event") == OK)
     self.quest_sign.visible = true
 
     

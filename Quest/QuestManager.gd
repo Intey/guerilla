@@ -17,6 +17,7 @@ var _assigned_quests = 'assigned'
 var _completed_quests = 'completed'
 var quests := {} # look at __init_quests_struct
 
+
 func _init():
     self.quests = __init_quests_struct()
     
@@ -43,7 +44,7 @@ func assign_quest(quest: Quest, assignee):
     self.quests[_available_quests].erase(quest)
     self.quests[_assigned_quests].append(quest)
     
-    assert(quest.connect("completed", self, "on_quest_completed"))
+    assert(quest.connect("completed", self, "on_quest_completed") == OK)
     
     
 func reward(quest: Quest):
@@ -51,7 +52,8 @@ func reward(quest: Quest):
     print_debug("reward ", quest)
     self.quests[_reward_quests].erase(quest)
     self.quests[_completed_quests].append(quest)
-        
+    quest.reward_assignee()
+    
     
 func on_quest_available(quest: Quest, available: bool):
     # not emit signal, if quest availability not changed
@@ -78,8 +80,10 @@ func on_quest_completed(quest: Quest):
 func get_reward_quests(owner):
     return self._filter_owner_quests(owner, self.quests[_reward_quests])
     
+    
 func get_available_quests(owner):
     return self._filter_owner_quests(owner, self.quests[_available_quests])
+    
     
 func _filter_owner_quests(owner, quests_):
     var result = []
@@ -87,6 +91,7 @@ func _filter_owner_quests(owner, quests_):
         if q.quest_owner == owner:
             result.append(q)
     return result
+    
     
 func __init_quests_struct():
     return {

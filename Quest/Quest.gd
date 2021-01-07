@@ -16,23 +16,26 @@ var quest_owner = null
 var objectives = []
 var done_objectives = []
 var requirements = []
-var assignee = null
+var assignee: Pawn = null
+var reward: Reward
 
 var _available := false
 var _done := false
+var __rewarded := false
 
+#for bind to UI
 signal available(quest, state)
 signal completed(quest)
-#for bind to UI
 signal objective_done(objective)
 
 
-func _init(owner, name, description, objectives_, requirements_=[]):
+func _init(owner: Pawn, name, description, objectives_, reward_exp: int, requirements_=[]):
     self.quest_owner = owner
     self.quest_name = name
     self.quest_description = description
     self.requirements = requirements_
     self.objectives = objectives_
+    self.reward = Reward.new(reward_exp)
 
 
 func _ready():
@@ -43,7 +46,6 @@ func _ready():
         
     for c in self.requirements:
         self.add_child(c)
-        c.bind()
     
 
 func is_done():
@@ -65,7 +67,7 @@ func is_available():
 
 
 #warning-ignore:unused_argument
-func _process(delta):
+func _process(_delta):
     if self._done:
         return
     # OPTZ: timer for check 
@@ -83,9 +85,26 @@ func on_complete_objective(objective):
     self.done_objectives.append(objective)
     emit_signal("objective_done", objective)
     
-func assign_to(assignee_):
+    
+func assign_to(assignee_: Pawn):
+    print_debug("assign quest ", self, " to ", assignee_)
     self.assignee = assignee_
     for obj in self.objectives:
         obj.bind(assignee)
     for requirement in self.requirements:
         requirement.debind(assignee)
+
+
+func reward_assignee():
+    """
+    move reward to assignee
+    """
+    assert(not __rewarded)
+    # TODO: apply reward to pawn
+    __rewarded = true
+    self.assignee.experience.change(self.reward.experience)
+    print_debug("rewarded. now player has exp ", self.assignee.experience.value)
+
+
+func _to_string():
+    return self.name + "(" + str(self.objectives) + ") " + "[" + str(self.reward) + "]"

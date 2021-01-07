@@ -20,6 +20,7 @@ func on_get(target: ResourceItem):
     """
     if self._count == 0:
         return
+    print_debug("get gather objective: ", target, " but expect ", self._target_type)
     if target is self._target_type:
         self._count -= 1
         if self._count == 0:
@@ -27,11 +28,14 @@ func on_get(target: ResourceItem):
             return
         emit_signal("changed", self._count)
 
-func bind(assignee=null):
-    if assignee == null:
-        self.player.connect("gathers", self, "on_get")
-    else:
-        assignee.connect("gathers", self, "on_get")
+func bind(assignee: Pawn):
+    """
+    connect events from assign to quest handling
+    """
+    assert(assignee.connect("gathers", self, "on_get") == OK)
         
 func on_reward(assignee):
     assignee.subtract_from_inventory(ResourceStick.new(self._count))
+
+func _to_string():
+    return "collect " + str(self._count) + " " + str(self._target_type)

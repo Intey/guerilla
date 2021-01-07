@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Items/Resources/Scenes/CollectableResource.gd"
 }, {
+"base": "Pawn",
+"class": "Commander",
+"language": "GDScript",
+"path": "res://NPC/Commander/Commander.gd"
+}, {
 "base": "Node",
 "class": "ConditionalEvent",
 "language": "GDScript",
@@ -79,11 +84,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://NPC/NPC/NPC.gd"
 }, {
-"base": "Node",
-"class": "ObjectInArea",
-"language": "GDScript",
-"path": "res://Quest/Conditions/ObjectInArea.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "Pawn",
 "language": "GDScript",
@@ -113,6 +113,11 @@ _global_script_classes=[ {
 "class": "ResourceStick",
 "language": "GDScript",
 "path": "res://Items/Resources/ResourceStick.gd"
+}, {
+"base": "Node",
+"class": "Reward",
+"language": "GDScript",
+"path": "res://Quest/Rewards/Reward.gd"
 }, {
 "base": "Node",
 "class": "RiskyCommander",
@@ -164,6 +169,7 @@ _global_script_class_icons={
 "AutoValue": "",
 "Blackboard": "",
 "CollectableResource": "",
+"Commander": "",
 "ConditionalEvent": "",
 "EventSheduler": "",
 "FSM": "",
@@ -174,13 +180,13 @@ _global_script_class_icons={
 "InitialGenerator": "",
 "KillObjective": "",
 "NPC": "",
-"ObjectInArea": "",
 "Pawn": "",
 "Player": "",
 "Quest": "",
 "ReciepeItem": "",
 "ResourceItem": "",
 "ResourceStick": "",
+"Reward": "",
 "RiskyCommander": "",
 "Sector": "",
 "Solder": "",
@@ -211,7 +217,7 @@ window/size/height=768
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "Todo_Manager" )
 
 [gdnative]
 

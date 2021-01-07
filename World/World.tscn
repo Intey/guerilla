@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://UI/huds/HUD.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Items/Resources/water.gd" type="Script" id=10]
 [ext_resource path="res://Items/Resources/Scenes/CollectableResource.tscn" type="PackedScene" id=11]
+[ext_resource path="res://NPC/Commander/Commander.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -62,10 +63,11 @@ collection_speed = 4
 position = Vector2( 1452.54, 284.099 )
 
 [node name="Sticks" parent="." instance=ExtResource( 11 )]
-position = Vector2( -22.2214, 1.48143 )
+position = Vector2( 16, 104 )
 type = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sticks"]
+visible = false
 scale = Vector2( 2, 2 )
 shape = SubResource( 1 )
 
@@ -78,3 +80,5 @@ count = 5000
 polygon = PoolVector2Array( -164.494, -107.924, -163.117, 85.1176, 87.479, 84.8422, 90.7836, 22.3308, 188.819, 26.1862, 190.471, -104.069 )
 
 [node name="HUD" parent="." instance=ExtResource( 9 )]
+
+[node name="Commander" parent="." instance=ExtResource( 12 )]

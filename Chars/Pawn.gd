@@ -17,6 +17,7 @@ export var THIRST_HEALTH_DIFF: float = -1.0
 export var STARVATION_HEALTH_DIFF: float = -1.0
 
 var health: AutoValue
+var experience: Value
 
 var alive := true
 var on_dead: FuncRef
@@ -35,7 +36,7 @@ func _ready():
     $RangeWeapon.time_for_one_shoot = self.shoot_rate
     # for simple acceptance for HUD/Weapons
     self.health = $Health
-    
+    self.experience = $Experience
     assert($Thirst.connect("value_at_bottom", self, "__start_thirsting") == OK)
     assert($Starving.connect("value_at_bottom", self, "__start_starving") == OK)
     assert($Thirst.connect("value_at_middle", self, "__stop_thirsting") == OK)
@@ -106,7 +107,7 @@ func __appease():
     """
     Appease starvation or thirst needs with items in inventory
     """
-    print_debug("appease")
+#    print_debug("appease")
     if $Thirst.value == 0:
         var item = ResourceItem.new()
         item.name = "water"

@@ -23,6 +23,9 @@ margin_left = -20.0
 margin_top = -20.0698
 margin_right = 20.0
 margin_bottom = 19.9302
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="FSM" parent="." index="7" instance=ExtResource( 3 )]
 

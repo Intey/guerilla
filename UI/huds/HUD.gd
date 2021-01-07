@@ -7,7 +7,7 @@ func join(player: Player):
     connect_health(player)
     connect_thirst(player)
     connect_starving(player)
-    
+    connect_experience(player)
     
 func connect_craft(p):
     assert(p != null)
@@ -30,7 +30,7 @@ func connect_clip(player):
     
     var mv = clip.max_value
     var v = clip.value
-    var ammoHud = $CL/MC/HB/VB/Ammo
+    var ammoHud = $CL/MC/VB/HB/VB/Ammo
     ammoHud.upload(v, mv)
     assert(clip.connect("clip_uploaded", ammoHud, "upload") == OK)
     assert(clip.connect("clip_value_change", ammoHud, "set_value") == OK)
@@ -39,24 +39,26 @@ func connect_clip(player):
 
 
 func connect_health(player):    
-    var hud_container = $CL/MC/HB/VB/Health
+    var hud_container = $CL/MC/VB/HB/VB/Health
     var value_container = player.health
-    assert(value_container != null)
-    hud_container.value = value_container.value
-    assert(value_container.connect("value_changed", hud_container, "on_change") == OK)
-
+    connect_progress(hud_container, value_container)
 
 func connect_thirst(player):
-    var hud_container = $CL/MC/HB/VB2/Thirst
+    var hud_container = $CL/MC/VB/HB/VB2/Thirst
     var value_container = player.get_node("Thirst")
-    assert(value_container != null)
-    hud_container.value = value_container.value
-    assert(value_container.connect("value_changed", hud_container, "on_change") == OK)
-
+    connect_progress(hud_container, value_container)
 
 func connect_starving(player):
-    var hud_container = $CL/MC/HB/VB2/Starving
+    var hud_container = $CL/MC/VB/HB/VB2/Starving
     var value_container = player.get_node("Starving")
+    connect_progress(hud_container, value_container)
+
+func connect_experience(player: Pawn):
+    var hud_container = $CL/MC/VB/Experience
+    var value_container = player.get_node("Experience")
+    connect_progress(hud_container, value_container)
+
+func connect_progress(hud_container, value_container):
     assert(value_container != null)
     hud_container.value = value_container.value
     assert(value_container.connect("value_changed", hud_container, "on_change") == OK)

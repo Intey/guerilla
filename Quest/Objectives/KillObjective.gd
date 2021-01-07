@@ -24,9 +24,14 @@ func on_kills(target):
         emit_signal("changed", self._count)
 
 
-func bind(assignee=null):
-    assignee.connect("kills", self, "on_kills")
+func bind(assignee: Pawn):
+    """
+    connect events from assign to quest handling
+    """
+    assert(assignee.connect("kills", self, "on_kills") == OK)
     
     
-func on_reward(assignee):
-    pass
+func on_reward(assignee: Pawn):
+    """
+    That should happens when assignee get reward from quest owner
+    """

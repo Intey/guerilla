@@ -4,5 +4,5 @@ class_name ResourceItem
 var count := 0
 
 
-func __str__():
+func _to_string():
     return self.name + ":" + str(self.count)
