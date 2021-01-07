@@ -58,7 +58,7 @@ func find_farest_visible_direction() -> Vector2:
         var result = space_state.intersect_ray(host.global_position, cast_to, excepts)
         # если есть коллизия - проверяем дистанцию до объекта 
         if result:
-            var distance = host.global_position.distance_to(result.global_position)
+            var distance = host.global_position.distance_to(result.position)
             if distance > max_distance:
                 max_direction_angle = angle
                 print_debug("angle for farest direction ", angle)
