@@ -7,7 +7,7 @@ export var clipsize: int
 export var damage: int
 export var autoshoot: bool = false
 export var time_for_one_shoot: float = 1.0
-export var critical: int = 0.4
+export var critical: float = 0.4
 
 const BULLET = preload('Bullet.tscn')
 onready var weapon_clip := $WeaponClip

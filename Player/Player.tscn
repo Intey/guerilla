@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Chars/Pawn.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Chars/Human.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/craft_area.png" type="Texture" id=2]
 [ext_resource path="res://assets/New.png" type="Texture" id=3]
 [ext_resource path="res://states/FSM.tscn" type="PackedScene" id=4]
@@ -98,14 +98,16 @@ script = ExtResource( 7 )
 modulate = Color( 1, 0, 1, 1 )
 shape = SubResource( 4 )
 
-[node name="CollisionShape2D" parent="CommRange" index="0"]
-position = Vector2( -2, 0 )
-
-[node name="Thirst" parent="." index="11"]
+[node name="Thirst" parent="." index="8"]
 change_per_tick = -2.0
 
-[node name="Experience" parent="." index="14"]
+[node name="Experience" parent="." index="11"]
 initial_value = 10
 debug = true
+
+[node name="RangeWeapon" parent="." index="13"]
+clipsize = 10
+damage = 5
+critical = 0.3
 [connection signal="area_entered" from="CollectionArea" to="." method="enter_collectable_area"]
 [connection signal="area_exited" from="CollectionArea" to="." method="exit_collectable_area"]

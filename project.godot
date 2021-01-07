@@ -9,10 +9,10 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "KinematicBody2D",
+"base": "Pawn",
 "class": "Animal",
 "language": "GDScript",
-"path": "res://NPC/Animal/AnimalKinematic.gd"
+"path": "res://NPC/Animal/Animal.gd"
 }, {
 "base": "Value",
 "class": "AutoValue",
@@ -29,7 +29,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Items/Resources/Scenes/CollectableResource.gd"
 }, {
-"base": "Pawn",
+"base": "Human",
 "class": "Commander",
 "language": "GDScript",
 "path": "res://NPC/Commander/Commander.gd"
@@ -48,6 +48,11 @@ _global_script_classes=[ {
 "class": "FSM",
 "language": "GDScript",
 "path": "res://states/FSM.gd"
+}, {
+"base": "Node",
+"class": "FSMState",
+"language": "GDScript",
+"path": "res://states/state.gd"
 }, {
 "base": "Node",
 "class": "GameEvent",
@@ -69,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://World/GlobalEffects/GlobalTime.gd"
 }, {
+"base": "Pawn",
+"class": "Human",
+"language": "GDScript",
+"path": "res://Chars/Human.gd"
+}, {
 "base": "Node",
 "class": "InitialGenerator",
 "language": "GDScript",
@@ -79,7 +89,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Quest/Objectives/KillObjective.gd"
 }, {
-"base": "Pawn",
+"base": "Human",
 "class": "NPC",
 "language": "GDScript",
 "path": "res://NPC/NPC/NPC.gd"
@@ -89,7 +99,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Chars/Pawn.gd"
 }, {
-"base": "Pawn",
+"base": "Human",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Player/Player.gd"
@@ -128,11 +138,6 @@ _global_script_classes=[ {
 "class": "Sector",
 "language": "GDScript",
 "path": "res://AI/Sector.gd"
-}, {
-"base": "Pawn",
-"class": "Solder",
-"language": "GDScript",
-"path": "res://NPC/Solder/Solder.gd"
 }, {
 "base": "Node",
 "class": "Troop",
@@ -173,10 +178,12 @@ _global_script_class_icons={
 "ConditionalEvent": "",
 "EventSheduler": "",
 "FSM": "",
+"FSMState": "",
 "GameEvent": "",
 "GatherObjective": "",
 "GitAPI": "",
 "GlobalTime": "",
+"Human": "",
 "InitialGenerator": "",
 "KillObjective": "",
 "NPC": "",
@@ -189,7 +196,6 @@ _global_script_class_icons={
 "Reward": "",
 "RiskyCommander": "",
 "Sector": "",
-"Solder": "",
 "Troop": "",
 "TroopAI": "",
 "TroopsManager": "",

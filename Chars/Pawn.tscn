@@ -1,16 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Chars/Pawn.gd" type="Script" id=1]
-[ext_resource path="res://Items/Weapons/RangeWeapon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Player/Inventory.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Utility/AutoValue.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Utility/Value/Value.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 272.0
 
 [node name="Pawn" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -19,17 +14,6 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-
-[node name="RangeWeapon" parent="." instance=ExtResource( 2 )]
-clipsize = 10
-damage = 30
-
-[node name="Inventory" parent="." instance=ExtResource( 3 )]
-
-[node name="CommRange" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CommRange"]
-shape = SubResource( 2 )
 
 [node name="Thirst" parent="." instance=ExtResource( 4 )]
 change_per_tick = -1.0
@@ -40,8 +24,3 @@ change_per_tick = -1.0
 [node name="Health" parent="." instance=ExtResource( 4 )]
 
 [node name="Experience" parent="." instance=ExtResource( 5 )]
-
-[node name="CheckStarvThirst" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true
-[connection signal="timeout" from="CheckStarvThirst" to="." method="__appease"]

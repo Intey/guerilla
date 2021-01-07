@@ -1,4 +1,4 @@
-extends Pawn
+extends Human
 class_name Player
 
 var settings_filepath = "res://settings.json"
@@ -42,7 +42,8 @@ onready var states_map = {
 var collectable_area = null
 var build_plan = null
 var CraftStation = null
-var godmode = false
+export var godmode = false
+
 
 func _ready():
     $FSM.init(states_map, IDLE)
@@ -56,8 +57,6 @@ func _ready():
     # TODO: Hide mouse when aiming, and enable on gui opened
     # Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
-    $RangeWeapon.init(self)
-    $RangeWeapon.time_for_one_shoot = self.shoot_rate
 
 func _process(_delta):
     self.update()
@@ -115,7 +114,7 @@ func craft(name):
                 res.name = res_name
                 res.count = count
                 self.subtract_from_inventory(res)
-            
+
             self.CraftStation.craft(reciepe)
             var res = ResourceItem.new()
             res.name = name
@@ -181,8 +180,8 @@ func take_damage(dmg):
 func set_craft_mode():
     Blackboard.check('crafting')
     emit_signal("craft_on")
-    
-    
+
+
 func unset_craft_mode():
     Blackboard.erase('crafting')
     emit_signal("craft_off")

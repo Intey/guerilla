@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
@@ -11,7 +11,8 @@
 [ext_resource path="res://UI/huds/HUD.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Items/Resources/water.gd" type="Script" id=10]
 [ext_resource path="res://Items/Resources/Scenes/CollectableResource.tscn" type="PackedScene" id=11]
-[ext_resource path="res://NPC/Commander/Commander.tscn" type="PackedScene" id=12]
+[ext_resource path="res://NPC/Animal/Animal.tscn" type="PackedScene" id=12]
+[ext_resource path="res://NPC/Commander/Commander.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -55,8 +56,8 @@ position = Vector2( -545.482, 272 )
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( -97.7198, 112.8 )
-fraction = 1
 speed = 250
+fraction = 1
 collection_speed = 4
 
 [node name="RightCamp" parent="." instance=ExtResource( 6 )]
@@ -81,4 +82,12 @@ polygon = PoolVector2Array( -164.494, -107.924, -163.117, 85.1176, 87.479, 84.84
 
 [node name="HUD" parent="." instance=ExtResource( 9 )]
 
-[node name="Commander" parent="." instance=ExtResource( 12 )]
+[node name="CraftHUD" parent="HUD/CL" index="1"]
+visible = false
+
+[node name="Commander" parent="." instance=ExtResource( 13 )]
+
+[node name="Animal" parent="." instance=ExtResource( 12 )]
+position = Vector2( 176, -128 )
+
+[editable path="HUD"]

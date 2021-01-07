@@ -1,4 +1,4 @@
-extends "res://states/state.gd"
+extends FSMState
 
 
 var vel: Vector2 = Vector2()

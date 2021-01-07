@@ -1,4 +1,4 @@
-extends "res://states/state.gd"
+extends FSMState
 
 func update_impl(delta):
       

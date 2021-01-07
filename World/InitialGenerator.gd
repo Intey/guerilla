@@ -20,10 +20,10 @@ func generate():
         # TOOD: 
         # - pass weapons (eg. 3 melee, 7 ranged)
 #        generate_commander(Pawn.Fraction.Left)
-        generate_npc(Pawn.Fraction.Left)
+        generate_npc(Human.Fraction.Left)
 
     for i in range(10):
-        generate_npc(Pawn.Fraction.Right)
+        generate_npc(Human.Fraction.Right)
         
 
 func generate_npc(fraction):
@@ -70,8 +70,8 @@ func random_position_in(shape):
 
 func generate_pos_for_fraction(fraction):
     var pos: Vector2
-    if fraction == Pawn.Fraction.Left:
+    if fraction == Human.Fraction.Left:
         pos = random_position_in(left_camp.get_node('Area/Shape'))
-    elif fraction == Pawn.Fraction.Right:
+    elif fraction == Human.Fraction.Right:
         pos = random_position_in(right_camp.get_node('Area/Shape'))
     return pos

@@ -122,6 +122,7 @@ func _physics_process(delta):
     
 
 func __get_current_state():
+    assert(len(__states_stack) > 0)
     return __states_stack[0]
 
 

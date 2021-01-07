@@ -1,4 +1,4 @@
-extends Pawn
+extends Human
 class_name NPC
 
 export var view_radius := 200
@@ -6,31 +6,33 @@ export var view_radius := 200
 var visible_enemies = []
 var nearest_enemy = null
 
+# f in state transitions
 const PURSUIT_STATE = "Pursuit"
 const IDLE_STATE = "Idle"
 const ATTACK_STATE = "Attack"
 
 
 func _ready():
+    ._ready()
     # rebind params
     $ViewArea/View.shape.radius = view_radius
     $ViewArea.connect("body_entered", self, "detect_body")
     $ViewArea.connect("body_exited", self, "undetect_body")
 
-    if self.fraction == Pawn.Fraction.Left:
+    if self.fraction == Human.Fraction.Left:
         $ColorRect.color = Color(1, 0, 0)
-    if self.fraction == Pawn.Fraction.Right:
+    if self.fraction == Human.Fraction.Right:
         $ColorRect.color = Color(0, 0, 1)
     $FSM.init()
 
 func detect_body(body):
-    if not (body is Pawn and self.is_enemy(body)):
+    if not (body is Human and self.is_enemy(body)):
         return
     body.connect("dead", self, "undetect_body")
     self.visible_enemies.push_back(body)
 
 func undetect_body(body):
-    if not (body is Pawn and self.is_enemy(body)):
+    if not (body is Human and self.is_enemy(body)):
         return
     self.visible_enemies.erase(body)
     if body == nearest_enemy:

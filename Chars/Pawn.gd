@@ -1,76 +1,29 @@
 extends KinematicBody2D
 class_name Pawn
 
-enum Fraction {
-    Neutral,
-    Left,
-    Right
-}
-    
-export(Fraction) var fraction = Fraction.Neutral
 #warning-ignore:unused_class_variable
 export var speed := 100
 #warning-ignore:unused_class_variable
-export var shoot_range := 100
-export var shoot_rate: float = 0.5
-export var THIRST_HEALTH_DIFF: float = -1.0
-export var STARVATION_HEALTH_DIFF: float = -1.0
-
 var health: AutoValue
-var experience: Value
 
 var alive := true
 var on_dead: FuncRef
 
-var target_pos: Vector2
-var Blackboard = preload("res://Utility/Blackboard.gd").new()
-
+export var THIRST_HEALTH_DIFF: float = -1.0
+export var STARVATION_HEALTH_DIFF: float = -1.0
 
 signal kills(victum)
 signal dead(this)
 
-    
+
 func _ready():
     self.on_dead = funcref(self, "queue_free")
-    $RangeWeapon.init(self)
-    $RangeWeapon.time_for_one_shoot = self.shoot_rate
     # for simple acceptance for HUD/Weapons
     self.health = $Health
-    self.experience = $Experience
     assert($Thirst.connect("value_at_bottom", self, "__start_thirsting") == OK)
     assert($Starving.connect("value_at_bottom", self, "__start_starving") == OK)
     assert($Thirst.connect("value_at_middle", self, "__stop_thirsting") == OK)
     assert($Starving.connect("value_at_middle", self, "__stop_starving") == OK)
-    
-    
-func shoot(delta, target: Vector2):
-    var victum = $RangeWeapon.fire(delta, target)
-    if not victum:
-        return
-    if not victum.alive:
-        emit_signal("kills", victum)
-
-        
-func subtract_from_inventory(res: ResourceItem):
-    return $Inventory.subtract(res)
-
-
-func add_to_inventory(res: ResourceItem):
-    $Inventory.add(res)
-
-
-func _get_inventory() -> Dictionary:
-    return $Inventory.inventory
-
-# TODO: remove set_move_to(pos) for troops from pawn. 
-# It's should be in troops AI/brain
-func set_move_to(pos: Vector2):
-    # print_debug("set pawn move to ", pos)
-    target_pos = pos
-
-
-func is_enemy(pawn: Pawn) -> bool:
-    return pawn.fraction != self.fraction
 
 
 # TODO: reduce damage with defence value?
@@ -89,46 +42,16 @@ func take_damage(dmg: int):
 
 func __start_thirsting():
     $Health.change_per_tick += THIRST_HEALTH_DIFF
-    
-    
+
+
 func __stop_thirsting():
     $Health.change_per_tick -= THIRST_HEALTH_DIFF
-    
-    
+
+
 func __start_starving():
     $Health.change_per_tick += STARVATION_HEALTH_DIFF
-    
-    
+
+
 func __stop_starving():
     $Health.change_per_tick -= STARVATION_HEALTH_DIFF
 
-
-func __appease():
-    """
-    Appease starvation or thirst needs with items in inventory
-    """
-#    print_debug("appease")
-    if $Thirst.value == 0:
-        var item = ResourceItem.new()
-        item.name = "water"
-        item.count = 1
-        if $Inventory.subtract(item):
-            print_debug("appease thirst")
-            $Thirst.set_value(100)
-            $Thirst.set_delay(30)
-            
-    if $Starving.value == 0:
-        var item = ResourceItem.new()
-        item.name = "food"
-        item.count = 1
-        if $Inventory.subtract(item):
-            print_debug("appease starve")
-            $Starving.set_value(100)
-
-
-func enter_campfire_zone():
-    self.Blackboard.check('campfire')
-
-
-func exit_campfire_zone():
-    self.Blackboard.uncheck('campfire')

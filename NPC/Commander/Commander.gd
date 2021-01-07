@@ -1,7 +1,6 @@
-extends Pawn
+extends Human
 class_name Commander
 
-#warning-ignore:unused_class_variable
 export var debug: bool = false
 
 #warning-ignore:unused_class_variable
@@ -16,7 +15,7 @@ var HAS_REWARD = "has reward"
 #warning-ignore:unused_class_variable
 var QUEST_OUT = "quest out"
 
-var current_quest: Quest = null
+var current_quest = null # type: Quest
 
 var behavior = null
 
@@ -53,7 +52,8 @@ func assign_current_quest():
     
 func reward():
     var quests = questManager.get_reward_quests(self)
-    print_debug("reward with assigned quest: ", quests[0])
+    if debug: 
+        print_debug("reward with assigned quest: ", quests[0])
     questManager.reward(quests[0])
     
     

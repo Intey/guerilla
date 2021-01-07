@@ -1,4 +1,5 @@
 extends Node
+class_name FSMState
 var inited = false
 var host = null
 export var debug = false

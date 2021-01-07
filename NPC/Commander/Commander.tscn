@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://NPC/Commander/Commander.gd" type="Script" id=1]
-[ext_resource path="res://Chars/Pawn.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Chars/Human.tscn" type="PackedScene" id=2]
 [ext_resource path="res://states/FSM.tscn" type="PackedScene" id=4]
 [ext_resource path="res://NPC/Commander/states/Idle.gd" type="Script" id=5]
 [ext_resource path="res://NPC/Commander/states/hasQuest.gd" type="Script" id=6]
@@ -11,15 +11,15 @@
 [ext_resource path="res://assets/icons/quest/QuestFrame1.png" type="Texture" id=10]
 [ext_resource path="res://assets/icons/quest/QuestFrame3.png" type="Texture" id=11]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 32 )
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.0
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "default",
-"speed": 6.0
+"speed": 5.0
 } ]
 
 [node name="Commander" instance=ExtResource( 2 )]
