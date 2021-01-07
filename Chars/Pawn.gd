@@ -39,14 +39,14 @@ func take_damage(dmg: int):
         # after queue_free, we need to remove reference on this pawn from other
         # objects (in arrays e.g.)
         emit_signal("dead", self)
-        var corpse = create_corpse()
+        var corpse = _create_corpse()
         self.queue_free()
         var parent = get_parent()
         print_debug("parent ", parent.name)
         parent.add_child(corpse)
         
         
-func create_corpse() -> Corpse:
+func _create_corpse() -> PackedScene:
     print_debug("corpse created")
     var corpse =  corpseScene.instance()
     corpse.global_position = self.global_position
@@ -54,17 +54,21 @@ func create_corpse() -> Corpse:
 
 
 func __start_thirsting():
+    print_debug("start thirsting")
     $Health.change_per_tick += THIRST_HEALTH_DIFF
 
 
 func __stop_thirsting():
+    print_debug("stop thirsting")
     $Health.change_per_tick -= THIRST_HEALTH_DIFF
 
 
 func __start_starving():
+    print_debug("start starving")
     $Health.change_per_tick += STARVATION_HEALTH_DIFF
 
 
 func __stop_starving():
+    print_debug("stop starving")
     $Health.change_per_tick -= STARVATION_HEALTH_DIFF
 

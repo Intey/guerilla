@@ -22,3 +22,6 @@ speed = 250
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CommRange" index="0"]
 shape = SubResource( 1 )
+
+[node name="AppeaseTimer" type="Timer" parent="." index="10"]
+[connection signal="timeout" from="AppeaseTimer" to="." method="__on_check_appease"]

@@ -36,10 +36,6 @@ func _ready():
         set_roam_target(roam_target)
     $FSM.init(states_map, ROAMING)
     # self.unit = Unit.new(100, funcref(self, "on_dead"))
-    
-    
-func move(delta, velocity):
-    move_and_slide(velocity)
 
 
 #TODO: deligates to current state
@@ -50,7 +46,38 @@ func _draw():
 
 func _physics_process(delta):
     update() # for redrawing
+        
     
+func move(delta, velocity):
+    move_and_slide(velocity)
+
+
+func _create_corpse() -> PackedScene:
+    var corpse = ._create_corpse()
+    corpse.loot = prepare_loot()
+    return corpse
+
+func prepare_loot() -> Dictionary:
+    return {"meat": randi() % 5}
+        
+func too_close(fp):
+    return (fp.position - position).length() < (fp.fear_radius)
+ 
+
+func take_damage(dmg: int):
+    .take_damage(dmg)
+    $AnimationPlayer.play("hit")
+    # self.unit.take_damage(dmg)
+        
+
+# FOR Events
+func set_roam_target(target):
+    if states_map == null:
+        roam_target = target
+    else:
+        var roam_state = states_map[ROAMING]
+        roam_state.target_direction = target
+        roam_state.random_roam = self.random_roam
 
 func _on_DetectionArea_body_entered(body):
     if body.name == 'Player':
@@ -70,28 +97,7 @@ func _on_DetectionArea_area_exited(area):
     if area.name == "AnimalFearArea":
         pass
         
-        
-func too_close(fp):
-    return (fp.position - position).length() < (fp.fear_radius)
-
 
 func _on_PursuitArea_body_exited(body):
     if body.name == 'Player':
         BB.erase('player')
-        
-
-func take_damage(dmg: int):
-    .take_damage(dmg)
-    $AnimationPlayer.play("hit")
-    # self.unit.take_damage(dmg)
-        
-
-# FOR Events
-func set_roam_target(target):
-    if states_map == null:
-        roam_target = target
-    else:
-        var roam_state = states_map[ROAMING]
-        roam_state.target_direction = target
-        roam_state.random_roam = self.random_roam
-

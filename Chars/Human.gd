@@ -63,6 +63,12 @@ func exit_campfire_zone():
     self.Blackboard.uncheck('campfire')
 
 
+func _create_corpse() -> PackedScene:
+    var corpse = ._create_corpse()
+    corpse.loot = self._get_inventory()
+    return corpse
+    
+
 func __on_check_appease():
     """
     Appease starvation or thirst needs with items in inventory
@@ -83,3 +89,5 @@ func __on_check_appease():
         if $Inventory.subtract(item):
             print_debug("appease starve")
             $Starving.set_value(100)
+            
+
