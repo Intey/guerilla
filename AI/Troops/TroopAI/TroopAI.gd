@@ -30,7 +30,7 @@ func _ready():
 func detect_body(body):
     if body in self.troop.teammates:
         return
-    elif body is Pawn:
+    elif body is Human:
         if body.fraction != self.pawn.fraction:
             if self.nearest_enemy == null:
                 self.nearest_enemy = body 
