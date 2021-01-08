@@ -3,12 +3,12 @@ extends Node2D
 func _ready():
     $HUD.join($Player)
     $Player/Thirst.tick_seconds = 1
-    $Player/Thirst.change_per_tick = -80
+    $Player/Thirst.change_per_tick = -40
     $Player.THIRST_HEALTH_DIFF = -11
     
     
     
-    $Player/Starving.tick_seconds = 300
+    $Player/Starving.set_delay(100)
     $Player/Starving.change_per_tick = 0
     $Player.STARVATION_HEALTH_DIFF = -40
     

@@ -2,9 +2,11 @@ extends Value
 class_name AutoValue
 
 export var change_per_tick: float = 0.0
-export var tick_seconds: int = 100
-var delay_seconds: float = 0.0
-var time_collector: float = 0.0
+export var tick_seconds: float = 1.0
+var effects: Dictionary
+
+#optimization
+var summary_effect_change: float = 0.0
 
 enum State {
     BOTTOM,
@@ -20,30 +22,58 @@ signal value_at_middle()
 signal value_at_top()
 
 
-func set_delay(seconds: int):
-    print_debug("auto change delayer for ", self.name, " of ", self.change_per_tick, " on ", self.delay_seconds)
-    self.delay_seconds = seconds
+func set_delay(seconds: float):
+#    print_debug("delay autovalue ", self.name, " (", self.change_per_tick, ") on ", seconds)
+    $Timer.set_paused(true)
+    $DelayTimer.wait_time = seconds
+    $DelayTimer.start()
+
+
+func set_effect(name: String, value: float):
+    effects[name] = value    
+    summary_effect_change = 0.0
+    for effect in effects:
+        summary_effect_change += effects[effect]
+    
+    
+func erase_effect(name: String):
+    if effects.has(name):
+        summary_effect_change -= effects[summary_effect_change]
+        effects.erase(name)
+
 
 func _init():
-    __sync_state(false)
-
-
-func _process(delta):
-    if delay_seconds > 0:
-#        print_debug("rest dalay ", self.delay_seconds)
-        delay_seconds -= delta
-        return
-    else:
-        delay_seconds = 0
+    __sync_state(false) # initialize state
     
-    time_collector += delta
-    if time_collector < tick_seconds:
-        return
-#    print_debug("process autovalue ", self.name, " : ", change_per_tick)
-    time_collector = 0.0
-    .change(change_per_tick)
+    
+func _ready():
+    $Timer.wait_time = tick_seconds
+    $Timer.set_paused(false)
+    $Timer.one_shot = false
+    $Timer.start()
+    
+
+func _on_Timer_timeout():
+    var summary := 0.0
+    for effect in effects:
+        summary += effects[effect]
+    assert (summary == summary_effect_change, "got you, bitch! Guards!")
+#    print_debug(
+#        "Autovalue(", 
+#        self.name, 
+#        ") Timer run decrement autovalue with effects: ", 
+#        effects.keys(), 
+#        "with summary effect:", 
+#        summary_effect_change
+#    )
+    .change(change_per_tick + summary_effect_change)
     __sync_state()
-    
+
+
+func _on_DelayTimer_timeout():
+#    print_debug("delay finished")
+    $Timer.set_paused(false)
+
 
 func __sync_state(with_emit: bool = true):
     last_state = state

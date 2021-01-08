@@ -24,4 +24,5 @@ speed = 250
 shape = SubResource( 1 )
 
 [node name="AppeaseTimer" type="Timer" parent="." index="10"]
+autostart = true
 [connection signal="timeout" from="AppeaseTimer" to="." method="__on_check_appease"]

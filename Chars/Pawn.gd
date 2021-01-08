@@ -55,20 +55,20 @@ func _create_corpse() -> PackedScene:
 
 func __start_thirsting():
     print_debug("start thirsting")
-    $Health.change_per_tick += THIRST_HEALTH_DIFF
+    $Health.set_effect("THIRST", THIRST_HEALTH_DIFF)
 
 
 func __stop_thirsting():
     print_debug("stop thirsting")
-    $Health.change_per_tick -= THIRST_HEALTH_DIFF
+    $Health.erase_effect("THIRST")
 
 
 func __start_starving():
     print_debug("start starving")
-    $Health.change_per_tick += STARVATION_HEALTH_DIFF
+    $Health.set_effect("STARVE", STARVATION_HEALTH_DIFF)
 
 
 func __stop_starving():
     print_debug("stop starving")
-    $Health.change_per_tick -= STARVATION_HEALTH_DIFF
+    $Health.erase_effect("STARVE")
 
