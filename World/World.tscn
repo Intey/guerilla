@@ -63,7 +63,7 @@ position = Vector2( 1452.54, 284.099 )
 
 [node name="Sticks" parent="." instance=ExtResource( 11 )]
 position = Vector2( -246, 567 )
-type = "sticks"
+type = "stick"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sticks"]
 visible = false

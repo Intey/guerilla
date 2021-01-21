@@ -37,7 +37,7 @@ func _ready():
     questManager.add_quest(
         Quest.new(self, "More sticks",
         "Comrade, collest sticks",
-        [GatherObjective.new(ResourceStick, 2)], 
+        [GatherObjective.new("sticks", 2)], 
         30))
     
 # Quest Giver Component

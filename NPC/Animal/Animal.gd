@@ -54,7 +54,7 @@ func move(delta, velocity):
 
 func _create_corpse() -> PackedScene:
     var corpse = ._create_corpse()
-    corpse.loot = prepare_loot()
+    corpse.set_loot(prepare_loot())
     return corpse
 
 func prepare_loot() -> Dictionary:
