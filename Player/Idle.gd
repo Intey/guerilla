@@ -1,11 +1,14 @@
 extends FSMState
 
+
 func update_impl(delta):
       
     # collecting
     if Input.is_action_just_pressed('ui_interact'):
         if self.host.collectable_area:
             return self.host.COLLECTING
+        elif self.host.target_exchange:
+            self.host.emit_signal("start_exchange", self.host.target_exchange)
         elif self.host.Blackboard.get("sleep"):
             return self.host.SLEEP
     if Input.is_action_just_pressed('ui_select'):
@@ -53,7 +56,7 @@ func get_input() -> Vector2:
     velocity = velocity.normalized() * self.host.speed
     return velocity
     
+    
 func physics_process_impl(_delta):
      var velocity = get_input()
      var _collision = self.host.move_and_slide(velocity)
-    

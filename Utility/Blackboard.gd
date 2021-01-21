@@ -32,3 +32,6 @@ func erase(key):
     
 func get(key):
     return _blackboard.get(key)
+    
+func has(key) -> bool:
+    return _blackboard.get(key) != null

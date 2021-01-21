@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://UI/huds/CraftHUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/huds/AmmoHUD.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://UI/huds/Starving.gd" type="Script" id=5]
 [ext_resource path="res://UI/huds/Thirst.gd" type="Script" id=6]
 [ext_resource path="res://UI/huds/Experience.gd" type="Script" id=7]
+[ext_resource path="res://UI/huds/InventoryExchange.tscn" type="PackedScene" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.94902, 0, 0, 1 )
@@ -59,22 +60,21 @@ script = ExtResource( 3 )
 [node name="CL" type="CanvasLayer" parent="."]
 
 [node name="MC" type="MarginContainer" parent="CL"]
-anchor_right = 1.0
 margin_left = 5.0
 margin_top = 5.0
-margin_right = -5.0
-margin_bottom = 38.0
+margin_right = 413.0
+margin_bottom = 61.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VB" type="VBoxContainer" parent="CL/MC"]
-margin_right = 1014.0
+margin_right = 408.0
 margin_bottom = 56.0
 
 [node name="Experience" type="ProgressBar" parent="CL/MC/VB"]
-margin_right = 1014.0
+margin_right = 408.0
 margin_bottom = 14.0
 script = ExtResource( 7 )
 __meta__ = {
@@ -83,7 +83,7 @@ __meta__ = {
 
 [node name="HB" type="HBoxContainer" parent="CL/MC/VB"]
 margin_top = 18.0
-margin_right = 1014.0
+margin_right = 408.0
 margin_bottom = 56.0
 size_flags_horizontal = 3
 __meta__ = {
@@ -115,14 +115,14 @@ rect_min_size = Vector2( 0, 14 )
 
 [node name="Spacer" type="Control" parent="CL/MC/VB/HB"]
 margin_left = 254.0
-margin_right = 860.0
+margin_right = 254.0
 margin_bottom = 38.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 
 [node name="VB2" type="VBoxContainer" parent="CL/MC/VB/HB"]
-margin_left = 864.0
-margin_right = 1014.0
+margin_left = 258.0
+margin_right = 408.0
 margin_bottom = 38.0
 rect_min_size = Vector2( 150, 0 )
 
@@ -149,7 +149,19 @@ __meta__ = {
 }
 
 [node name="CraftHUD" parent="CL" instance=ExtResource( 1 )]
-anchor_top = 1.0
+anchor_top = 0.687
+anchor_right = 0.398
 anchor_bottom = 1.0
-margin_top = -240.0
+margin_top = 0.383972
+margin_right = 0.447968
 margin_bottom = 0.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="InventoryExchange" parent="CL" instance=ExtResource( 8 )]
+anchor_top = 0.687
+anchor_right = 0.398
+margin_top = 0.383972
+margin_right = 0.447968
+margin_bottom = 2.0
+size_flags_horizontal = 1

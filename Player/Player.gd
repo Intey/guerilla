@@ -9,6 +9,9 @@ export var max_sleep_time := 10.0
 export var sleep_time := 10.0
 export var debug = false
 
+
+onready var inventory = $Inventory
+
 var CS = preload('./craft/CraftStation.gd')
 var BuildPlan = preload('./craft/BuildPlan.tscn')
 var crafts = preload('./craft/crafts.gd')
@@ -18,6 +21,7 @@ signal build(reciepe, position)
 signal gathers(resource)
 signal craft_on()
 signal craft_off()
+signal start_exchange(target)
 
 # State machinary
 
@@ -40,6 +44,7 @@ onready var states_map = {
 
 #var craftHud = null
 var collectable_area = null
+var target_exchange = null
 var build_plan = null
 var CraftStation = null
 export var godmode = false
@@ -82,13 +87,16 @@ func enter_collectable_area(area):
     if area is CollectableResource:
         print_debug('enter ', area)
         collectable_area = area
+    if area is Corpse:
+        target_exchange = area
 
 
-func exit_collectable_area(area):
+func exit_collectable_area(area: Area2D):
     if area == collectable_area:
         print_debug('exit ', area)
         collectable_area = null
-
+    if  area == target_exchange:
+        target_exchange = null
 
 func set_sleep_zone(in_zone=true):
     if in_zone:
@@ -110,15 +118,11 @@ func craft(name):
         if reciepe.type == crafts.Types.ITEM:
             for res_name in reciepe.ingridients:
                 var count = reciepe.ingridients[res_name]
-                var res = ResourceItem.new()
-                res.name = res_name
-                res.count = count
+                var res = ResourceItem.new(res_name, count)
                 self.subtract_from_inventory(res)
 
             self.CraftStation.craft(reciepe)
-            var res = ResourceItem.new()
-            res.name = name
-            res.count = reciepe.count
+            var res = ResourceItem.new(name, reciepe.count)
             self.add_to_inventory(res)
 
         elif reciepe.type == crafts.Types.BUILDING:
@@ -140,9 +144,7 @@ func build_structure():
         self.hide_build_mode()
         return
     for ingr in reciepe["ingridients"]:
-        var res = ResourceItem.new()
-        res.name = ingr
-        res.count = reciepe["ingridients"][ingr]
+        var res = ResourceItem.new(ingr, reciepe["ingridients"][ingr])
         subtract_from_inventory(res)
     var position = build_plan['node'].position
     emit_signal('build', reciepe, position)

@@ -74,18 +74,14 @@ func __on_check_appease():
     Appease starvation or thirst needs with items in inventory
     """
     if $Thirst.value == 0:
-        var item = ResourceItem.new()
-        item.name = "water"
-        item.count = 1
+        var item = ResourceItem.new("water", 1)
         if $Inventory.subtract(item):
             print_debug("appease thirst")
             $Thirst.set_value(100)
             $Thirst.set_delay(30)
 
     if $Starving.value == 0:
-        var item = ResourceItem.new()
-        item.name = "food"
-        item.count = 1
+        var item = ResourceItem.new("food", 1)
         if $Inventory.subtract(item):
             print_debug("appease starve")
             $Starving.set_value(100)

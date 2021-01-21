@@ -15,6 +15,7 @@ func init(_player):
     self.render_ingridients(self.player._get_inventory())
     self.init_reciepes()
 
+    
 func init_reciepes():
     for reciepe_name in self.reciepes:
         var reciepeItem = ReciepeItem.instance()
@@ -57,6 +58,7 @@ func _add_ingridient(name, count):
     
 func _on_reciepe_selected(reciepe: ReciepeItem):
     print_debug("select recipe:", reciepe)
+    # change selected reciepe. Grid is multiselect by default
     if selected_reciepe:
         selected_reciepe.set_selected(false)
     selected_reciepe = reciepe

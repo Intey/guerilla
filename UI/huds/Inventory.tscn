@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/huds/Inventory.gd" type="Script" id=1]
+
+[node name="Inventory" type="HBoxContainer"]
+margin_right = 72.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="."]
+margin_right = 61.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 10.0
+auto_height = true
+
+[node name="Counts" type="ItemList" parent="."]
+margin_left = 65.0
+margin_right = 72.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

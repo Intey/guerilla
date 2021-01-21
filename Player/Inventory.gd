@@ -1,4 +1,5 @@
 extends Node
+class_name Inventory
 
 var inventory = {}
 
@@ -15,11 +16,21 @@ func add(collected: ResourceItem):
         collected.count, 
         ' ', 
         collected.name, 
-        ". now player has ", 
+        ". now ",
+        get_parent().name, 
+        " has ", 
         inventory
     )
     emit_signal('update', self.inventory)
     
+    
+func add_item(type: String, count: int):
+    var item = ResourceItem.new(type, count)
+    self.add(item)
+    
+func sub_item(type: String, count: int) -> bool:
+    var item = ResourceItem.new(type, count)
+    return self.subtract(item)
     
 func subtract(res: ResourceItem) -> bool:
     print_debug("try substract ", res.name, ":", res.count)
@@ -31,3 +42,17 @@ func subtract(res: ResourceItem) -> bool:
         self.inventory.erase(res.name)
     emit_signal("update", self.inventory)
     return true
+
+func items():
+    var items = []
+    for k in inventory:
+        var i = ResourceItem.new(k, inventory[k])
+        items.append(i)
+    return items        
+
+func clear():
+    inventory = {}
+    emit_signal("update", self.inventory)
+
+func get_count(item: String):
+    return inventory[item]

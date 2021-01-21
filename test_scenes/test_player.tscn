@@ -6,7 +6,7 @@
 [ext_resource path="res://test_scenes/test_player.gd" type="Script" id=4]
 [ext_resource path="res://UI/huds/HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/GlobalEffects/GlobalTime.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Items/Resources/ResourceStick.gd" type="Script" id=7]
+[ext_resource path="res://Chars/Corpse.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -23,7 +23,7 @@ position = Vector2( 80, 32 )
 
 [node name="Sticks" parent="." instance=ExtResource( 3 )]
 position = Vector2( -128, 32 )
-type = ExtResource( 7 )
+type = "stick"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sticks"]
 position = Vector2( -0.840942, 0 )
@@ -33,3 +33,6 @@ shape = SubResource( 1 )
 [node name="HUD" parent="." instance=ExtResource( 5 )]
 
 [node name="GlobalTime" parent="." instance=ExtResource( 6 )]
+
+[node name="Corpse" parent="." instance=ExtResource( 8 )]
+position = Vector2( 91.4366, -60.7352 )

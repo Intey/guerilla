@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://UI/huds/Inventory.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI/huds/InventoryExchange.gd" type="Script" id=2]
+
+[sub_resource type="ImageTexture" id=1]
+
+[node name="InventoryExchange" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -863.0
+margin_bottom = -633.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="L" type="VBoxContainer" parent="."]
+margin_right = 61.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="L"]
+margin_right = 61.0
+margin_bottom = 14.0
+text = "Left"
+
+[node name="Left" parent="L" instance=ExtResource( 1 )]
+margin_top = 18.0
+margin_right = 61.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+name_left = true
+
+[node name="B" type="VBoxContainer" parent="."]
+margin_left = 65.0
+margin_right = 95.0
+margin_bottom = 135.0
+size_flags_stretch_ratio = 0.56
+alignment = 1
+
+[node name="Left" type="Button" parent="B"]
+margin_top = 45.0
+margin_right = 30.0
+margin_bottom = 65.0
+size_flags_stretch_ratio = 0.34
+text = "<<"
+icon = SubResource( 1 )
+
+[node name="Right" type="Button" parent="B"]
+margin_left = 1.0
+margin_top = 69.0
+margin_right = 29.0
+margin_bottom = 89.0
+size_flags_horizontal = 4
+text = ">>"
+
+[node name="R" type="VBoxContainer" parent="."]
+margin_left = 99.0
+margin_right = 161.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="R"]
+margin_right = 62.0
+margin_bottom = 14.0
+text = "Right"
+align = 2
+
+[node name="Right" parent="R" instance=ExtResource( 1 )]
+margin_top = 18.0
+margin_right = 62.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

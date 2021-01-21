@@ -38,7 +38,7 @@ func set_effect(name: String, value: float):
     
 func erase_effect(name: String):
     if effects.has(name):
-        summary_effect_change -= effects[summary_effect_change]
+        summary_effect_change -= effects[name]
         effects.erase(name)
 
 

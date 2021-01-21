@@ -25,6 +25,9 @@ text = "Craft"
 [node name="Items" type="HBoxContainer" parent="."]
 anchor_bottom = 1.0
 margin_right = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ItemList" type="ItemList" parent="Items"]
 margin_right = 93.0
@@ -49,4 +52,7 @@ margin_right = 384.0
 margin_bottom = 160.0
 mouse_filter = 0
 columns = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="CraftButton" to="." method="_on_craft_pressed"]

@@ -1,7 +1,8 @@
 extends Node2D
 class_name Corpse
 
-var loot := {}
+onready var inventory = $Inventory
 
-func _ready():
-    print_debug("corpse ready")
+func clone_resources(target): # Pawn
+    # TODO: add resources from target
+    pass
