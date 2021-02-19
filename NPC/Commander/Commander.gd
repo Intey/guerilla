@@ -17,7 +17,7 @@ var QUEST_OUT = "quest out"
 
 var current_quest = null # type: Quest
 
-var behavior = null
+var behavior: Node
 
 #warning-ignore:unused_signal
 signal quest_available(quest, available)
@@ -39,7 +39,12 @@ func _ready():
         "Comrade, collest sticks",
         [GatherObjective.new("sticks", 2)], 
         30))
+
     
+func _process(delta):
+    if self.behavior:
+        self.behavior._process(delta)
+        
 # Quest Giver Component
 func assign_current_quest():
     """

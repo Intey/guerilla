@@ -145,6 +145,11 @@ _global_script_classes=[ {
 "path": "res://AI/Sector.gd"
 }, {
 "base": "Node",
+"class": "SimpleCommander",
+"language": "GDScript",
+"path": "res://AI/SimpleCommander.gd"
+}, {
+"base": "Node",
 "class": "Troop",
 "language": "GDScript",
 "path": "res://AI/Troops/Troop.gd"
@@ -202,6 +207,7 @@ _global_script_class_icons={
 "Reward": "",
 "RiskyCommander": "",
 "Sector": "",
+"SimpleCommander": "",
 "Troop": "",
 "TroopAI": "",
 "TroopsManager": "",
