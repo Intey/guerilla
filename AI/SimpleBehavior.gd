@@ -1,9 +1,9 @@
 """
-Risky Commander sends it's scouts in battle mode.
+SimpleCommander Behavior
 """
 
 extends Node
-class_name RiskyCommander
+class_name SimpleBehavior
 # analize data
 # on low information - run scouting
 # when know enemy position - select strategy, handle it
@@ -43,8 +43,10 @@ func _process(delta):
     if self.passed_time >= 2 and self.passed_time - delta <= delta * 2:
         touch_sectors(delta)
         if todo == "scout":
+            print_debug("send scounts")
             create_scout()
         elif todo == "attack":
+            print_debug("send attack team")
             make_attack()
             pass 
 
@@ -58,13 +60,17 @@ func create_scout():
     """
     var participants = search_participants()
     if len(participants) == 0:
-        var lead = participants.pop_front()
-        var target_sector = select_scout_sector()
-        # TODO: pawn can has destination sector, not vector
-        lead.target_pos = target_sector.position
-        var troop = troopsManager.create_troop(lead, participants)
-        # TODO: send with battle mode
-        scouts.append({'troop': troop, 'sector': target_sector})
+        print_debug("not found souts")
+        # self.say("can find any solder near...")
+        return
+        
+    var lead = participants.pop_front()
+    var target_sector = select_scout_sector()
+    # TODO: pawn can has destination sector, not vector
+    lead.target_pos = target_sector.position
+    var troop = troopsManager.create_troop(lead, participants)
+    # TODO: send with battle mode
+    scouts.append({'troop': troop, 'sector': target_sector})
 
 
 func search_participants():
@@ -72,6 +78,7 @@ func search_participants():
     return possible participants for some adventure
     """
     # TODO: process near area, select 1/3 pawns     return []
+    
     return []
 
 
@@ -156,3 +163,14 @@ func make_attack():
     var lead = participants[0]
     lead.target_pos = self.nearest_enemy_sector.position
     self.attack_troop = troopsManager.create_troop(lead, participants)
+
+
+func _on_Action_timeout():
+    todo = analize()
+    touch_sectors(delta)
+    if todo == "scout":
+        print_debug("send scounts")
+        create_scout()
+    elif todo == "attack":
+        print_debug("send attack team")
+        make_attack()
