@@ -24,29 +24,24 @@ animations = [ {
 
 [node name="Commander" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-fraction = 0
 speed = 100
-shoot_range = 100
-shoot_rate = 0.5
-THIRST_HEALTH_DIFF = -1.0
-STARVATION_HEALTH_DIFF = -1.0
 
 [node name="Camera2D" parent="." index="0"]
 visible = false
 
-[node name="CommRange" parent="." index="4"]
+[node name="Thirst" parent="." index="2"]
 visible = false
 
-[node name="Thirst" parent="." index="5"]
+[node name="Starving" parent="." index="3"]
 visible = false
 
-[node name="Starving" parent="." index="6"]
+[node name="Health" parent="." index="4"]
 visible = false
 
-[node name="Health" parent="." index="7"]
+[node name="Experience" parent="." index="5"]
 visible = false
 
-[node name="Experience" parent="." index="8"]
+[node name="CommRange" parent="." index="9"]
 visible = false
 
 [node name="FSM" parent="." index="10" instance=ExtResource( 4 )]

@@ -11,6 +11,7 @@ class_name SimpleBehavior
 
 # Main loop:
 # * Analize exists data
+# * check existing orders. DRY
 # * run Scouts
 # * Handle battles
 
@@ -22,7 +23,11 @@ var sectors = []
 var nearest_enemy_sector: Sector
 var passed_time = 0
 var attack_troop: Troop
+var resource_to_host = {
+    "stick": {"limit": 10, "packsize": 20}
+   }
 
+var seconds
 
 func _init():
     for col in Sector.cols:
@@ -31,28 +36,7 @@ func _init():
             var sector = Sector.new(name, self.sector_size)
             sector.last_update = 10000
             self.sectors.append(sector)
-
-
-func _process(delta):
-    passed_time += delta
-
-    # NOTE: maybe Timers?
-    var todo = ""
-    if self.passed_time >= 1 and self.passed_time - delta <= delta: 
-        todo = analize()
-    if self.passed_time >= 2 and self.passed_time - delta <= delta * 2:
-        touch_sectors(delta)
-        if todo == "scout":
-            print_debug("send scounts")
-            create_scout()
-        elif todo == "attack":
-            print_debug("send attack team")
-            make_attack()
-            pass 
-
-    if self.passed_time >= 2:
-        self.passed_time = 0
-
+            
 
 func create_scout():
     """
@@ -71,6 +55,13 @@ func create_scout():
     var troop = troopsManager.create_troop(lead, participants)
     # TODO: send with battle mode
     scouts.append({'troop': troop, 'sector': target_sector})
+
+func _process(delta):
+    seconds += delta
+    if seconds > 1:
+        var todo = analize()
+        touch_sectors(1)
+        seconds = 0
 
 
 func search_participants():
@@ -130,6 +121,14 @@ func analize():
     1. When enemy position unknown - spawn scouts.
     2. When we know enemy position - move army to attack
     """
+    # check warehouse
+    var warehouse = self.find_warehouse()
+    for resource in warehouse.resources():
+        var res_to_hold = self.resource_to_hold[resource.name]
+        var diffcount = res_to_hold.limit - resource.count
+        
+        if diffcount > 0:
+            self.create_order_grind(resource.name, diffcount + res_to_hold.packsize)
 
     # find nearest sector with enemy
     var nearest_enemy_sector: Sector
@@ -144,11 +143,21 @@ func analize():
 
     if nearest_enemy_sector:
         self.nearest_enemy_sector = nearest_enemy_sector
-        return 'attack'
+        make_attack()
     else:
         self.nearest_enemy_sector = null
-        return 'scout'
+        create_scout()
 
+
+func find_warehouse():
+    pass
+    
+func create_order_grind(resname, count):
+    questManager.add_quest(
+        Quest.new(self.host, "More sticks",
+        "Comrade, collest sticks",
+        [GatherObjective.new(resname, count)], 
+        30))
 
 func make_attack():
     """
@@ -165,12 +174,3 @@ func make_attack():
     self.attack_troop = troopsManager.create_troop(lead, participants)
 
 
-func _on_Action_timeout():
-    todo = analize()
-    touch_sectors(delta)
-    if todo == "scout":
-        print_debug("send scounts")
-        create_scout()
-    elif todo == "attack":
-        print_debug("send attack team")
-        make_attack()

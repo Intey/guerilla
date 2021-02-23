@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Tilemap.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://World/GlobalEffects/GlobalTime.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/Events/EventSheduler.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/Areas/Camp.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Buildings/Warehouse.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=8]
 [ext_resource path="res://UI/huds/HUD.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Items/Resources/Scenes/CollectableResource.tscn" type="PackedScene" id=11]
@@ -101,5 +102,8 @@ position = Vector2( 176, -128 )
 
 [node name="Corpse" parent="." instance=ExtResource( 14 )]
 position = Vector2( 234, 221 )
+
+[node name="Warehoouse" parent="." instance=ExtResource( 7 )]
+position = Vector2( -606.684, 455.18 )
 
 [editable path="HUD"]
