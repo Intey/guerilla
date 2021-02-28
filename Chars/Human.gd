@@ -13,6 +13,8 @@ export var shoot_range := 100
 export var shoot_rate: float = 0.5
 var experience: Value
 
+# team camp
+var camp = null
 
 var target_pos: Vector2
 
@@ -85,5 +87,14 @@ func __on_check_appease():
         if $Inventory.subtract(item):
             print_debug("appease starve")
             $Starving.set_value(100)
+     
+    
+func search(building_name: String):
+    for area in $SearchArea.get_overlapping_areas():
+        if area.name == building_name:
+            return area
+    return null
             
+    
+    
 

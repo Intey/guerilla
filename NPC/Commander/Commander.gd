@@ -19,6 +19,7 @@ var current_quest = null # type: Quest
 
 var behavior: Node
 
+
 #warning-ignore:unused_signal
 signal quest_available(quest, available)
     
@@ -44,6 +45,7 @@ func _ready():
 func _process(delta):
     if self.behavior:
         self.behavior._process(delta)
+        
         
 # Quest Giver Component
 func assign_current_quest():
@@ -73,4 +75,5 @@ func has_reward():
 func display_quest():
     var quests = questManager.get_available_quests(self)
     self.current_quest = quests[0]
+    
     

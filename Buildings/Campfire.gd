@@ -1,4 +1,6 @@
-extends Node2D
+extends Building
+class_name Campfile
+
 
 export onready var fear_radius = $AnimalFearArea/Shape.shape.radius
 export var camp_distance: float 

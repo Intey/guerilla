@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Buildings/Campfire.gd" type="Script" id=1]
 
@@ -36,7 +36,10 @@ radius = 160.0
 [sub_resource type="CircleShape2D" id=6]
 radius = 60.0
 
-[node name="Campfire" type="Node2D"]
+[sub_resource type="CircleShape2D" id=7]
+radius = 21.2305
+
+[node name="Campfire" type="Area2D"]
 script = ExtResource( 1 )
 camp_distance = 600.0
 
@@ -91,5 +94,8 @@ collision_layer = 4
 
 [node name="Shape" type="CollisionShape2D" parent="HeatArea"]
 shape = SubResource( 6 )
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource( 7 )
 [connection signal="body_entered" from="CraftArea" to="." method="_on_CraftArea_body_entered"]
 [connection signal="body_exited" from="CraftArea" to="." method="_on_CraftArea_body_exited"]

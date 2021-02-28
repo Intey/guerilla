@@ -27,15 +27,23 @@ var resource_to_host = {
     "stick": {"limit": 10, "packsize": 20}
    }
 
+var strategy = Strategy.new()
+var orders = []
+
 var seconds
+var host = null
 
 func _init():
+    self.host = get_parent()
+     
     for col in Sector.cols:
         for i in range(len(Sector.cols)):
             var name = col + str(i+1)
             var sector = Sector.new(name, self.sector_size)
             sector.last_update = 10000
             self.sectors.append(sector)
+    
+    self.orders = self.strategy.orders()
             
 
 func create_scout():
@@ -59,7 +67,7 @@ func create_scout():
 func _process(delta):
     seconds += delta
     if seconds > 1:
-        var todo = analize()
+        analize()
         touch_sectors(1)
         seconds = 0
 
@@ -121,8 +129,14 @@ func analize():
     1. When enemy position unknown - spawn scouts.
     2. When we know enemy position - move army to attack
     """
+    for order in self.orders:
+        if order.status == "todo":
+            self.dispatch_order(order)
+    
     # check warehouse
     var warehouse = self.find_warehouse()
+    if warehouse == null:
+        self.create_order_build("Warehouse")
     for resource in warehouse.resources():
         var res_to_hold = self.resource_to_hold[resource.name]
         var diffcount = res_to_hold.limit - resource.count
@@ -130,34 +144,44 @@ func analize():
         if diffcount > 0:
             self.create_order_grind(resource.name, diffcount + res_to_hold.packsize)
 
-    # find nearest sector with enemy
-    var nearest_enemy_sector: Sector
-    var current_position = self.pawn.global_position
-    var dist = 0
-    for s in self.sectors:
-        if s.has_enemy():
-            var new_dist = current_position.distance_to(s.position)
-            if  new_dist < dist:
-                dist = new_dist
-                nearest_enemy_sector = s
-
-    if nearest_enemy_sector:
-        self.nearest_enemy_sector = nearest_enemy_sector
-        make_attack()
-    else:
-        self.nearest_enemy_sector = null
-        create_scout()
+#    # find nearest sector with enemy
+#    var nearest_enemy_sector: Sector
+#    var current_position = self.pawn.global_position
+#    var dist = 0
+#    for s in self.sectors:
+#        if s.has_enemy():
+#            var new_dist = current_position.distance_to(s.position)
+#            if  new_dist < dist:
+#                dist = new_dist
+#                nearest_enemy_sector = s
+#
+#    if nearest_enemy_sector:
+#        self.nearest_enemy_sector = nearest_enemy_sector
+#        make_attack()
+#    else:
+#        self.nearest_enemy_sector = null
+#        create_scout()
 
 
 func find_warehouse():
-    pass
+    return self.host.search("Warehouse")
+    
     
 func create_order_grind(resname, count):
     questManager.add_quest(
-        Quest.new(self.host, "More sticks",
-        "Comrade, collest sticks",
+        Quest.new(self.host, "More " + resname,
+        "Comrade, collest " + str(count) + ' of "' + resname +'".',
         [GatherObjective.new(resname, count)], 
         30))
+
+
+func create_order_build(building_name):
+    questManager.add_quest(
+        Quest.new(self.host, "Build "+ building_name,
+        "We need "+ building_name +". Build it in camp",
+        [BuildingObjective.new(building_name, Vector2(100, 200))],
+        100)
+       )
 
 func make_attack():
     """
@@ -173,4 +197,24 @@ func make_attack():
     lead.target_pos = self.nearest_enemy_sector.position
     self.attack_troop = troopsManager.create_troop(lead, participants)
 
+
+func most_free_solder():
+    return null
+    
+    
+func dispatch_order(order):
+    var solder = self.most_free_solder()
+    if solder == null:
+        return
+    else:
+        var objectives = []
+        var s := "some:string"
+        s.split(":")
+        var parts = order.objective.split(":")
+        if parts[0] == "build":
+            self.objectives.append(BuildingObjective.new(parts[1]))
+        questManager.add_quest(
+            Quest.new(self.host, order.title, order.description,
+            )
+           )
 

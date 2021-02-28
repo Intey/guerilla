@@ -53,6 +53,8 @@ position = Vector2( -992, 64 )
 
 [node name="LeftCamp" parent="." instance=ExtResource( 6 )]
 position = Vector2( -545.482, 272 )
+scale = Vector2( 1.00254, 1 )
+fraction = 1
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( -97.7198, 112.8 )
@@ -61,13 +63,13 @@ collection_speed = 4
 
 [node name="RightCamp" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1452.54, 284.099 )
+fraction = 2
 
 [node name="Sticks" parent="." instance=ExtResource( 11 )]
 position = Vector2( -246, 567 )
 type = "stick"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sticks"]
-visible = false
 scale = Vector2( 2, 2 )
 shape = SubResource( 1 )
 
@@ -95,7 +97,8 @@ polygon = PoolVector2Array( -164.494, -107.924, -165.317, 89.5866, 94.8082, 88.9
 visible = false
 
 [node name="Commander" parent="." instance=ExtResource( 13 )]
-position = Vector2( -121, -8 )
+position = Vector2( -500, 250 )
+fraction = 1
 
 [node name="Animal" parent="." instance=ExtResource( 12 )]
 position = Vector2( 176, -128 )
@@ -104,6 +107,6 @@ position = Vector2( 176, -128 )
 position = Vector2( 234, 221 )
 
 [node name="Warehoouse" parent="." instance=ExtResource( 7 )]
-position = Vector2( -606.684, 455.18 )
+position = Vector2( -670.252, 282.487 )
 
 [editable path="HUD"]

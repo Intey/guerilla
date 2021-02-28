@@ -1,2 +1,2 @@
-extends Node2D
-
+extends Building
+class_name Warehouse

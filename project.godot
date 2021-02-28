@@ -25,6 +25,26 @@ _global_script_classes=[ {
 "path": "res://Utility/Blackboard.gd"
 }, {
 "base": "Area2D",
+"class": "Building",
+"language": "GDScript",
+"path": "res://Buildings/Building.gd"
+}, {
+"base": "Node",
+"class": "BuildingObjective",
+"language": "GDScript",
+"path": "res://Quest/Objectives/BuildingObjective.gd"
+}, {
+"base": "Node",
+"class": "Camp",
+"language": "GDScript",
+"path": "res://Managers/FractionManager.gd"
+}, {
+"base": "Building",
+"class": "Campfile",
+"language": "GDScript",
+"path": "res://Buildings/Campfire.gd"
+}, {
+"base": "Area2D",
 "class": "CollectableResource",
 "language": "GDScript",
 "path": "res://Items/Resources/Scenes/CollectableResource.gd"
@@ -135,6 +155,11 @@ _global_script_classes=[ {
 "path": "res://Quest/Rewards/Reward.gd"
 }, {
 "base": "Node",
+"class": "RiskyCommander",
+"language": "GDScript",
+"path": "res://AI/RiskyCommander.gd"
+}, {
+"base": "Node",
 "class": "Sector",
 "language": "GDScript",
 "path": "res://AI/Sector.gd"
@@ -143,6 +168,11 @@ _global_script_classes=[ {
 "class": "SimpleBehavior",
 "language": "GDScript",
 "path": "res://AI/SimpleBehavior.gd"
+}, {
+"base": "Node",
+"class": "Strategy",
+"language": "GDScript",
+"path": "res://AI/Strategy.gd"
 }, {
 "base": "Node",
 "class": "Troop",
@@ -169,6 +199,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Utility/vector.gd"
 }, {
+"base": "Building",
+"class": "Warehouse",
+"language": "GDScript",
+"path": "res://Buildings/Warehouse.gd"
+}, {
 "base": "ResourceItem",
 "class": "Water",
 "language": "GDScript",
@@ -178,6 +213,10 @@ _global_script_class_icons={
 "Animal": "",
 "AutoValue": "",
 "Blackboard": "",
+"Building": "",
+"BuildingObjective": "",
+"Camp": "",
+"Campfile": "",
 "CollectableResource": "",
 "Commander": "",
 "ConditionalEvent": "",
@@ -200,13 +239,16 @@ _global_script_class_icons={
 "ResourceItem": "",
 "ResourceStick": "",
 "Reward": "",
+"RiskyCommander": "",
 "Sector": "",
 "SimpleBehavior": "",
+"Strategy": "",
 "Troop": "",
 "TroopAI": "",
 "TroopsManager": "",
 "Value": "",
 "Velik": "",
+"Warehouse": "",
 "Water": ""
 }
 
@@ -222,6 +264,7 @@ utils="*res://Utility/utils.gd"
 questManager="*res://Quest/QuestManager.gd"
 troopsManager="*res://AI/Troops/TroopsManager.gd"
 troopAIBrain="*res://AI/Troops/TroopAIBrain.gd"
+fractionManager="*res://Managers/FractionManager.gd"
 
 [display]
 
@@ -229,7 +272,7 @@ window/size/height=768
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "Todo_Manager" )
 
 [gdnative]
 
